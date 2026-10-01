@@ -6,9 +6,9 @@
   // team은 teams.js의 id와 같은 값을 씁니다. 배열 순서가 WAR 순위입니다.
   // photoUrl(선택)은 WAR 1~3위만 연결했습니다. 파일이 없거나 불러오지 못하면 화면에서 기본 실루엣으로 대신 표시합니다.
   const pitchers=[
-    P('장유호','hanwha',2.12,6.40,15,4,0,0,28,'assets/players/jang-yuho.jpg'),
+    P('장유호','hanwha',2.12,6.40,15,4,0,0,28,'assets/players/jang-yuho.png'),
     P('김진욱','lotte',2.48,5.85,14,5,0,0,29,'assets/players/kim-jinuk.jpg'),
-    P('문동주','hanwha',2.71,5.30,13,6,0,0,27,'assets/players/moon-dongju.jpg'),
+    P('문동주','hanwha',2.71,5.30,13,6,0,0,27,'assets/players/moon-dongju.png'),
     P('곽빈','doosan',2.95,4.75,12,7,0,0,28),
     P('올러','kia',3.08,4.30,12,6,0,0,27),
     P('임찬규','lg',3.21,3.90,11,7,0,0,27),
@@ -20,7 +20,7 @@
   const batters=[
     B('전민재','lotte',.331,6.90,172,12,71,88,14,'assets/players/jeon-minjae.jpg'),
     B('장두성','lotte',.318,6.25,165,5,48,97,38,'assets/players/jang-duseong.jpg'),
-    B('이도윤','hanwha',.305,5.70,148,7,62,74,11,'assets/players/lee-doyun.jpg'),
+    B('이도윤','hanwha',.305,5.70,148,7,62,74,11,'assets/players/lee-doyun.png'),
     B('오스틴','lg',.312,5.20,163,32,108,91,9),
     B('김도영','kia',.336,4.85,178,34,104,100,36),
     B('구자욱','samsung',.322,4.40,169,26,96,93,10),
