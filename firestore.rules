@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 예매 내역: 로그인한 본인 티켓만 읽고, 만들고, 지울 수 있습니다. 수정은 허용하지 않습니다.
+    match /tickets/{ticketId} {
+      allow read: if request.auth != null && resource.data.uid == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.uid == request.auth.uid;
+      allow delete: if request.auth != null && resource.data.uid == request.auth.uid;
+      allow update: if false;
+    }
+    // 그 외 모든 경로는 읽기·쓰기 모두 차단합니다.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

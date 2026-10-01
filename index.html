@@ -198,6 +198,18 @@
     .success-match span.matchup,.success-match span.matchup-home{display:inline-flex;justify-content:center;margin-top:0;color:inherit;font-size:inherit}.success-match span.versus{margin-top:0}.success-match span.home-tag{margin-top:0;color:var(--white);font-size:9px}
     .seat-booking-header p span.matchup,.seat-booking-header p span.matchup-home{display:inline-flex}.seat-booking-header p .matchup,.seat-booking-header p .matchup span{margin-top:0}
     #players-view .player-stats{margin-top:0}
+    /* 로그인 모달 · 헤더 로그인 상태 · 티켓 예매 내역 */
+    .auth-area{display:inline-flex;align-items:center;gap:2px}
+    .user-chip{display:inline-flex;align-items:center;gap:6px;max-width:170px;padding:6px 12px 6px 9px;border-radius:999px;background:var(--blue-soft);color:var(--navy);font-size:13px;font-weight:700}.user-chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .auth-dialog{width:calc(100% - 32px);max-width:420px;padding:28px;border:1px solid var(--line);border-radius:var(--radius-panel);box-shadow:var(--shadow-lg);color:var(--text)}.auth-dialog::backdrop{background:#071b4380}
+    .auth-dialog h2{font-size:22px;font-weight:800;color:var(--navy)}
+    .auth-close{position:absolute;top:14px;right:14px;width:40px;height:40px;border:0;border-radius:50%;background:none;font-size:24px;line-height:1;color:var(--text-sub)}.auth-close:hover{background:var(--blue-soft)}
+    .auth-notice{margin-top:12px;padding:10px 12px;border-radius:var(--radius-btn);background:var(--blue-soft);color:var(--navy);font-size:13px;font-weight:600}
+    .auth-tabs{display:flex;margin:18px 0 20px;border-bottom:1px solid var(--line)}.auth-tabs button{flex:1;min-height:44px;margin-bottom:-1px;border:0;border-bottom:3px solid transparent;background:none;font-size:15px;font-weight:500;color:var(--text-sub)}.auth-tabs button[aria-selected=true]{border-bottom-color:var(--navy);font-weight:800;color:var(--navy)}
+    .auth-dialog label{display:block;margin-bottom:14px;font-size:13px;font-weight:600}.auth-dialog input{display:block;width:100%;min-height:46px;margin-top:6px;padding:10px 12px;border:1px solid var(--line-strong);border-radius:var(--radius-btn);font:inherit;font-weight:400;color:var(--text)}.auth-dialog input:focus-visible{outline:3px solid var(--blue);outline-offset:1px;border-color:var(--blue)}.auth-dialog small{display:block;margin-top:5px;font-size:11px;font-weight:400;color:var(--text-sub)}
+    .auth-error{min-height:21px;margin-bottom:12px;font-size:13px;font-weight:600;color:var(--danger)}
+    .ticket-seats{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 0;padding:0;list-style:none}.ticket-seats li{padding:3px 10px;border:1px solid var(--blue-line);border-radius:999px;background:var(--blue-soft);color:var(--navy);font-size:11px;font-weight:700}.ticket-types{margin-top:10px;font-size:12px;color:var(--text-sub)}
+    .btn.cancel-btn{margin-top:8px;border-color:#efc3bf;color:var(--danger)}.btn.cancel-btn:hover:not(:disabled){background:#fdecea;border-color:var(--danger)}
   </style>
 </head>
 <body>
@@ -212,8 +224,8 @@
           <button class="nav-link" data-soon>고객센터</button>
         </nav>
         <div class="header-actions">
-          <button class="btn plain" disabled title="로그인 기능은 준비 중입니다"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 4h5v16h-5M4 12h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>로그인</button>
-          <button class="btn plain" data-soon><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" stroke="currentColor" stroke-width="1.6"/><path d="M5 20c.6-3.8 3.4-5.5 7-5.5s6.4 1.7 7 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>마이페이지</button>
+          <span class="auth-area" id="auth-area"></span>
+          <button class="btn plain" id="mypage-button"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" stroke="currentColor" stroke-width="1.6"/><path d="M5 20c.6-3.8 3.4-5.5 7-5.5s6.4 1.7 7 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>마이페이지</button>
         </div>
       </div>
       <button class="btn wallet-btn" id="wallet-button"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h16v5a2 2 0 0 0 0 4v5H4v-5a2 2 0 0 0 0-4V5Z" stroke="currentColor" stroke-width="1.6"/><path d="M15 7v2m0 2v2m0 2v2" stroke="currentColor" stroke-width="1.6"/></svg>내 티켓 <span class="ticket-count" id="ticket-count">0</span></button>
@@ -289,14 +301,32 @@
       </ul>
     </div>
   </section>
-  <footer class="footer"><div class="wrap footer-inner"><div class="footer-links" aria-label="안내 링크"><a>이용약관</a><a>개인정보처리방침</a><a>고객센터</a></div><span><strong>만루티켓 · 조류동맹</strong> © 2026 · 가상 경기 · 모의 결제 · 알림 및 전달 기능 준비 중 · 새로고침하면 티켓이 초기화됩니다</span></div></footer>
+  <footer class="footer"><div class="wrap footer-inner"><div class="footer-links" aria-label="안내 링크"><a>이용약관</a><a>개인정보처리방침</a><a>고객센터</a></div><span><strong>만루티켓 · 조류동맹</strong> © 2026 · 가상 경기 · 모의 결제 · 알림 및 전달 기능 준비 중 · 예매 내역은 로그인한 계정에 저장됩니다</span></div></footer>
   <dialog id="selection-dialog" aria-labelledby="selection-dialog-title"><h2 id="selection-dialog-title"></h2><p id="selection-dialog-description"></p><div id="selection-dialog-actions"></div><button class="btn plain full" id="selection-dialog-cancel">취소</button></dialog>
+  <dialog id="auth-dialog" class="auth-dialog" aria-labelledby="auth-title">
+    <button class="auth-close" id="auth-close" type="button" aria-label="닫기">×</button>
+    <h2 id="auth-title">만루티켓 로그인</h2>
+    <p class="auth-notice" id="auth-notice" hidden></p>
+    <div class="auth-tabs" role="tablist" aria-label="가입 또는 로그인">
+      <button type="button" role="tab" id="auth-tab-signup" data-auth-tab="signup" aria-controls="auth-form">가입</button>
+      <button type="button" role="tab" id="auth-tab-login" data-auth-tab="login" aria-controls="auth-form">로그인</button>
+    </div>
+    <form id="auth-form" role="tabpanel" novalidate>
+      <label>이메일<input type="email" id="auth-email" autocomplete="email" inputmode="email" required></label>
+      <label>비밀번호<input type="password" id="auth-password" autocomplete="current-password" required><small>6자 이상</small></label>
+      <label id="auth-confirm-row" hidden>비밀번호 확인<input type="password" id="auth-confirm" autocomplete="new-password"></label>
+      <p class="auth-error" id="auth-error" role="alert"></p>
+      <button class="btn primary full" id="auth-submit" type="submit">로그인</button>
+    </form>
+  </dialog>
   <div class="toast" id="toast" role="status" hidden></div>
   <script src="teams.js"></script>
   <script src="grades.js"></script>
   <script src="sections.js"></script>
   <script src="weatherService.js"></script>
   <script src="statsService.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="firebaseService.js"></script>
   <script>
     'use strict';
     const teams=window.Teams;
@@ -379,7 +409,7 @@
       for(let i=0;i<5;i++){
         const pair=[order[i],order[9-i]],home=pair[(Math.floor((day-1)/3)+i)%2],away=pair[(Math.floor((day-1)/3)+i+1)%2];
         const date=new Date(year,month,day,[0,6].includes(new Date(year,month,day).getDay())?14+i%2*3:18,i%2?30:0);
-        games.push({id:`g-${day}-${i}`,day,home,away,date,stadium:home.stadium,preOpen:new Date(year,month,day-5,11),generalOpen:new Date(year,month,day-3,14)});
+        games.push({id:`g-${year}${String(month+1).padStart(2,'0')}${String(day).padStart(2,'0')}-${i}`,day,home,away,date,stadium:home.stadium,preOpen:new Date(year,month,day-5,11),generalOpen:new Date(year,month,day-3,14)});
       }
     }
     function matchingGames(day){return games.filter(g=>g.day===day&&(!selectedTeams.size||selectedTeams.has(g.home.id)||selectedTeams.has(g.away.id)));}
@@ -692,18 +722,23 @@
     }
     function completeBooking(){
       const selected=chosenSeats();
-      if(currentView!=='booking'||bookingState.phase!=='payment'||!selected.length||typeTotal()!==selected.length)return;
+      if(currentView!=='booking'||bookingState.phase!=='payment'||!selected.length||typeTotal()!==selected.length||savingOrder)return;
+      if(!currentUser){openAuthDialog('login','로그인 후 예매할 수 있어요');return;}
       if(selected.some(s=>!seatAvailable(s))){setSelectedSeats([]);bookingState={...bookingState,phase:'seats',message:'판매된 좌석이 있어요. 좌석을 다시 선택해 주세요.'};renderBooking();return;}
-      const section=sectionById(bookingState.sectionId),grade=gradeById(section.gradeId),total=orderTotal(),issued=[];
-      // 권종은 선택한 좌석 순서대로 일반 → 장애인 → 청소년 순으로 배정합니다.
-      const typeQueue=ticketTypes.flatMap(t=>Array(bookingState.typeCounts[t.id]).fill(t));
-      selected.forEach((seat,i)=>{
-        const ticket={id:`ML-${year}${String(month+1).padStart(2,'0')}-${String(tickets.length+1).padStart(4,'0')}`,game:selectedGame,zone:{id:section.id,name:`${grade.name} ${section.id}구역`,price:typePrice(typeQueue[i])},seat:seatLabel(seat),seatId:seat.id,type:typeQueue[i].name};
-        tickets.push(ticket);issued.push(ticket);
-        seat.status='sold'; // 내가 결제한 좌석도 구역 데이터에서 판매완료로 바꿉니다.
-      });
-      lastOrder={game:selectedGame,zone:{name:issued[0].zone.name},quantity:issued.length,total,issued};
-      $('ticket-count').textContent=tickets.length;renderSuccess();showView('success');
+      const game=selectedGame,section=sectionById(bookingState.sectionId),grade=gradeById(section.gradeId);
+      // Firestore tickets 컬렉션에 저장할 예매 내역. 실제 결제는 하지 않습니다.
+      const order={uid:currentUser.uid,emailPrefix:currentUser.emailPrefix,gameId:game.id,gameLabel:gameLabel(game),sectionId:section.id,seats:selected.map(s=>s.id),ticketTypes:{...bookingState.typeCounts},totalPrice:orderTotal()};
+      const button=$('mock-payment');
+      savingOrder=true;button.disabled=true;button.textContent='처리 중…';
+      cloud.saveTicket(order).then(id=>{
+        selected.forEach(seat=>seat.status='sold'); // 내가 결제한 좌석도 구역 데이터에서 판매완료로 바꿉니다.
+        tickets.unshift({...order,id,createdAt:new Date()});ticketsState='ready';
+        lastOrder={game,zone:{name:`${grade.name} ${section.id}구역`},quantity:selected.length,total:order.totalPrice};
+        updateTicketCount();renderSuccess();showView('success');
+      },()=>{
+        bookingState={...bookingState,message:'예매 내역을 저장하지 못했어요. 잠시 후 다시 시도해 주세요.'};
+        if(currentView==='booking')renderBooking();
+      }).then(()=>{savingOrder=false;});
     }
     function applyPlotTransform(){
       const canvas=$('plot-canvas');if(!canvas)return;
@@ -784,10 +819,132 @@
       }
       return `<svg class="qr" viewBox="0 0 29 29" role="img" aria-label="입장 불가, 연습용 가짜 QR 모양"><rect width="29" height="29" fill="white"/><g fill="#071B43">${rects}</g></svg>`;
     }
-    function renderWallet(){
-      $('wallet-view').innerHTML=`<div class="wallet-header"><div><h1>내 티켓 <span class="small-count">${tickets.length}장</span></h1><p>응원하는 팀은 달라도, 티켓은 한곳에.</p></div><button class="btn" id="wallet-calendar">경기 둘러보기</button></div>`+(tickets.length?`<div class="ticket-grid">${tickets.slice().reverse().map(t=>`<article class="ticket"><div class="ticket-head"><p class="ticket-tag">모의 예매 완료 · ${teamName(t.game.home.id,{short:true,size:16})} 홈경기</p><h2>${formatMatchup(t.game,{short:true})}</h2><p>${dateLabel(t.game.date)} ${timeLabel(t.game.date)}<br>${t.game.stadium}</p></div><div class="ticket-body"><div class="ticket-seat"><strong>${t.zone.name}</strong><span>${t.seat}</span></div><div class="qr-area">${fakeQr(t.id)}<p class="qr-caption">연습용 QR 모양 · 실제 입장 불가</p><p class="ticket-id">${t.id}</p><button class="btn full" disabled title="친구에게 전달 기능은 준비 중입니다">친구에게 전달 · 준비 중</button></div></div></article>`).join('')}</div><p class="small-note" style="margin-top:22px">티켓은 현재 화면에만 저장되며, 새로고침하면 초기화됩니다.</p>`:`<div class="empty-wallet"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 5h18v5a2 2 0 0 0 0 4v5H3v-5a2 2 0 0 0 0-4V5Z" stroke="currentColor" stroke-width="1.3"/><path d="M16 7v2m0 2v2m0 2v2" stroke="currentColor" stroke-width="1.3"/></svg><h2>첫 직관을 기다리고 있어요</h2><p>경기를 예매하면 이곳에 티켓이 모여요.</p><button class="btn primary" id="empty-calendar">경기 캘린더 보기 ${arrow}</button></div>`);
+    // ----- 로그인(Firebase Authentication)과 내 티켓(Firestore) -----
+    // Firebase와 직접 통신하는 코드는 firebaseService.js에 있고, 여기서는 window.TicketCloud만 씁니다.
+    const cloudUnavailable=()=>Promise.reject(Object.assign(new Error('sdk'),{code:'app/sdk-load-failed'}));
+    const cloud=window.TicketCloud||{configured:true,onAuth:listener=>listener(null),signUp:cloudUnavailable,signIn:cloudUnavailable,signOut:cloudUnavailable,saveTicket:cloudUnavailable,loadMyTickets:cloudUnavailable,deleteTicket:cloudUnavailable};
+    let currentUser=null,pendingBookingId=null,ticketsState='idle',savingOrder=false,authMode='login';
+    const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    // Firebase 오류 코드를 한글 안내로 바꿉니다.
+    const authMessages={
+      'auth/email-already-in-use':'이미 가입된 이메일이에요.',
+      'auth/invalid-email':'이메일 형식이 올바르지 않아요.',
+      'auth/weak-password':'비밀번호는 6자 이상이어야 해요.',
+      'app/password-mismatch':'비밀번호가 서로 달라요.',
+      'app/missing-password':'비밀번호를 입력해 주세요.',
+      'auth/invalid-credential':'이메일 또는 비밀번호가 틀렸어요.',
+      'auth/invalid-login-credentials':'이메일 또는 비밀번호가 틀렸어요.',
+      'auth/wrong-password':'이메일 또는 비밀번호가 틀렸어요.',
+      'auth/user-not-found':'이메일 또는 비밀번호가 틀렸어요.',
+      'auth/too-many-requests':'시도가 너무 많아요. 잠시 후 다시 해 주세요.',
+      'auth/network-request-failed':'네트워크 연결을 확인해 주세요.',
+      'auth/operation-not-allowed':'Firebase 콘솔에서 이메일/비밀번호 로그인을 켜 주세요.',
+      'auth/configuration-not-found':'Firebase 콘솔에서 Authentication을 먼저 시작해 주세요.',
+      'auth/api-key-not-valid':'Firebase 설정값(apiKey)이 올바르지 않아요. firebase-config.js를 확인해 주세요.',
+      'app/not-configured':'Firebase 설정이 아직 없어요. firebase-config.js를 채워 주세요.',
+      'app/sdk-load-failed':'Firebase에 연결하지 못했어요. 네트워크 연결을 확인해 주세요.',
+      default:'처리하지 못했어요. 잠시 후 다시 시도해 주세요.'
+    };
+    const showAuthError=code=>{$('auth-error').textContent=authMessages[String(code).split('.')[0]]||authMessages.default;};
+    // 예: "두산 vs LG · 잠실야구장 · 10/12 18:30" (원정팀 vs 홈팀)
+    function gameLabel(game){return `${formatMatchup(game,{style:'text',short:true})} · ${game.stadium} · ${game.date.getMonth()+1}/${game.date.getDate()} ${timeLabel(game.date)}`;}
+    const ticketSeatCount=()=>tickets.reduce((n,t)=>n+(Array.isArray(t.seats)?t.seats.length:0),0);
+    function updateTicketCount(){$('ticket-count').textContent=ticketSeatCount();}
+    // 헤더: 로그인 전에는 [로그인], 로그인하면 이메일 앞부분과 [로그아웃]을 보여 줍니다.
+    function renderAuth(){
+      $('auth-area').innerHTML=currentUser
+        ?`<span class="user-chip" title="${esc(currentUser.email)}"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="m8.5 12.5 2.5 2.5 4.5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>${esc(currentUser.emailPrefix)}</span></span><button class="btn plain" id="logout-button">로그아웃</button>`
+        :'<button class="btn plain" id="login-button"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 4h5v16h-5M4 12h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>로그인</button>';
     }
-    function openWallet(){renderWallet();showView('wallet');}
+    function setAuthMode(mode,focus=false){
+      authMode=mode;const signup=mode==='signup';
+      document.querySelectorAll('[data-auth-tab]').forEach(tab=>{
+        const selected=tab.dataset.authTab===mode;
+        tab.setAttribute('aria-selected',String(selected));tab.tabIndex=selected?0:-1;if(selected&&focus)tab.focus();
+      });
+      $('auth-title').textContent=signup?'만루티켓 가입':'만루티켓 로그인';
+      $('auth-confirm-row').hidden=!signup;$('auth-password').autocomplete=signup?'new-password':'current-password';
+      $('auth-form').setAttribute('aria-labelledby','auth-tab-'+mode);
+      $('auth-submit').textContent=signup?'가입하기':'로그인';$('auth-error').textContent='';
+    }
+    function openAuthDialog(mode='login',notice=''){
+      setAuthMode(mode);
+      $('auth-notice').textContent=notice;$('auth-notice').hidden=!notice;
+      if(!$('auth-dialog').open)$('auth-dialog').showModal();
+      if(cloud.configured===false)showAuthError('app/not-configured');
+      $('auth-email').focus();
+    }
+    async function submitAuth(){
+      const email=$('auth-email').value.trim(),password=$('auth-password').value,signup=authMode==='signup',submit=$('auth-submit');
+      const problem=!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)?'auth/invalid-email':!password?'app/missing-password':signup&&password.length<6?'auth/weak-password':signup&&password!==$('auth-confirm').value?'app/password-mismatch':'';
+      if(problem){showAuthError(problem);return;}
+      submit.disabled=true;submit.textContent='처리 중…';$('auth-error').textContent='';
+      try{
+        await (signup?cloud.signUp(email,password):cloud.signIn(email,password));
+        $('auth-form').reset(); // 성공하면 handleAuth가 모달을 닫고 이어서 처리합니다.
+      }catch(error){showAuthError(error&&error.code);}
+      finally{submit.disabled=false;submit.textContent=authMode==='signup'?'가입하기':'로그인';}
+    }
+    // 로그인한 사람만 예매할 수 있습니다. 비로그인이면 로그인 모달을 열고, 로그인에 성공하면 누르려던 경기의 예매로 이어 갑니다.
+    function requestBooking(game){
+      if(!game)return;
+      if(!currentUser){pendingBookingId=game.id;openAuthDialog('login','로그인 후 예매할 수 있어요');return;}
+      selectedGame=game;selectedDay=game.day;renderCalendar();renderDetail();startBooking();
+    }
+    // 로그인 상태가 바뀔 때마다 불립니다(onAuthStateChanged). 새로고침 뒤 로그인이 복원될 때도 같습니다.
+    function handleAuth(user){
+      const wasLoggedIn=!!currentUser;
+      currentUser=user;renderAuth();
+      if(user){
+        if($('auth-dialog').open)$('auth-dialog').close();
+        loadTickets();
+        if(pendingBookingId){const game=games.find(g=>g.id===pendingBookingId);pendingBookingId=null;requestBooking(game);}
+      }else{
+        // 로그아웃하면 내 티켓 목록을 화면에서 바로 비웁니다.
+        tickets.length=0;ticketsState='idle';updateTicketCount();
+        if(currentView==='wallet')renderWallet();
+        if(wasLoggedIn&&['booking','success'].includes(currentView))openCalendar();
+      }
+    }
+    // Firestore에서 내 uid의 티켓만 불러옵니다.
+    function loadTickets(){
+      const uid=currentUser.uid;
+      if(ticketsState!=='ready')ticketsState='loading';
+      if(currentView==='wallet')renderWallet();
+      cloud.loadMyTickets(uid).then(list=>{
+        if(!currentUser||currentUser.uid!==uid)return;
+        const time=t=>t.createdAt instanceof Date?t.createdAt.getTime():0;
+        tickets.length=0;tickets.push(...list.sort((a,b)=>time(b)-time(a)));ticketsState='ready';
+      },()=>{if(currentUser&&currentUser.uid===uid)ticketsState='error';}).then(()=>{updateTicketCount();if(currentView==='wallet')renderWallet();});
+    }
+    function cancelTicket(id){
+      const ticket=tickets.find(t=>t.id===id);
+      if(!ticket||!currentUser||ticket.uid!==currentUser.uid)return;
+      if(!window.confirm('이 예매를 취소할까요? 취소하면 되돌릴 수 없어요.'))return;
+      const button=document.querySelector(`[data-cancel-ticket="${CSS.escape(id)}"]`);
+      if(button){button.disabled=true;button.textContent='처리 중…';}
+      cloud.deleteTicket(id).then(()=>{
+        tickets.splice(tickets.indexOf(ticket),1);updateTicketCount();showToast('예매를 취소했어요');
+      },()=>showToast('예매를 취소하지 못했어요. 잠시 후 다시 시도해 주세요.')).then(()=>{if(currentView==='wallet')renderWallet();});
+    }
+    // 예매 1건(Firestore 문서 1개)을 티켓 카드 하나로 그립니다. 경기는 gameId로 찾고, 못 찾으면 저장된 gameLabel을 씁니다.
+    function ticketCard(t){
+      const game=games.find(g=>g.id===t.gameId),section=sectionById(String(t.sectionId)),seats=Array.isArray(t.seats)?t.seats:[],types=t.ticketTypes||{};
+      const seatText=id=>{const m=/^\w+-(\d+)-(\d+)$/.exec(String(id));return m?`${m[1]}열 ${m[2]}번`:esc(id);};
+      const typeText=ticketTypes.filter(type=>Number(types[type.id])>0).map(type=>`${type.name} ${Number(types[type.id])}명`).join(' · ');
+      return `<article class="ticket"><div class="ticket-head"><p class="ticket-tag">모의 예매 완료 · 예매자 ${esc(t.emailPrefix)}</p><h2>${game?formatMatchup(game,{short:true}):esc(t.gameLabel)}</h2>${game?`<p>${dateLabel(game.date)} ${timeLabel(game.date)}<br>${game.stadium}</p>`:''}</div><div class="ticket-body"><div class="ticket-seat"><strong>${section?`${gradeById(section.gradeId).name} ${section.id}구역`:esc(t.sectionId)+'구역'}</strong><span>${seats.length}석 · ${money(Number(t.totalPrice)||0)}</span></div><ul class="ticket-seats" aria-label="좌석">${seats.map(id=>`<li>${seatText(id)}</li>`).join('')}</ul>${typeText?`<p class="ticket-types">${typeText}</p>`:''}<div class="qr-area">${fakeQr(String(t.id))}<p class="qr-caption">연습용 QR 모양 · 실제 입장 불가</p><p class="ticket-id">${esc(t.id)}</p><button class="btn full" disabled title="친구에게 전달 기능은 준비 중입니다">친구에게 전달 · 준비 중</button><button class="btn full cancel-btn" data-cancel-ticket="${esc(t.id)}">예매 취소</button></div></div></article>`;
+    }
+    function renderWallet(){
+      const icon='<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 5h18v5a2 2 0 0 0 0 4v5H3v-5a2 2 0 0 0 0-4V5Z" stroke="currentColor" stroke-width="1.3"/><path d="M16 7v2m0 2v2m0 2v2" stroke="currentColor" stroke-width="1.3"/></svg>';
+      const notice=(title,text,button='')=>`<div class="empty-wallet">${icon}<h2>${title}</h2><p>${text}</p>${button}</div>`;
+      const body=!currentUser?notice('로그인이 필요해요','로그인하면 예매 내역을 볼 수 있어요','<button class="btn primary" id="wallet-login">로그인</button>')
+        :ticketsState==='loading'?notice('예매 내역을 불러오는 중…','잠시만 기다려 주세요.')
+        :ticketsState==='error'?notice('예매 내역을 불러올 수 없습니다','잠시 후 다시 시도해 주세요.','<button class="btn" id="wallet-retry">다시 불러오기</button>')
+        :!tickets.length?notice('첫 직관을 기다리고 있어요','경기를 예매하면 이곳에 티켓이 모여요.',`<button class="btn primary" id="empty-calendar">경기 캘린더 보기 ${arrow}</button>`)
+        :`<div class="ticket-grid">${tickets.map(ticketCard).join('')}</div><p class="small-note" style="margin-top:22px">예매 내역은 로그인한 계정에 저장됩니다. 실제 결제·입장은 되지 않는 연습용 티켓입니다.</p>`;
+      $('wallet-view').innerHTML=`<div class="wallet-header"><div><h1>내 티켓 <span class="small-count">${currentUser?ticketSeatCount()+'장':''}</span></h1><p>응원하는 팀은 달라도, 티켓은 한곳에.</p></div><button class="btn" id="wallet-calendar">경기 둘러보기</button></div>`+body;
+    }
+    function openWallet(){if(currentUser&&ticketsState!=='loading')loadTickets();renderWallet();showView('wallet');}
     function openCalendar(){renderCalendar();renderDetail();showView('calendar');}
     // 아래 네 메뉴도 모두 가짜 데이터입니다. 실제 KBO 기록·순위를 불러오지 않습니다.
     const mockRankings=['lotte','hanwha','lg','kia','samsung','ssg','kt','doosan','nc','kiwoom'].map((id,i)=>{
@@ -879,6 +1036,8 @@
       const target=event.target.closest('[data-team],[data-day],[data-game],[data-section],[data-seat],[data-view],[data-type],[data-grade],[data-remove-seat],button');
       if(!target)return;
       if(target.dataset.view){openHomeTab(target.dataset.view);return;}
+      if(target.dataset.authTab){setAuthMode(target.dataset.authTab);return;}
+      if(target.dataset.cancelTicket){cancelTicket(target.dataset.cancelTicket);return;}
       if(target.dataset.statTab){statsView.tab=target.dataset.statTab;renderStats();$('player-stats').querySelector(`[data-stat-tab="${statsView.tab}"]`).focus({preventScroll:true});return;}
       if(target.dataset.statSort){sortStats(target.dataset.statSort);return;}
       if(target.dataset.section&&currentView==='booking'){activateSection(target.dataset.section);return;}
@@ -895,7 +1054,11 @@
       if(target.dataset.game){selectGame(target.dataset.game,target.classList.contains('mini-match')?'calendar':'row');return;}
       switch(target.id){
         case 'brand':case 'success-calendar':case 'wallet-calendar':case 'empty-calendar':openCalendar();break;
-        case 'wallet-button':case 'success-wallet':openWallet();break;
+        case 'wallet-button':case 'success-wallet':case 'mypage-button':openWallet();break;
+        case 'login-button':case 'wallet-login':openAuthDialog('login');break;
+        case 'logout-button':cloud.signOut().then(()=>showToast('로그아웃했어요'),()=>showToast('로그아웃하지 못했어요. 잠시 후 다시 시도해 주세요.'));break;
+        case 'auth-close':$('auth-dialog').close();break;
+        case 'wallet-retry':loadTickets();break;
         case 'filter-reset':selectedTeams.clear();renderFilters();selectDay(selectedDay);$('filter-reset').focus({preventScroll:true});break;
         case 'today-button':selectDay(today);break;
         case 'notify-switch':{
@@ -903,7 +1066,7 @@
           const enabled=notifications.has(id);target.setAttribute('aria-checked',String(enabled));
           $('notification-status').textContent=enabled?'알림 설정됨 · 실제 발송은 준비 중':'예매 오픈 일정을 놓치지 마세요';$('notification-status').classList.toggle('enabled',enabled);break;
         }
-        case 'book-button':startBooking();break;
+        case 'book-button':requestBooking(selectedGame);break;
         case 'booking-back':{
           // [이전]: 앞 단계에서 고른 값은 그대로 두고 한 단계만 돌아갑니다.
           const phase=bookingState.phase;
@@ -944,6 +1107,14 @@
     document.addEventListener('focusin',event=>{if(event.target.matches('.dot-seat,[data-section]'))revealPlotFocus(event.target);if(event.target.matches('[data-section]'))showMapTooltip(event.target,event);});
     document.addEventListener('focusout',event=>{if(event.target.matches('[data-section]')&&$('map-tooltip'))$('map-tooltip').hidden=true;});
     $('selection-dialog').addEventListener('cancel',()=>pendingDialog=null);
+    $('auth-form').addEventListener('submit',event=>{event.preventDefault();submitAuth();});
+    // 로그인하지 않고 모달을 닫으면, 이어서 하려던 예매는 잊습니다.
+    $('auth-dialog').addEventListener('close',()=>{if(!currentUser)pendingBookingId=null;});
+    // 가입/로그인 탭은 좌우 방향키로도 옮길 수 있습니다.
+    document.querySelector('.auth-tabs').addEventListener('keydown',event=>{
+      if(!['ArrowLeft','ArrowRight'].includes(event.key))return;
+      event.preventDefault();setAuthMode(authMode==='signup'?'login':'signup',true);
+    });
     window.addEventListener('resize',()=>{if(currentView==='booking'&&bookingState.phase!=='payment')resetPlot();});
     // 브랜드 디자인용 보조 동작: 준비 중 메뉴 안내, 모바일 메뉴 접기·펼치기, 배너·메뉴의 스크롤 이동, 경기 카드의 예매하기.
     document.addEventListener('click',event=>{
@@ -961,13 +1132,13 @@
       }
       if(target.dataset.book){
         // 경기 선택 후 상세 패널의 예매하기를 누르는 것과 같은 순서입니다.
-        const game=games.find(g=>g.id===target.dataset.book);
-        if(game){selectedGame=game;selectedDay=game.day;renderCalendar();renderDetail();startBooking();}
+        requestBooking(games.find(g=>g.id===target.dataset.book));
       }
     });
     window.addEventListener('hashchange',()=>{const view=hashView();if(view&&view!==currentView)openHomeTab(view);});
     renderFilters();selectDay(today);
     if(hashView())openHomeTab(hashView());
+    renderAuth();cloud.onAuth(handleAuth);
     setInterval(updateCountdown,1000);
   </script>
 </body>
