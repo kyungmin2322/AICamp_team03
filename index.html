@@ -33,8 +33,15 @@
     @media(max-width:520px){.step-more{display:none}.type-list{padding:4px 14px}}
     /* 경기 카드 날씨 · 선수 기록 TOP 10 */
     .match-weather{display:block;font-size:11px;color:#466149;margin-top:4px;font-variant-numeric:tabular-nums}.match-weather.muted{color:var(--muted)}.weather-badge{display:inline-block;background:var(--grass);border:1px solid #cedeca;border-radius:5px;padding:0 6px;margin-right:5px;font-weight:700;color:var(--green)}
-    .player-stats{margin-top:38px}.stats-title{font-size:20px;letter-spacing:-.6px;margin-bottom:12px}.stat-tabs{display:flex;gap:8px;margin-bottom:14px}.stat-tab{min-height:44px;padding:9px 16px;border:1px solid var(--line);background:white;border-radius:24px;font-size:13px;font-weight:700;color:#4f6055}.stat-tab:hover{border-color:#84998b}.stat-tab[aria-selected=true]{background:var(--green);border-color:var(--green);color:white}.stat-table th{padding:4px 6px}.stat-sort{border:0;background:none;color:inherit;font-size:11px;font-weight:700;min-height:36px;padding:6px 4px;display:inline-flex;align-items:center;gap:3px}.stat-sort:hover,.stat-table th[aria-sort=ascending] .stat-sort,.stat-table th[aria-sort=descending] .stat-sort{color:var(--green)}.stat-table td.sorted{background:#f6faf2;font-weight:700}.team-badge{font-size:10px;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 5px}
+    .player-stats{margin-top:38px}.stats-title{font-size:20px;letter-spacing:-.6px;margin-bottom:12px}.stat-tabs{display:flex;gap:8px;margin-bottom:14px}.stat-tab{min-height:44px;padding:9px 16px;border:1px solid var(--line);background:white;border-radius:24px;font-size:13px;font-weight:700;color:#4f6055}.stat-tab:hover{border-color:#84998b}.stat-tab[aria-selected=true]{background:var(--green);border-color:var(--green);color:white}.stat-table th{padding:4px 6px}.stat-sort{border:0;background:none;color:inherit;font-size:11px;font-weight:700;min-height:36px;padding:6px 4px;display:inline-flex;align-items:center;gap:3px}.stat-sort:hover,.stat-table th[aria-sort=ascending] .stat-sort,.stat-table th[aria-sort=descending] .stat-sort{color:var(--green)}.stat-table td.sorted{background:#f6faf2;font-weight:700}
     @media(max-width:800px){.stat-table th:nth-child(2),.stat-table td:nth-child(2){position:sticky;left:0;z-index:1;background:white;box-shadow:1px 0 0 var(--line)}.stat-table th:nth-child(2){background:#f3f6ef}}
+    /* 팀 로고 + 팀명 공통 표시 · 선수 사진 · TOP 3 카드 */
+    .team-name{display:inline-flex;align-items:center;gap:6px;vertical-align:middle;min-width:0}.team-label{font-weight:inherit}.team-logo{position:relative;display:inline-grid;place-items:center;flex-shrink:0;border-radius:50%;overflow:hidden;color:white;font-style:normal;font-weight:800;line-height:1;letter-spacing:-.5px}.team-logo>i{font-style:normal}.team-logo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0}.team-logo.loaded{background:none!important;border-radius:0}.team-logo.loaded img{opacity:1}.team-logo.loaded>i{visibility:hidden}
+    .detail-top .team-logo,.chip[aria-pressed=true] .team-logo{box-shadow:0 0 0 1px #ffffff66}.mini-match .team-name{gap:3px}.summary-line span.team-name{color:inherit}.success-match span.team-name{display:inline-flex;color:inherit;font-size:inherit;margin-top:0}.seat-booking-header p span.team-name{display:inline-flex;margin-top:0}
+    @media(max-width:1050px){.mini-match .team-name:last-child .team-logo{display:none}}
+    .player-photo{position:relative;display:inline-block;flex-shrink:0;border-radius:50%;overflow:hidden;background:#dde2de}.player-photo svg{width:100%;height:100%;fill:#a3ada6}.player-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}.player-photo.loaded img{opacity:1}
+    .top3{display:flex;align-items:flex-end;justify-content:center;gap:14px;margin-bottom:18px}.top3-card{position:relative;flex:1 1 0;max-width:230px;min-width:0;background:white;border:1px solid var(--line);border-radius:14px;padding:22px 12px 16px;display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center}.top3-card.rank-1{order:2;padding:28px 12px 24px;border-color:#e2c35c;box-shadow:0 4px 14px #17342614}.top3-card.rank-2{order:1}.top3-card.rank-3{order:3}.rank-badge{position:absolute;top:10px;left:10px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:850;color:white}.rank-1 .rank-badge{background:#d9a514;color:#3d2c00}.rank-2 .rank-badge{background:#8f99a3}.rank-3 .rank-badge{background:#a9683a}.top3-name{font-size:15px}.rank-1 .top3-name{font-size:17px}.top3-card .team-name{font-size:12px;color:var(--muted)}.top3-stat{display:flex;align-items:baseline;gap:6px;margin-top:3px;color:var(--green)}.top3-stat span{font-size:11px;font-weight:700}.top3-stat b{font-size:22px;letter-spacing:-.6px;font-variant-numeric:tabular-nums}.rank-1 .top3-stat b{font-size:27px}
+    @media(max-width:767px){.top3{justify-content:flex-start;align-items:stretch;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x proximity}.top3-card{flex:0 0 168px;max-width:none;scroll-snap-align:start}.top3-card.rank-1,.top3-card.rank-2,.top3-card.rank-3{order:0}}
   </style>
 </head>
 <body>
@@ -83,24 +90,14 @@
   <footer class="footer"><div class="wrap footer-inner"><strong>만루티켓 · 조류동맹</strong><span>가상 경기 · 모의 결제 · 알림 및 전달 기능 준비 중 · 새로고침하면 티켓이 초기화됩니다</span></div></footer>
   <dialog id="selection-dialog" aria-labelledby="selection-dialog-title"><h2 id="selection-dialog-title"></h2><p id="selection-dialog-description"></p><div id="selection-dialog-actions"></div><button class="btn plain full" id="selection-dialog-cancel">취소</button></dialog>
   <div class="toast" id="toast" role="status" hidden></div>
+  <script src="teams.js"></script>
   <script src="grades.js"></script>
   <script src="sections.js"></script>
   <script src="weatherService.js"></script>
   <script src="statsService.js"></script>
   <script>
     'use strict';
-    const teams = [
-      {id:'lg',name:'LG 트윈스',short:'LG',color:'#c30452',stadium:'잠실야구장'},
-      {id:'kt',name:'KT 위즈',short:'KT',color:'#252525',stadium:'수원 KT 위즈파크'},
-      {id:'ssg',name:'SSG 랜더스',short:'SSG',color:'#ce0e2d',stadium:'인천 SSG 랜더스필드'},
-      {id:'nc',name:'NC 다이노스',short:'NC',color:'#315e8b',stadium:'창원 NC 파크'},
-      {id:'doosan',name:'두산 베어스',short:'두산',color:'#172951',stadium:'잠실야구장'},
-      {id:'kia',name:'KIA 타이거즈',short:'KIA',color:'#d52231',stadium:'광주 기아 챔피언스필드'},
-      {id:'lotte',name:'롯데 자이언츠',short:'롯데',color:'#5798bb',stadium:'사직야구장'},
-      {id:'samsung',name:'삼성 라이온즈',short:'삼성',color:'#1559b4',stadium:'대구 삼성 라이온즈파크'},
-      {id:'hanwha',name:'한화 이글스',short:'한화',color:'#f07722',stadium:'대전 한화생명 볼파크'},
-      {id:'kiwoom',name:'키움 히어로즈',short:'키움',color:'#7c173d',stadium:'고척 스카이돔'}
-    ];
+    const teams=window.Teams;
     // 구장 위치. 날씨 조회 때 위경도를 기상청 격자(nx, ny)로 바꿔 씁니다. 좌표는 대략값이라 확인이 필요합니다.
     const stadiums=[
       {id:'jamsil',name:'잠실야구장',city:'서울',lat:37.5122,lng:127.0719},
@@ -127,6 +124,35 @@
     const timeLabel=date=>`${String(date.getHours()).padStart(2,'0')}:${String(date.getMinutes()).padStart(2,'0')}`;
     const openLabel=date=>`${date.getMonth()+1}.${String(date.getDate()).padStart(2,'0')} (${weekdays[date.getDay()]}) ${timeLabel(date)}`;
     const dot=team=>`<span class="team-dot" style="background:${team.color}" aria-hidden="true"></span>`;
+    // 공통 표시 함수. 팀명을 화면에 그릴 때는 문자열을 직접 쓰지 않고 teamName()(로고 + 팀명)을 씁니다.
+    // 로고·선수 사진은 불러온 결과(ok/fail)를 기억해, 실패한 이미지는 다시 요청하지 않고 대체 표시만 그립니다.
+    const imageState=new Map();
+    function fallbackImage(url,alt,size,lazy){
+      return url&&imageState.get(url)!=='fail'?`<img data-fallback src="${url}" alt="${alt}" width="${size}" height="${size}"${lazy?' loading="lazy"':''}>`:'';
+    }
+    // 대체 표시: 팀 대표색 원 + 흰색 약칭. 16px보다 작으면 글자 없이 색 원만 그립니다.
+    function teamLogo(teamId,size=20){
+      const t=teams.find(team=>team.id===teamId);
+      return `<i class="team-logo${imageState.get(t.logoUrl)==='ok'?' loaded':''}" style="width:${size}px;height:${size}px;font-size:${Math.round(size*.4)}px;background:${t.color}"><i aria-hidden="true">${size>=16?t.shortName:''}</i>${fallbackImage(t.logoUrl,t.name+' 로고',size)}</i>`;
+    }
+    function teamName(teamId,{size=20,short=false}={}){
+      const t=teams.find(team=>team.id===teamId);
+      return `<span class="team-name">${teamLogo(teamId,size)}<b class="team-label">${short?t.shortName:t.name}</b></span>`;
+    }
+    // 대체 표시: 회색 원 안의 사람 실루엣.
+    const silhouette='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9.5" r="4.3"/><path d="M3.5 23c.6-5.2 4-7.8 8.5-7.8s7.9 2.6 8.5 7.8Z"/></svg>';
+    function playerPhoto(player,size){
+      return `<span class="player-photo${imageState.get(player.photoUrl)==='ok'?' loaded':''}" style="width:${size}px;height:${size}px">${silhouette}${fallbackImage(player.photoUrl,player.name+' 프로필 사진',size,true)}</span>`;
+    }
+    // load/error 이벤트는 버블링되지 않아 캡처 단계에서 받습니다.
+    document.addEventListener('load',event=>{
+      const img=event.target;if(img.tagName!=='IMG'||!img.hasAttribute('data-fallback'))return;
+      imageState.set(img.getAttribute('src'),'ok');img.parentNode.classList.add('loaded');
+    },true);
+    document.addEventListener('error',event=>{
+      const img=event.target;if(img.tagName!=='IMG'||!img.hasAttribute('data-fallback'))return;
+      imageState.set(img.getAttribute('src'),'fail');img.remove();
+    },true);
     const arrow='<svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     const backArrow='<svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m14 6-6 6 6 6M8 12h12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     // 월요일은 휴식일. 나머지 날짜는 10개 구단이 한 번씩 출전하는 5경기입니다.
@@ -143,7 +169,7 @@
     function matchingGames(day){return games.filter(g=>g.day===day&&(!selectedTeams.size||selectedTeams.has(g.home.id)||selectedTeams.has(g.away.id)));}
     function statusLabel(g){const t=Date.now();return t>=g.date.getTime()?'모의 예매':t>=g.generalOpen.getTime()?'일반예매':t>=g.preOpen.getTime()?'선예매':'오픈 예정';}
     function renderFilters(){
-      $('filters').innerHTML=teams.map(t=>`<button class="chip" data-team="${t.id}" aria-pressed="${selectedTeams.has(t.id)}">${dot(t)}${t.short}</button>`).join('')+'<button class="filter-reset" id="filter-reset">전체 구단</button>';
+      $('filters').innerHTML=teams.map(t=>`<button class="chip" data-team="${t.id}" aria-pressed="${selectedTeams.has(t.id)}">${teamName(t.id,{short:true})}</button>`).join('')+'<button class="filter-reset" id="filter-reset">전체 구단</button>';
     }
     function renderCalendar(){
       $('month-title').textContent=`${year}년 ${month+1}월`;
@@ -153,7 +179,7 @@
       for(let day=1;day<=monthDays;day++){
         const list=matchingGames(day),isToday=day===today,isMonday=new Date(year,month,day).getDay()===1;
         cells+=`<div class="day${day===selectedDay?' selected':''}"><div class="day-top"><button class="day-number${isToday?' today':''}" data-day="${day}" aria-label="${month+1}월 ${day}일, ${list.length}경기" aria-pressed="${day===selectedDay}"${isToday?' aria-current="date"':''}>${day}</button>${isToday?'<span class="day-label">오늘</span>':''}</div>`;
-        cells+=list.slice(0,2).map(g=>`<button class="mini-match" data-game="${g.id}" aria-label="${day}일 ${g.home.name} 대 ${g.away.name}, ${timeLabel(g.date)}">${dot(g.home)}${g.home.short} <span class="versus">vs</span> ${g.away.short}</button>`).join('');
+        cells+=list.slice(0,2).map(g=>`<button class="mini-match" data-game="${g.id}" aria-label="${day}일 ${g.home.name} 대 ${g.away.name}, ${timeLabel(g.date)}">${teamName(g.home.id,{short:true,size:10})} <span class="versus">vs</span> ${teamName(g.away.id,{short:true,size:10})}</button>`).join('');
         if(list.length>2)cells+=`<button class="more-games" data-day="${day}" aria-label="${day}일 전체 ${list.length}경기 보기">+ ${list.length-2}경기</button>`;
         if(isMonday)cells+='<span class="day-rest">휴식일</span>';
         cells+=`<button class="mobile-games" data-day="${day}" aria-label="${day}일 ${isMonday?'월요일 휴식일':list.length+'경기 보기'}"><span class="dot-strip">${list.map(g=>dot(g.home)).join('')}</span><span>${isMonday?'':list.length?list.length+'경기':'경기 없음'}</span></button></div>`;
@@ -167,7 +193,7 @@
       const list=matchingGames(selectedDay);
       $('daily-title').textContent=dateLabel(new Date(year,month,selectedDay));
       $('daily-count').textContent=`${list.length}경기`;
-      $('match-list').innerHTML=list.length?list.map(g=>`<button class="match-row${selectedGame&&selectedGame.id===g.id?' active':''}" data-game="${g.id}" aria-pressed="${!!selectedGame&&selectedGame.id===g.id}"><span class="match-time">${timeLabel(g.date)}</span><span class="match-main"><span class="match-title">${dot(g.home)}${g.home.name}<span class="versus">vs</span>${dot(g.away)}${g.away.name}</span><span class="match-stadium">${g.stadium} · 홈 ${g.home.short}</span><span class="match-weather muted" data-weather="${g.id}">날씨 확인 중…</span></span><span class="match-status">${statusLabel(g)}</span>${arrow}</button>`).join(''):new Date(year,month,selectedDay).getDay()===1?'<p class="empty-list">월요일은 휴식일이에요. 다른 날짜의 경기를 확인해 주세요.</p>':'<p class="empty-list">선택한 구단의 경기가 없어요. 전체 구단을 선택해 보세요.</p>';
+      $('match-list').innerHTML=list.length?list.map(g=>`<button class="match-row${selectedGame&&selectedGame.id===g.id?' active':''}" data-game="${g.id}" aria-pressed="${!!selectedGame&&selectedGame.id===g.id}"><span class="match-time">${timeLabel(g.date)}</span><span class="match-main"><span class="match-title">${teamName(g.home.id,{size:40})}<span class="versus">vs</span>${teamName(g.away.id,{size:40})}</span><span class="match-stadium">${g.stadium} · 홈 ${teamName(g.home.id,{short:true,size:16})}</span><span class="match-weather muted" data-weather="${g.id}">날씨 확인 중…</span></span><span class="match-status">${statusLabel(g)}</span>${arrow}</button>`).join(''):new Date(year,month,selectedDay).getDay()===1?'<p class="empty-list">월요일은 휴식일이에요. 다른 날짜의 경기를 확인해 주세요.</p>':'<p class="empty-list">선택한 구단의 경기가 없어요. 전체 구단을 선택해 보세요.</p>';
       list.forEach(loadGameWeather);
     }
     // 경기 카드의 날씨 영역만 따로 채웁니다. 실패해도 카드의 나머지 정보는 그대로 보입니다.
@@ -187,7 +213,7 @@
       const g=selectedGame;
       if(!g){$('detail').innerHTML='<div class="detail-empty"><h2>오늘의 직관을 골라보세요</h2><p>달력에서 경기를 선택하면<br>경기 정보와 예매 일정을 볼 수 있어요.</p></div>';return;}
       const enabled=notifications.has(g.id);
-      $('detail').innerHTML=`<div class="detail-top"><p class="detail-label">${dateLabel(g.date)} · ${timeLabel(g.date)}</p><h2 class="detail-versus"><span>${g.home.short}</span><span>vs</span><span>${g.away.short}</span></h2><p class="game-meta">${g.home.name} 홈경기</p></div><div class="detail-body"><div class="detail-info"><span>경기장</span><strong>${g.stadium}</strong></div><div class="open-times"><div class="open-line"><span>선예매 오픈</span><strong>${openLabel(g.preOpen)}</strong></div><div class="open-line"><span>일반예매 오픈</span><strong>${openLabel(g.generalOpen)}</strong></div></div><div class="countdown-box"><p id="countdown-label"></p><div class="countdown" id="countdown" role="timer" aria-live="off"></div></div><div class="notify-row"><div><strong>오픈 알림 받기</strong><p class="notification-status${enabled?' enabled':''}" id="notification-status" role="status">${enabled?'알림 설정됨 · 실제 발송은 준비 중':'예매 오픈 일정을 놓치지 마세요'}</p></div><button class="switch" id="notify-switch" role="switch" aria-label="오픈 알림 받기" aria-checked="${enabled}"></button></div><button class="btn primary full" id="book-button">예매하기 ${arrow}</button><p class="demo-note">연습용으로 오픈 전 경기에도 예매할 수 있어요.</p></div>`;
+      $('detail').innerHTML=`<div class="detail-top"><p class="detail-label">${dateLabel(g.date)} · ${timeLabel(g.date)}</p><h2 class="detail-versus">${teamName(g.home.id,{short:true,size:40})}<span>vs</span>${teamName(g.away.id,{short:true,size:40})}</h2><p class="game-meta">${teamName(g.home.id)} 홈경기</p></div><div class="detail-body"><div class="detail-info"><span>경기장</span><strong>${g.stadium}</strong></div><div class="open-times"><div class="open-line"><span>선예매 오픈</span><strong>${openLabel(g.preOpen)}</strong></div><div class="open-line"><span>일반예매 오픈</span><strong>${openLabel(g.generalOpen)}</strong></div></div><div class="countdown-box"><p id="countdown-label"></p><div class="countdown" id="countdown" role="timer" aria-live="off"></div></div><div class="notify-row"><div><strong>오픈 알림 받기</strong><p class="notification-status${enabled?' enabled':''}" id="notification-status" role="status">${enabled?'알림 설정됨 · 실제 발송은 준비 중':'예매 오픈 일정을 놓치지 마세요'}</p></div><button class="switch" id="notify-switch" role="switch" aria-label="오픈 알림 받기" aria-checked="${enabled}"></button></div><button class="btn primary full" id="book-button">예매하기 ${arrow}</button><p class="demo-note">연습용으로 오픈 전 경기에도 예매할 수 있어요.</p></div>`;
       updateCountdown();
     }
     function updateCountdown(){
@@ -346,7 +372,7 @@
     }
     function renderOrderSummary(payment){
       const selected=chosenSeats(),lines=orderLines();
-      return `<aside class="order-summary"><h2>예매 내역</h2><div class="summary-line"><span>경기</span><span>${selectedGame.home.short} vs ${selectedGame.away.short}</span></div><div class="summary-line"><span>일시</span><span>${dateLabel(selectedGame.date)} ${timeLabel(selectedGame.date)}</span></div>${selected.map((s,i)=>`<div class="summary-line"><span>좌석 ${i+1}</span><span>${seatFullLabel(s)}</span></div>`).join('')}${lines.map(l=>`<div class="summary-line"><span>${l.type.name} ${l.count}명</span><span>${money(l.amount)}</span></div>`).join('')}<div class="total"><span>총 결제 금액</span><strong>${money(orderTotal())}</strong></div>${payment?'<button class="btn orange full" id="mock-payment">결제하기</button><p class="demo-note">모의 결제이며 실제 금액은 청구되지 않습니다.</p>':''}</aside>`;
+      return `<aside class="order-summary"><h2>예매 내역</h2><div class="summary-line"><span>경기</span><span>${teamName(selectedGame.home.id,{short:true})} vs ${teamName(selectedGame.away.id,{short:true})}</span></div><div class="summary-line"><span>일시</span><span>${dateLabel(selectedGame.date)} ${timeLabel(selectedGame.date)}</span></div>${selected.map((s,i)=>`<div class="summary-line"><span>좌석 ${i+1}</span><span>${seatFullLabel(s)}</span></div>`).join('')}${lines.map(l=>`<div class="summary-line"><span>${l.type.name} ${l.count}명</span><span>${money(l.amount)}</span></div>`).join('')}<div class="total"><span>총 결제 금액</span><strong>${money(orderTotal())}</strong></div>${payment?'<button class="btn orange full" id="mock-payment">결제하기</button><p class="demo-note">모의 결제이며 실제 금액은 청구되지 않습니다.</p>':''}</aside>`;
     }
     function renderTypes(){
       const n=bookingState.selectedSeatIds.length,m=typeTotal(),match=n===m;
@@ -365,7 +391,7 @@
       const title={sections:'통합 좌석 선택',seats:'통합 좌석 선택',types:'권종 선택',payment:'간편결제로 예매 완료'}[phase];
       const body=phase==='payment'?renderPayment():phase==='types'?renderTypes():`<div class="booking-shell"><div class="booking-main">${phase==='sections'?renderSections():renderSeats()}</div>${renderBookingSide()}</div>`;
       $('booking-view').classList.toggle('dark-booking',bookingOptions.dark&&picking);
-      $('booking-view').innerHTML=`<button class="btn plain back" id="booking-back">${backArrow}${back}</button><div class="seat-booking-header"><div><h1>${title}</h1><p>${selectedGame.home.name} VS ${selectedGame.away.name}<span> · ${dateLabel(selectedGame.date)} ${timeLabel(selectedGame.date)}</span></p></div></div>${renderSteps()}<p class="booking-policy">한 번의 예매에서는 한 구역에서 최대 ${MAX_SEATS}석까지 선택할 수 있어요. · 가상 좌석도</p><p class="booking-feedback" id="booking-feedback" role="status">${bookingState.message}</p>${body}<div class="map-tooltip" id="map-tooltip" role="tooltip" hidden></div>`;
+      $('booking-view').innerHTML=`<button class="btn plain back" id="booking-back">${backArrow}${back}</button><div class="seat-booking-header"><div><h1>${title}</h1><p>${teamName(selectedGame.home.id,{size:28})} VS ${teamName(selectedGame.away.id,{size:28})}<span> · ${dateLabel(selectedGame.date)} ${timeLabel(selectedGame.date)}</span></p></div></div>${renderSteps()}<p class="booking-policy">한 번의 예매에서는 한 구역에서 최대 ${MAX_SEATS}석까지 선택할 수 있어요. · 가상 좌석도</p><p class="booking-feedback" id="booking-feedback" role="status">${bookingState.message}</p>${body}<div class="map-tooltip" id="map-tooltip" role="tooltip" hidden></div>`;
       document.body.classList.toggle('seat-selecting',picking&&currentView==='booking');
       if(phase==='sections'&&!$('booking-view').hidden)bindPlotGestures();
     }
@@ -513,7 +539,7 @@
 
     function renderSuccess(){
       const o=lastOrder,g=o.game;
-      $('success-view').innerHTML=`<div class="success"><div class="success-mark"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h1>야구장에서 만나요!</h1><p>모의 예매 완료 · 티켓 ${o.quantity}장이 발급되었어요.</p><div class="success-match"><strong>${g.home.name} vs ${g.away.name}</strong><span>${dateLabel(g.date)} ${timeLabel(g.date)} · ${g.stadium}</span><span>${o.zone.name} · ${o.quantity}장 · ${money(o.total)}</span></div><div class="success-actions"><button class="btn primary" id="success-wallet">내 티켓 확인하기 ${arrow}</button><button class="btn" id="success-calendar">다른 경기 둘러보기</button></div><p class="demo-note" style="margin-bottom:0">실제 결제가 발생하지 않았습니다.</p></div>`;
+      $('success-view').innerHTML=`<div class="success"><div class="success-mark"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h1>야구장에서 만나요!</h1><p>모의 예매 완료 · 티켓 ${o.quantity}장이 발급되었어요.</p><div class="success-match"><strong>${teamName(g.home.id,{size:28})} vs ${teamName(g.away.id,{size:28})}</strong><span>${dateLabel(g.date)} ${timeLabel(g.date)} · ${g.stadium}</span><span>${o.zone.name} · ${o.quantity}장 · ${money(o.total)}</span></div><div class="success-actions"><button class="btn primary" id="success-wallet">내 티켓 확인하기 ${arrow}</button><button class="btn" id="success-calendar">다른 경기 둘러보기</button></div><p class="demo-note" style="margin-bottom:0">실제 결제가 발생하지 않았습니다.</p></div>`;
     }
     // 장식용 QR 패턴입니다. 실제 입장 코드나 외부 링크는 포함하지 않습니다.
     function fakeQr(id){
@@ -529,7 +555,7 @@
       return `<svg class="qr" viewBox="0 0 29 29" role="img" aria-label="입장 불가, 연습용 가짜 QR 모양"><rect width="29" height="29" fill="white"/><g fill="#173c2a">${rects}</g></svg>`;
     }
     function renderWallet(){
-      $('wallet-view').innerHTML=`<div class="wallet-header"><div><h1>내 티켓 <span class="small-count">${tickets.length}장</span></h1><p>응원하는 팀은 달라도, 티켓은 한곳에.</p></div><button class="btn" id="wallet-calendar">경기 둘러보기</button></div>`+(tickets.length?`<div class="ticket-grid">${tickets.slice().reverse().map(t=>`<article class="ticket"><div class="ticket-head"><p class="ticket-tag">모의 예매 완료 · ${t.game.home.short} 홈경기</p><h2>${t.game.home.short} vs ${t.game.away.short}</h2><p>${dateLabel(t.game.date)} ${timeLabel(t.game.date)}<br>${t.game.stadium}</p></div><div class="ticket-body"><div class="ticket-seat"><strong>${t.zone.name}</strong><span>${t.seat}</span></div><div class="qr-area">${fakeQr(t.id)}<p class="qr-caption">연습용 QR 모양 · 실제 입장 불가</p><p class="ticket-id">${t.id}</p><button class="btn full" disabled title="친구에게 전달 기능은 준비 중입니다">친구에게 전달 · 준비 중</button></div></div></article>`).join('')}</div><p class="small-note" style="margin-top:22px">티켓은 현재 화면에만 저장되며, 새로고침하면 초기화됩니다.</p>`:`<div class="empty-wallet"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 5h18v5a2 2 0 0 0 0 4v5H3v-5a2 2 0 0 0 0-4V5Z" stroke="currentColor" stroke-width="1.3"/><path d="M16 7v2m0 2v2m0 2v2" stroke="currentColor" stroke-width="1.3"/></svg><h2>첫 직관을 기다리고 있어요</h2><p>경기를 예매하면 이곳에 티켓이 모여요.</p><button class="btn primary" id="empty-calendar">경기 캘린더 보기 ${arrow}</button></div>`);
+      $('wallet-view').innerHTML=`<div class="wallet-header"><div><h1>내 티켓 <span class="small-count">${tickets.length}장</span></h1><p>응원하는 팀은 달라도, 티켓은 한곳에.</p></div><button class="btn" id="wallet-calendar">경기 둘러보기</button></div>`+(tickets.length?`<div class="ticket-grid">${tickets.slice().reverse().map(t=>`<article class="ticket"><div class="ticket-head"><p class="ticket-tag">모의 예매 완료 · ${teamName(t.game.home.id,{short:true,size:16})} 홈경기</p><h2>${teamName(t.game.home.id,{short:true})} vs ${teamName(t.game.away.id,{short:true})}</h2><p>${dateLabel(t.game.date)} ${timeLabel(t.game.date)}<br>${t.game.stadium}</p></div><div class="ticket-body"><div class="ticket-seat"><strong>${t.zone.name}</strong><span>${t.seat}</span></div><div class="qr-area">${fakeQr(t.id)}<p class="qr-caption">연습용 QR 모양 · 실제 입장 불가</p><p class="ticket-id">${t.id}</p><button class="btn full" disabled title="친구에게 전달 기능은 준비 중입니다">친구에게 전달 · 준비 중</button></div></div></article>`).join('')}</div><p class="small-note" style="margin-top:22px">티켓은 현재 화면에만 저장되며, 새로고침하면 초기화됩니다.</p>`:`<div class="empty-wallet"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 5h18v5a2 2 0 0 0 0 4v5H3v-5a2 2 0 0 0 0-4V5Z" stroke="currentColor" stroke-width="1.3"/><path d="M16 7v2m0 2v2m0 2v2" stroke="currentColor" stroke-width="1.3"/></svg><h2>첫 직관을 기다리고 있어요</h2><p>경기를 예매하면 이곳에 티켓이 모여요.</p><button class="btn primary" id="empty-calendar">경기 캘린더 보기 ${arrow}</button></div>`);
     }
     function openWallet(){renderWallet();showView('wallet');}
     function openCalendar(){renderCalendar();renderDetail();showView('calendar');}
@@ -563,8 +589,8 @@
     function dataHeading(title,description){return `<div class="data-heading"><div><h1>${title}</h1><p>${description}</p></div><span class="practice-label">가짜 데이터</span></div>`;}
     function renderRecords(){
       $('records-view').innerHTML=dataHeading('경기 기록','끝난 경기의 스코어와 이야기를 한눈에.')+`<div class="records-list">${mockRecords.map(r=>{
-        const home=teamById(r.home),away=teamById(r.away),result=r.homeScore===r.awayScore?'무승부':`${r.homeScore>r.awayScore?home.short:away.short} 승리`;
-        return `<article class="record-row"><span class="record-date">${dateLabel(r.date)}</span><div><h2 class="record-score"><span>${dot(home)} ${home.short}</span><strong>${r.homeScore} : ${r.awayScore}</strong><span>${dot(away)} ${away.short}</span></h2><p>${home.stadium} · 경기 종료</p><p>${r.note}</p></div><span class="record-result">${result}</span></article>`;
+        const home=teamById(r.home),away=teamById(r.away),result=r.homeScore===r.awayScore?'무승부':`${teamName((r.homeScore>r.awayScore?home:away).id,{short:true,size:16})} 승리`;
+        return `<article class="record-row"><span class="record-date">${dateLabel(r.date)}</span><div><h2 class="record-score">${teamName(home.id,{short:true})}<strong>${r.homeScore} : ${r.awayScore}</strong>${teamName(away.id,{short:true})}</h2><p>${home.stadium} · 경기 종료</p><p>${r.note}</p></div><span class="record-result">${result}</span></article>`;
       }).join('')}</div><p class="data-disclaimer">샘플 경기 5개입니다. 실제 경기 결과와 다르며, 실시간으로 갱신되지 않습니다.</p><section class="player-stats" id="player-stats" aria-label="선수 기록 TOP 10"></section>`;
       renderStats();
       if(!statsData&&window.StatsService)window.StatsService.load().then(data=>{statsData=data;renderStats();},()=>{statsError=true;renderStats();});
@@ -583,9 +609,10 @@
       if(!statsData){box.innerHTML=head+`<p class="empty-list">${statsError?'선수 기록을 불러올 수 없습니다':'선수 기록을 불러오는 중…'}</p>`;return;}
       // 정렬할 때마다 전체 선수에서 상위 10명을 다시 뽑습니다. ERA·타율은 규정이닝/규정타석을 채운 선수만 대상입니다.
       const rows=statsData[tab].filter(p=>!col.qualifiedOnly||p.qualified).sort((a,b)=>(a[sort.key]-b[sort.key])*(sort.asc?1:-1)||b.war-a.war).slice(0,10);
-      box.innerHTML=head+`<p class="small-note" style="margin-bottom:10px">${col.label} ${sort.asc?'오름차순':'내림차순'} 상위 10명${col.qualifiedOnly?` · ${col.qualifiedOnly}을 채운 선수만`:''} · 열 이름을 누르면 다시 정렬해요</p><div class="table-wrap"><table class="rank-table stat-table" aria-label="${tab==='pitchers'?'투수':'타자'} TOP 10"><thead><tr><th scope="col">순위</th><th scope="col">선수명(소속팀)</th>${cols.map(c=>`<th scope="col" aria-sort="${c.key===sort.key?(sort.asc?'ascending':'descending'):'none'}"><button class="stat-sort" data-stat-sort="${c.key}">${c.label}<span aria-hidden="true">${c.key===sort.key?(sort.asc?'▲':'▼'):''}</span></button></th>`).join('')}</tr></thead><tbody>${rows.map((p,i)=>{
-        const team=teamById(p.team);
-        return `<tr><td class="rank-number">${i+1}</td><td><span class="rank-team">${dot(team)}${p.name}<span class="team-badge">${team.short}</span></span></td>${cols.map(c=>`<td${c.key===sort.key?' class="sorted"':''}>${c.format?c.format(p[c.key]):p[c.key]}</td>`).join('')}</tr>`;
+      // TOP 3 카드. 현재 정렬 기준 스탯을 크게 보여 주고, 정렬이 바뀌면 함께 갱신됩니다.
+      const top3=`<div class="top3" role="list" aria-label="${col.label} 상위 3명">${rows.slice(0,3).map((p,i)=>`<div class="top3-card rank-${i+1}" role="listitem"><span class="rank-badge" aria-label="${i+1}위">${i+1}</span>${playerPhoto(p,i?72:88)}<strong class="top3-name">${p.name}</strong>${teamName(p.team)}<p class="top3-stat"><span>${col.label}</span><b>${col.format?col.format(p[sort.key]):p[sort.key]}</b></p></div>`).join('')}</div>`;
+      box.innerHTML=head+top3+`<p class="small-note" style="margin-bottom:10px">${col.label} ${sort.asc?'오름차순':'내림차순'} 상위 10명${col.qualifiedOnly?` · ${col.qualifiedOnly}을 채운 선수만`:''} · 열 이름을 누르면 다시 정렬해요</p><div class="table-wrap"><table class="rank-table stat-table" aria-label="${tab==='pitchers'?'투수':'타자'} TOP 10"><thead><tr><th scope="col">순위</th><th scope="col">선수명(소속팀)</th>${cols.map(c=>`<th scope="col" aria-sort="${c.key===sort.key?(sort.asc?'ascending':'descending'):'none'}"><button class="stat-sort" data-stat-sort="${c.key}">${c.label}<span aria-hidden="true">${c.key===sort.key?(sort.asc?'▲':'▼'):''}</span></button></th>`).join('')}</tr></thead><tbody>${rows.map((p,i)=>{
+        return `<tr><td class="rank-number">${i+1}</td><td><span class="rank-team">${i<3?playerPhoto(p,28):''}${p.name}${teamName(p.team,{short:true})}</span></td>${cols.map(c=>`<td${c.key===sort.key?' class="sorted"':''}>${c.format?c.format(p[c.key]):p[c.key]}</td>`).join('')}</tr>`;
       }).join('')}</tbody></table></div><p class="data-disclaimer">기준일: ${statsData.asOf} · WAR 출처: ${statsData.warSource}</p>`;
     }
     function sortStats(key){
@@ -595,11 +622,11 @@
       renderStats();$('player-stats').querySelector(`[data-stat-sort="${key}"]`).focus({preventScroll:true});
     }
     function renderRankings(){
-      $('rankings-view').innerHTML=dataHeading('현재 순위','우리 팀은 어디쯤? 10개 구단의 가상 시즌 순위.')+`<div class="table-wrap"><table class="rank-table"><caption>연습용 가상 순위 · 1위 롯데, 2위 한화</caption><thead><tr><th scope="col">순위</th><th scope="col">구단</th><th scope="col">승</th><th scope="col">패</th><th scope="col">무</th><th scope="col">승률</th><th scope="col">게임차</th></tr></thead><tbody>${mockRankings.map((r,i)=>`<tr${i<2?' class="leading"':''}><td class="rank-number">${i+1}</td><td><span class="rank-team">${dot(r.team)}${r.team.name}</span></td><td>${r.wins}</td><td>${r.losses}</td><td>${r.draws}</td><td>${(r.wins/(r.wins+r.losses)).toFixed(3)}</td><td>${i?((mockRankings[0].wins-r.wins+r.losses-mockRankings[0].losses)/2).toFixed(1):'—'}</td></tr>`).join('')}</tbody></table></div><p class="data-disclaimer">실제 KBO 순위가 아닌 가짜 데이터입니다. 승률은 무승부를 제외해 계산했습니다.</p>`;
+      $('rankings-view').innerHTML=dataHeading('현재 순위','우리 팀은 어디쯤? 10개 구단의 가상 시즌 순위.')+`<div class="table-wrap"><table class="rank-table"><caption>연습용 가상 순위 · 1위 ${teamName(mockRankings[0].team.id,{short:true,size:16})}, 2위 ${teamName(mockRankings[1].team.id,{short:true,size:16})}</caption><thead><tr><th scope="col">순위</th><th scope="col">구단</th><th scope="col">승</th><th scope="col">패</th><th scope="col">무</th><th scope="col">승률</th><th scope="col">게임차</th></tr></thead><tbody>${mockRankings.map((r,i)=>`<tr${i<2?' class="leading"':''}><td class="rank-number">${i+1}</td><td>${teamName(r.team.id)}</td><td>${r.wins}</td><td>${r.losses}</td><td>${r.draws}</td><td>${(r.wins/(r.wins+r.losses)).toFixed(3)}</td><td>${i?((mockRankings[0].wins-r.wins+r.losses-mockRankings[0].losses)/2).toFixed(1):'—'}</td></tr>`).join('')}</tbody></table></div><p class="data-disclaimer">실제 KBO 순위가 아닌 가짜 데이터입니다. 승률은 무승부를 제외해 계산했습니다.</p>`;
     }
     function renderVisits(){
       $('visits-view').innerHTML=dataHeading('나의 직관 기록','야구장에서 보낸 하루하루를 모아봐요.')+`<div class="visit-summary"><span>직관 경기<strong>5회</strong></span><span>승리<strong>3회</strong></span><span>다녀온 구장<strong>2곳</strong></span></div><div class="visit-list">${mockVisits.map(v=>{
-        const home=teamById(v.home),away=teamById(v.away);return `<article class="visit-row"><span class="visit-month">${v.date.getMonth()+1}.${String(v.date.getDate()).padStart(2,'0')}</span><div><h2>${dot(home)} ${home.short} vs ${away.short} · ${v.score}</h2><p>${home.stadium} · ${v.seat}</p><p class="visit-note">${v.note}</p></div><span class="visit-badge">${v.result}</span></article>`;
+        const home=teamById(v.home),away=teamById(v.away);return `<article class="visit-row"><span class="visit-month">${v.date.getMonth()+1}.${String(v.date.getDate()).padStart(2,'0')}</span><div><h2>${teamName(home.id,{short:true})} vs ${teamName(away.id,{short:true})} · ${v.score}</h2><p>${home.stadium} · ${v.seat}</p><p class="visit-note">${v.note}</p></div><span class="visit-badge">${v.result}</span></article>`;
       }).join('')}</div><p class="data-disclaimer">직관 기록 5개는 샘플입니다. 이번 앱에서 예매한 티켓은 ‘내 티켓’에서 확인할 수 있어요.</p>`;
     }
     function renderCommunity(){

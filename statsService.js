@@ -52,6 +52,10 @@
     B('온규민','lotte',.257,1.04,118,18,69,54,4,true),
     B('국한결','hanwha',.249,.72,109,13,58,49,10,true)
   ];
+  // photoUrl(선택): 선수 사진 경로. 파일이 없거나 불러오지 못하면 화면에서 기본 실루엣으로 대신 표시합니다.
+  // 투수는 assets/players/p01.jpg ~ p22.jpg, 타자는 b01.jpg ~ b22.jpg (위 배열 순서).
+  const withPhotos=(list,prefix)=>list.forEach((player,i)=>player.photoUrl=`assets/players/${prefix}${String(i+1).padStart(2,"0")}.jpg`);
+  withPhotos(pitchers,"p");withPhotos(batters,"b");
   // 실제 연동 시 이 함수 안에서 fetch 등으로 데이터를 받아 같은 모양으로 돌려줍니다.
   function load(){
     return Promise.resolve({asOf:'2026-09-30',warSource:'가상 데이터(연습용)',pitchers,batters});
