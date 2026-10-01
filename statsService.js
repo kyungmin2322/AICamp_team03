@@ -1,64 +1,38 @@
-/* 선수 기록 서비스. 지금은 가상의 선수로 만든 mock 데이터를 돌려줍니다.
+/* 선수 기록 서비스. 선수 명단은 실제 KBO 선수이지만 스탯 수치는 모두 예시 값입니다(실제 기록 아님).
    실제 데이터 소스로 바꿀 때는 load()가 같은 모양의 객체를 돌려주도록만 맞추면 됩니다. */
 (function(){
-  const P=(name,team,era,war,wins,losses,saves,holds,games,qualified)=>({name,team,era,war,wins,losses,saves,holds,games,qualified});
-  const B=(name,team,avg,war,hits,homeRuns,rbi,runs,stolenBases,qualified)=>({name,team,avg,war,hits,homeRuns,rbi,runs,stolenBases,qualified});
-  // team은 index.html의 teams[].id와 같은 값을 씁니다. qualified는 규정이닝/규정타석 충족 여부입니다.
+  const P=(name,team,era,war,wins,losses,saves,holds,games,photoUrl)=>({name,team,era,war,wins,losses,saves,holds,games,qualified:true,photoUrl});
+  const B=(name,team,avg,war,hits,homeRuns,rbi,runs,stolenBases,photoUrl)=>({name,team,avg,war,hits,homeRuns,rbi,runs,stolenBases,qualified:true,photoUrl});
+  // team은 teams.js의 id와 같은 값을 씁니다. 배열 순서가 WAR 순위입니다.
+  // photoUrl(선택)은 WAR 1~3위만 연결했습니다. 파일이 없거나 불러오지 못하면 화면에서 기본 실루엣으로 대신 표시합니다.
   const pitchers=[
-    P('한도율','lotte',2.41,6.82,16,5,0,0,29,true),
-    P('서이찬','hanwha',2.68,6.15,15,6,0,0,28,true),
-    P('문태결','lg',2.85,5.74,14,7,0,0,29,true),
-    P('권해솔','kia',3.02,5.31,13,8,0,0,28,true),
-    P('노은겸','samsung',3.11,4.96,13,7,0,0,27,true),
-    P('차우빈','ssg',3.24,4.52,12,9,0,0,28,true),
-    P('방시후','kt',3.37,4.18,11,9,0,0,27,true),
-    P('길도경','doosan',3.48,3.87,11,10,0,0,28,true),
-    P('표민결','nc',3.59,3.55,10,10,0,0,27,true),
-    P('설하준','kiwoom',3.72,3.21,9,11,0,0,27,true),
-    P('옥재윤','lotte',3.81,3.02,10,8,0,0,26,true),
-    P('탁건호','hanwha',3.95,2.76,9,9,0,0,26,true),
-    P('예승민','lg',4.12,2.31,8,10,0,0,26,true),
-    P('반지환','kia',4.35,1.84,7,11,0,0,25,true),
-    P('감태오','lotte',1.92,3.48,4,2,36,0,61,false),
-    P('마루한','hanwha',2.15,3.12,3,3,33,1,58,false),
-    P('제갈윤','lg',2.34,2.65,5,2,28,3,60,false),
-    P('남궁혁','ssg',2.56,2.41,4,4,2,31,68,false),
-    P('선우담','samsung',2.71,2.18,6,3,1,27,66,false),
-    P('황보결','kt',2.93,1.95,3,2,0,25,63,false),
-    P('어진서','doosan',3.18,1.62,5,4,19,4,55,false),
-    P('편도윤','nc',3.40,1.37,2,5,22,2,57,false)
+    P('장유호','hanwha',2.12,6.40,15,4,0,0,28,'assets/players/jang-yuho.jpg'),
+    P('김진욱','lotte',2.48,5.85,14,5,0,0,29,'assets/players/kim-jinuk.jpg'),
+    P('문동주','hanwha',2.71,5.30,13,6,0,0,27,'assets/players/moon-dongju.jpg'),
+    P('곽빈','doosan',2.95,4.75,12,7,0,0,28),
+    P('올러','kia',3.08,4.30,12,6,0,0,27),
+    P('임찬규','lg',3.21,3.90,11,7,0,0,27),
+    P('고영표','kt',3.36,3.45,10,8,0,0,26),
+    P('류현진','hanwha',3.52,3.05,10,8,0,0,26),
+    P('김재윤','samsung',2.64,2.40,4,3,31,2,62),
+    P('박영현','kt',2.39,2.10,5,4,34,1,66)
   ];
   const batters=[
-    B('강루빈','lotte',.341,7.12,192,28,104,109,21,true),
-    B('은태성','hanwha',.329,6.58,181,34,118,98,8,true),
-    B('진하람','kia',.325,6.03,178,22,91,103,32,true),
-    B('채도윤','lg',.318,5.61,174,19,85,96,27,true),
-    B('변시온','samsung',.312,5.24,169,31,109,88,5,true),
-    B('석주원','ssg',.308,4.87,166,26,97,84,11,true),
-    B('도건우','kt',.304,4.45,162,17,78,91,38,true),
-    B('육현서','nc',.299,4.02,158,24,92,80,9,true),
-    B('소준혁','doosan',.296,3.71,155,15,74,87,24,true),
-    B('맹서진','kiwoom',.291,3.38,151,20,83,76,13,true),
-    B('함지율','lotte',.288,3.09,147,12,66,82,41,true),
-    B('봉태현','hanwha',.284,2.84,143,27,95,71,3,true),
-    B('추민재','lg',.279,2.52,139,14,68,73,16,true),
-    B('연우석','kia',.275,2.21,135,21,80,65,6,true),
-    B('금하늘','ssg',.271,1.93,131,9,55,70,29,true),
-    B('빈도현','kt',.266,1.58,127,16,71,61,7,true),
-    B('왕재하','samsung',.352,2.47,81,9,44,41,6,false),
-    B('명시율','nc',.338,1.86,68,5,31,36,12,false),
-    B('태윤호','doosan',.331,1.42,59,11,39,28,2,false),
-    B('경로운','kiwoom',.322,1.15,55,3,22,33,15,false),
-    B('온규민','lotte',.257,1.04,118,18,69,54,4,true),
-    B('국한결','hanwha',.249,.72,109,13,58,49,10,true)
+    B('전민재','lotte',.331,6.90,172,12,71,88,14,'assets/players/jeon-minjae.jpg'),
+    B('장두성','lotte',.318,6.25,165,5,48,97,38,'assets/players/jang-duseong.jpg'),
+    B('이도윤','hanwha',.305,5.70,148,7,62,74,11,'assets/players/lee-doyun.jpg'),
+    B('오스틴','lg',.312,5.20,163,32,108,91,9),
+    B('김도영','kia',.336,4.85,178,34,104,100,36),
+    B('구자욱','samsung',.322,4.40,169,26,96,93,10),
+    B('레이예스','lotte',.329,3.95,180,15,102,85,5),
+    B('문현빈','hanwha',.314,3.50,160,13,78,80,16),
+    B('강백호','hanwha',.287,3.05,141,24,89,69,3),
+    B('페라자','hanwha',.279,2.60,136,22,81,76,8)
   ];
-  // photoUrl(선택): 선수 사진 경로. 파일이 없거나 불러오지 못하면 화면에서 기본 실루엣으로 대신 표시합니다.
-  // 투수는 assets/players/p01.jpg ~ p22.jpg, 타자는 b01.jpg ~ b22.jpg (위 배열 순서).
-  const withPhotos=(list,prefix)=>list.forEach((player,i)=>player.photoUrl=`assets/players/${prefix}${String(i+1).padStart(2,"0")}.jpg`);
-  withPhotos(pitchers,"p");withPhotos(batters,"b");
   // 실제 연동 시 이 함수 안에서 fetch 등으로 데이터를 받아 같은 모양으로 돌려줍니다.
+  // note는 표 하단에 그대로 표시되는 출처 문구입니다.
   function load(){
-    return Promise.resolve({asOf:'2026-09-30',warSource:'가상 데이터(연습용)',pitchers,batters});
+    return Promise.resolve({note:'※ 예시 데이터 (실제 기록 아님)',pitchers,batters});
   }
   window.StatsService={load};
 })();

@@ -613,7 +613,7 @@
       const top3=`<div class="top3" role="list" aria-label="${col.label} 상위 3명">${rows.slice(0,3).map((p,i)=>`<div class="top3-card rank-${i+1}" role="listitem"><span class="rank-badge" aria-label="${i+1}위">${i+1}</span>${playerPhoto(p,i?72:88)}<strong class="top3-name">${p.name}</strong>${teamName(p.team)}<p class="top3-stat"><span>${col.label}</span><b>${col.format?col.format(p[sort.key]):p[sort.key]}</b></p></div>`).join('')}</div>`;
       box.innerHTML=head+top3+`<p class="small-note" style="margin-bottom:10px">${col.label} ${sort.asc?'오름차순':'내림차순'} 상위 10명${col.qualifiedOnly?` · ${col.qualifiedOnly}을 채운 선수만`:''} · 열 이름을 누르면 다시 정렬해요</p><div class="table-wrap"><table class="rank-table stat-table" aria-label="${tab==='pitchers'?'투수':'타자'} TOP 10"><thead><tr><th scope="col">순위</th><th scope="col">선수명(소속팀)</th>${cols.map(c=>`<th scope="col" aria-sort="${c.key===sort.key?(sort.asc?'ascending':'descending'):'none'}"><button class="stat-sort" data-stat-sort="${c.key}">${c.label}<span aria-hidden="true">${c.key===sort.key?(sort.asc?'▲':'▼'):''}</span></button></th>`).join('')}</tr></thead><tbody>${rows.map((p,i)=>{
         return `<tr><td class="rank-number">${i+1}</td><td><span class="rank-team">${i<3?playerPhoto(p,28):''}${p.name}${teamName(p.team,{short:true})}</span></td>${cols.map(c=>`<td${c.key===sort.key?' class="sorted"':''}>${c.format?c.format(p[c.key]):p[c.key]}</td>`).join('')}</tr>`;
-      }).join('')}</tbody></table></div><p class="data-disclaimer">기준일: ${statsData.asOf} · WAR 출처: ${statsData.warSource}</p>`;
+      }).join('')}</tbody></table></div><p class="data-disclaimer">${statsData.note}</p>`;
     }
     function sortStats(key){
       const tab=statsView.tab,sort=statsView.sort[tab];
