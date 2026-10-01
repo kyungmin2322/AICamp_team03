@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#174b35">
+  <title>만루티켓 · 모든 경기를 한곳에서</title>
+  <style>
+    :root{--green:#174b35;--green-dark:#103a29;--grass:#eaf3e8;--lime:#d4edb3;--ink:#20352b;--muted:#637269;--line:#dde5df;--paper:#fff;--bg:#f5f7f3;--red:#b94742;--radius:16px}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"맑은 고딕","Malgun Gothic",system-ui,sans-serif;font-size:14px;line-height:1.6}button{font:inherit;cursor:pointer}button:disabled{cursor:not-allowed;opacity:.5}button,a{-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible{outline:3px solid #708e42;outline-offset:4px}::selection{background:var(--lime);color:var(--green-dark)}::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:#b1c3b5;border-radius:8px}h1,h2,h3,p{margin:0}h1,h2,h3{text-wrap:balance}svg{display:block}button{touch-action:manipulation} [hidden]{display:none!important}
+    .wrap{max-width:1320px;margin:auto;padding:0 40px}.site-header{background:white;border-bottom:1px solid var(--line)}.header-inner{height:82px;display:flex;align-items:center;justify-content:space-between;gap:15px}.brand{display:flex;align-items:center;gap:11px;border:0;background:none;padding:0;color:var(--green);font-size:23px;font-weight:900;letter-spacing:-1px}.brand-mark{width:36px;height:36px;background:var(--green);border-radius:10px;display:grid;place-items:center;color:white}.header-actions{display:flex;gap:10px;align-items:center}.btn{min-height:44px;border-radius:10px;padding:10px 18px;border:1px solid var(--line);background:white;color:var(--ink);font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:background .15s,border-color .15s}.btn:hover:not(:disabled){background:var(--grass);border-color:#9bad9f}.btn.primary{background:var(--green);color:white;border-color:var(--green)}.btn.primary:hover:not(:disabled){background:var(--green-dark)}.btn.plain{background:transparent;border-color:transparent}.btn.full{width:100%}.ticket-count{background:var(--lime);color:var(--green);border-radius:50%;min-width:21px;height:21px;font-size:11px;display:grid;place-items:center}.icon{width:19px;height:19px;flex-shrink:0}
+    main{padding-top:36px;padding-bottom:60px}.intro{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px;gap:20px}.intro h1{font-size:32px;letter-spacing:-1.5px;font-weight:850}.intro p{color:var(--muted);margin-top:5px;font-size:15px}.practice-label{color:var(--green);background:var(--grass);border:1px solid #cedeca;border-radius:30px;padding:7px 13px;font-size:12px;font-weight:700;white-space:nowrap;display:flex;align-items:center;gap:7px}.practice-label:before{content:"";width:6px;height:6px;background:var(--green);border-radius:50%}.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:25px}.chip{display:flex;align-items:center;gap:7px;border:1px solid var(--line);background:white;border-radius:24px;padding:9px 13px;min-height:44px;font-size:13px;font-weight:700;color:#4f6055}.chip:hover{border-color:#84998b}.chip[aria-pressed=true]{border-color:var(--green);background:var(--green);color:white}.team-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;display:inline-block;border:1px solid rgba(0,0,0,.12)}.filter-reset{border:0;background:none;color:var(--muted);font-size:12px;padding:10px;min-height:44px;text-decoration:underline;text-underline-offset:4px}.workspace{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:24px;align-items:start}.calendar-area{min-width:0}.calendar{border:1px solid var(--line);border-radius:var(--radius);background:white;overflow:hidden}.calendar-toolbar{display:flex;justify-content:space-between;align-items:center;padding:19px 22px;border-bottom:1px solid var(--line)}.calendar-toolbar h2{font-size:21px;letter-spacing:-.6px}.calendar-toolbar .btn{font-size:12px;min-height:36px;padding:6px 13px}.weekdays{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));background:#f9faf7}.weekdays span{text-align:center;padding:11px;color:var(--muted);font-size:12px;font-weight:700}.weekdays span:first-child{color:var(--red)}.weekdays span:last-child{color:#476c9b}.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}.day{min-height:112px;border:0;border-top:1px solid var(--line);border-right:1px solid var(--line);padding:8px 6px;background:white;min-width:0;position:relative}.day:nth-child(7n){border-right:0}.day.blank{background:#fafbf8}.day.selected{background:#edf5e9;box-shadow:inset 0 0 0 2px var(--green)}.day-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}.day-number{border:0;background:none;color:var(--ink);min-width:28px;min-height:28px;border-radius:50%;padding:2px;font-size:12px;font-weight:700}.day:nth-child(7n+1) .day-number{color:var(--red)}.day:nth-child(7n) .day-number{color:#476c9b}.day-number.today{background:var(--green);color:white!important}.day-number:hover{background:#d6e7cf}.day-label{font-size:9px;color:var(--green);font-weight:700}.mini-match{display:flex;align-items:center;gap:4px;border:0;width:100%;padding:4px 2px;background:transparent;border-radius:4px;text-align:left;font-size:10px;white-space:nowrap;color:#465b4d;min-height:25px}.mini-match:hover{background:#dcebd5}.mini-match .team-dot{width:5px;height:5px}.more-games{display:block;border:0;background:none;color:var(--muted);font-size:10px;padding:1px 3px;min-height:23px}.mobile-games{display:none}.calendar-foot{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;padding:13px 2px;gap:10px}.legend{display:flex;align-items:center;gap:6px}.legend span{height:6px;width:6px;border-radius:50%;background:var(--green)}.daily-heading{display:flex;align-items:center;gap:9px;margin:18px 0 11px}.daily-heading h2{font-size:18px;letter-spacing:-.6px}.small-count{font-size:12px;color:var(--muted);font-weight:500}.match-list{border-top:1px solid var(--line)}.match-row{width:100%;border:0;border-bottom:1px solid var(--line);background:none;display:flex;align-items:center;gap:13px;text-align:left;padding:15px 10px;min-height:78px;color:var(--ink);border-radius:0}.match-row:hover,.match-row.active{background:#eaf2e6}.match-time{font-size:13px;font-weight:800;font-variant-numeric:tabular-nums;min-width:42px}.match-main{flex:1;min-width:0}.match-title{font-size:13px;font-weight:750;display:flex;align-items:center;gap:6px;flex-wrap:wrap}.versus{color:var(--muted);font-size:10px;font-weight:400}.match-stadium{font-size:11px;color:var(--muted);margin-top:4px}.match-status{font-size:10px;color:var(--green);border:1px solid #d1dfca;background:#f2f7ee;padding:3px 7px;border-radius:5px;white-space:nowrap}.empty-list{color:var(--muted);padding:30px 10px;text-align:center}.detail{background:white;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;position:sticky;top:22px}.detail-top{background:var(--green);color:white;padding:23px 24px;position:relative;overflow:hidden}.detail-top:after{content:"";position:absolute;right:-30px;bottom:-70px;width:145px;height:145px;border:1px solid #4b765b;transform:rotate(45deg);pointer-events:none}.detail-top .detail-label{font-size:12px;color:#c7dec9;margin-bottom:15px}.detail-versus{display:flex;gap:12px;align-items:center;justify-content:space-between;font-size:23px;font-weight:850;letter-spacing:-.8px}.detail-versus span:nth-child(2){font-size:12px;font-weight:400;color:#c4d8c8}.detail-top .game-meta{font-size:12px;color:#c7dec9;margin-top:10px}.detail-body{padding:23px 24px}.detail-info{display:flex;justify-content:space-between;padding-bottom:18px;border-bottom:1px solid var(--line);font-size:12px;gap:10px}.detail-info span{color:var(--muted)}.open-times{margin:18px 0}.open-line{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin:9px 0}.open-line span{color:var(--muted)}.open-line strong{font-weight:650}.countdown-box{background:var(--grass);border-radius:10px;padding:17px;text-align:center;margin-bottom:18px}.countdown-box p{font-size:11px;color:#466149}.countdown{font-size:23px;line-height:1.5;font-weight:850;color:var(--green);font-variant-numeric:tabular-nums;letter-spacing:-.6px}.notify-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:21px;gap:12px}.notify-row strong{font-size:12px}.notification-status{font-size:10px;color:var(--muted);margin-top:3px}.notification-status.enabled{color:var(--green);font-weight:700}.switch{border:0;background:#d7ded8;border-radius:30px;width:45px;height:27px;position:relative;flex-shrink:0;min-height:27px}.switch:before{content:"";position:absolute;width:21px;height:21px;background:white;border-radius:50%;left:3px;top:3px;transition:transform .18s}.switch[aria-checked=true]{background:var(--green)}.switch[aria-checked=true]:before{transform:translateX(18px)}.switch:after{content:"";position:absolute;inset:-8px}.demo-note{font-size:10px;color:var(--muted);text-align:center;margin-top:11px}.detail-empty{padding:35px 25px;text-align:center;color:var(--muted)}.detail-empty h2{font-size:19px;color:var(--green);margin-bottom:10px}
+    .flow-shell{max-width:960px;margin:auto}.back{margin-bottom:18px;padding-left:0}.flow-header{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:27px}.flow-header h1{font-size:29px;letter-spacing:-1px}.flow-header p{color:var(--muted);margin-top:7px;font-size:13px}.steps{display:flex;align-items:center;gap:15px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:28px}.step{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--muted)}.step-num{height:25px;width:25px;display:grid;place-items:center;border-radius:50%;border:1px solid #bdcbbf;font-size:11px}.step.current{color:var(--green);font-weight:800}.step.current .step-num,.step.done .step-num{background:var(--green);color:white;border-color:var(--green)}.step-separator{height:1px;flex:1;background:var(--line);max-width:60px}.booking-layout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:30px;align-items:start}.section-heading{font-size:20px;letter-spacing:-.6px;margin-bottom:7px}.section-description{color:var(--muted);font-size:12px;margin-bottom:22px}.stadium{width:100%;max-width:450px;margin:auto}.stadium svg{width:100%;height:auto}.stadium .zone{stroke:white;stroke-width:4;cursor:pointer;transition:fill .18s;fill:#d9e7ce}.stadium .zone:hover{fill:#b7d49e}.stadium .zone.selected{fill:var(--green)}.stadium text{font:700 13px "Malgun Gothic",sans-serif;fill:var(--green);pointer-events:none}.stadium .on{fill:white}.zone-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.zone-option{display:flex;align-items:center;justify-content:space-between;gap:6px;min-height:58px;padding:12px 15px;border:1px solid var(--line);background:white;border-radius:10px;text-align:left;color:var(--ink)}.zone-option[aria-pressed=true]{border-color:var(--green);box-shadow:inset 0 0 0 1px var(--green);background:var(--grass)}.zone-option strong{font-size:13px}.zone-option span{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}.order-summary{background:white;border:1px solid var(--line);border-radius:14px;padding:22px}.order-summary h2{font-size:16px;margin-bottom:18px}.summary-line{display:flex;justify-content:space-between;gap:15px;font-size:12px;margin:13px 0}.summary-line span:first-child{color:var(--muted)}.summary-line span:last-child{text-align:right;font-weight:650}.total{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:17px;margin:18px 0}.total span{font-size:12px;color:var(--muted)}.total strong{font-size:23px;color:var(--green);letter-spacing:-1px}.order-summary .btn{margin-top:5px}.order-summary .demo-note{line-height:1.8}.quantity-panel{background:white;border:1px solid var(--line);border-radius:14px;padding:25px;margin-top:23px}.quantity-selection{display:flex;align-items:center;justify-content:space-between;gap:20px;margin:20px 0}.quantity-controls{display:flex;align-items:center;gap:21px}.quantity-controls .btn{width:44px;font-size:21px;padding:0}.quantity-controls output{font-size:25px;font-weight:800;min-width:35px;text-align:center}.seats-preview{display:flex;gap:9px;margin:22px 0}.seat-icon{width:40px;height:38px;border:2px solid var(--green);background:var(--grass);border-radius:9px 9px 4px 4px;display:grid;place-items:center;font-size:12px;color:var(--green);font-weight:700}.small-note{font-size:12px;color:var(--muted)}.payment-card{margin-top:20px;max-width:370px;background:var(--green);color:white;padding:24px;border-radius:15px;min-height:190px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}.payment-card:after{content:"";position:absolute;width:170px;height:170px;border:1px solid #4e745b;right:-20px;bottom:-90px;transform:rotate(45deg)}.payment-card h3{font-size:15px}.payment-card .card-chip{width:34px;height:27px;border:1px solid #adc693;border-radius:5px;display:grid;grid-template-columns:1fr 1fr;margin:18px 0 10px;background:#a6bc7d}.card-chip:before{content:"";border-right:1px solid #6c8059}.card-number{font-variant-numeric:tabular-nums;font-size:16px;letter-spacing:2px}.card-foot{display:flex;justify-content:space-between;font-size:11px;color:#d4e3ce;margin-top:14px}.payment-hint{margin:18px 0;color:var(--muted);font-size:12px}.success{text-align:center;max-width:570px;margin:40px auto;background:white;border:1px solid var(--line);border-radius:18px;padding:42px 28px}.success-mark{width:65px;height:65px;border-radius:50%;background:var(--grass);color:var(--green);display:grid;place-items:center;margin:0 auto 21px}.success-mark svg{width:30px;height:30px}.success h1{font-size:27px;letter-spacing:-1px}.success p{color:var(--muted);margin:10px 0 25px}.success-match{padding:21px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:24px}.success-match strong{font-size:18px}.success-match span{display:block;color:var(--muted);font-size:12px;margin-top:6px}.success-actions{display:flex;gap:10px;justify-content:center}.wallet-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;gap:15px}.wallet-header h1{font-size:29px;letter-spacing:-1px}.wallet-header p{color:var(--muted);margin-top:5px}.ticket-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.ticket{border:1px solid var(--line);border-radius:15px;background:white;overflow:hidden}.ticket-head{background:var(--grass);padding:21px 23px}.ticket-head .ticket-tag{color:var(--green);font-size:11px;margin-bottom:9px}.ticket-head h2{font-size:20px;letter-spacing:-.8px}.ticket-head p{font-size:12px;color:var(--muted);margin-top:5px}.ticket-body{padding:20px 23px}.ticket-seat{display:flex;justify-content:space-between;align-items:center}.ticket-seat strong{font-size:16px}.ticket-seat span{font-size:11px;color:var(--muted)}.qr-area{border-top:1px dashed #b7c9b6;margin-top:20px;padding-top:20px;text-align:center}.qr{display:block;width:96px;height:96px;margin:0 auto 7px;image-rendering:pixelated}.qr-caption{font-size:10px;color:var(--muted)}.ticket-id{font-size:11px;letter-spacing:1px;color:var(--muted);margin:9px 0 15px;font-variant-numeric:tabular-nums}.empty-wallet{padding:65px 25px;border:1px dashed #b8cbb7;border-radius:16px;text-align:center;background:white}.empty-wallet h2{font-size:22px;margin:16px 0 8px}.empty-wallet p{color:var(--muted);margin-bottom:24px}.empty-wallet svg{margin:auto;width:46px;height:46px;color:var(--green)}.footer{border-top:1px solid var(--line);padding:22px 0;font-size:11px;color:var(--muted)}.footer-inner{display:flex;justify-content:space-between;gap:15px}.footer strong{color:var(--green)}.view-enter{animation:reveal .3s cubic-bezier(.16,1,.3,1)}@keyframes reveal{from{clip-path:inset(0 0 4% 0);opacity:.7}to{clip-path:inset(0);opacity:1}}
+    @media(min-width:1400px){.day{min-height:124px}.mini-match{font-size:11px}}
+    @media(max-width:1050px){.wrap{padding:0 24px}.workspace{grid-template-columns:minmax(0,1fr) 300px;gap:18px}.mini-match{font-size:9px;gap:3px}.detail-body,.detail-top{padding:20px}.day{min-height:107px;padding:7px 4px}.ticket-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:800px){.workspace{grid-template-columns:1fr}.detail{position:static;margin-top:5px}.detail-versus{justify-content:flex-start;gap:30px}.detail-info,.open-times{max-width:520px}.detail-body{padding:24px}.booking-layout{grid-template-columns:1fr}.order-summary{margin-top:4px}.ticket-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.mini-match{font-size:11px}.day{min-height:112px}}
+    @media(max-width:520px){.wrap{padding:0 16px}.header-inner{height:69px;gap:8px}.brand{font-size:20px;gap:7px}.brand-mark{width:29px;height:29px;border-radius:8px}.brand-mark svg{width:19px;height:19px}.header-actions{gap:2px}.header-actions .btn{padding:8px 10px;font-size:12px}.header-actions .icon{display:none}.intro{align-items:flex-start;margin-bottom:20px;gap:8px}.intro h1{font-size:26px;letter-spacing:-1.2px}.intro p{font-size:12px;max-width:235px}.practice-label{padding:5px 8px;font-size:10px;margin-top:6px}.practice-label:before{display:none}main{padding-top:25px;padding-bottom:40px}.filters{gap:7px;margin-bottom:20px}.chip{font-size:12px;padding:8px 11px;min-height:42px}.filter-reset{font-size:11px;padding:6px}.calendar-toolbar{padding:16px}.calendar-toolbar h2{font-size:19px}.weekdays span{font-size:11px;padding:9px 3px}.day{min-height:71px;padding:5px 3px}.day-top{justify-content:center;margin-bottom:3px}.day-number{min-width:26px;min-height:26px;font-size:12px}.day-label{display:none}.mini-match,.more-games{display:none}.mobile-games{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:0;background:none;padding:3px 0;width:100%;min-height:28px;color:var(--muted);font-size:9px}.dot-strip{display:flex;gap:2px}.dot-strip .team-dot{width:4px;height:4px;border:0}.calendar-foot{font-size:9px;gap:6px}.daily-heading{margin-top:15px}.match-row{gap:9px;padding:13px 5px}.match-title{font-size:12px;gap:5px}.match-time{font-size:12px;min-width:38px}.match-status{font-size:9px;padding:3px 5px}.detail{scroll-margin-top:15px}.detail-top{padding:22px}.detail-body{padding:22px}.detail-versus{font-size:26px}.flow-header h1,.wallet-header h1{font-size:25px}.flow-header{display:block}.flow-header .practice-label{display:inline-flex;margin-top:12px}.steps{gap:9px}.step{font-size:11px;gap:5px}.step-separator{max-width:20px}.step-num{width:23px;height:23px}.zone-option{padding:12px}.zone-option span{font-size:11px}.booking-layout{gap:24px}.success{padding:30px 20px;margin:18px auto}.success h1{font-size:24px}.success-actions{flex-direction:column}.ticket-grid{grid-template-columns:1fr}.wallet-header .btn{font-size:12px;padding:10px}.footer-inner{flex-direction:column;gap:5px}.quantity-panel{padding:20px}.quantity-selection{gap:10px}.quantity-controls{gap:15px}.section-heading{font-size:19px}}
+    .home-tabs{display:flex;gap:25px;border-bottom:1px solid var(--line);margin-bottom:29px;overflow-x:auto;scrollbar-width:thin}.home-tab{flex-shrink:0;min-height:49px;padding:9px 2px 13px;border:0;border-bottom:3px solid transparent;background:none;color:var(--muted);font-weight:700;font-size:14px;white-space:nowrap}.home-tab[aria-current=page]{color:var(--green);border-bottom-color:var(--green)}.home-tab:hover{color:var(--green)}.day-rest{display:block;text-align:center;font-size:10px;color:var(--muted);padding-top:8px}.zone-group{margin-top:18px}.zone-group h3{font-size:13px;margin-bottom:8px;color:var(--green)}.zone-group .zone-options{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:0;gap:7px}.zone-group .zone-option{display:block;text-align:center;min-width:0;padding:10px 4px}.zone-group .zone-option strong,.zone-group .zone-option span{display:block}.stadium .zone.group-first{fill:#d4e7c9}.stadium .zone.group-third{fill:#dce5ed}.stadium .zone.group-center{fill:#ecdfc3}.stadium .zone.group-outfield{fill:#e4eccc}.stadium .zone:hover{fill:#b7d49e}.stadium .zone.selected{fill:var(--green)}.seat-panel{border:1px solid var(--line);background:white;border-radius:14px;padding:17px 14px;margin-top:20px}.seat-field{background:var(--grass);color:var(--green);padding:9px;text-align:center;border-radius:6px;font-size:12px;font-weight:700;letter-spacing:3px;margin-bottom:24px}.seat-grid{max-width:420px;margin:auto}.seat-row{display:grid;grid-template-columns:20px repeat(6,minmax(0,1fr));align-items:center;gap:4px;margin:7px 0}.row-label{font-size:11px;color:var(--muted);text-align:center}.seat-button{min-width:0;min-height:44px;border:1px solid #9bb29a;border-radius:8px 8px 3px 3px;background:#edf5e9;color:var(--green);font-size:12px;font-weight:700;padding:0}.seat-button:hover:not(:disabled){background:#d5e9c8}.seat-button[aria-pressed=true]{background:var(--green);color:white;border-color:var(--green)}.seat-button:disabled{background:#e9ece8;border-color:#dce1da;color:#747e73;opacity:1}.seat-legend{display:flex;justify-content:center;flex-wrap:wrap;gap:16px;margin:19px 0 14px;font-size:11px;color:var(--muted)}.seat-legend span{display:flex;align-items:center;gap:5px}.seat-key{width:12px;height:12px;border-radius:3px;display:inline-block;border:1px solid #9bb29a;background:#edf5e9}.seat-key.chosen{background:var(--green);border-color:var(--green)}.seat-key.sold{background:#e9ece8;border-color:#dce1da}.seat-selection-info{font-size:12px;color:var(--green);margin-top:12px;min-height:38px}.seat-feedback{font-size:12px;color:var(--red);min-height:23px;margin-top:6px}.summary-seats{max-width:170px;line-height:1.9}.data-surface{max-width:1050px;margin:auto}.data-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:25px}.data-heading h1{font-size:29px;letter-spacing:-1px}.data-heading p{font-size:13px;color:var(--muted);margin-top:5px}.table-wrap{border:1px solid var(--line);background:white;border-radius:14px;overflow-x:auto}.rank-table{width:100%;border-collapse:collapse;font-size:13px;white-space:nowrap;font-variant-numeric:tabular-nums}.rank-table caption{text-align:left;padding:16px 20px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--line)}.rank-table th{background:#f3f6ef;color:var(--muted);font-size:11px;text-align:center;padding:12px 10px}.rank-table td{padding:15px 10px;border-top:1px solid var(--line);text-align:center}.rank-table td:nth-child(2){text-align:left;font-weight:700}.rank-team{display:inline-flex;gap:8px;align-items:center}.rank-table .leading{background:#eff6e9}.rank-number{font-weight:850;color:var(--green)}.records-list{border-top:1px solid var(--line)}.record-row{display:grid;grid-template-columns:115px 1fr 90px;gap:15px;align-items:center;border-bottom:1px solid var(--line);padding:21px 12px;background:white}.record-date{font-size:12px;color:var(--muted)}.record-score{display:flex;align-items:center;gap:14px;font-size:15px;font-weight:700;flex-wrap:wrap}.record-score strong{font-size:21px;color:var(--green);font-variant-numeric:tabular-nums}.record-row p{font-size:11px;color:var(--muted);margin-top:5px}.record-result{font-size:12px;color:var(--green);text-align:right}.visit-summary{display:flex;gap:25px;flex-wrap:wrap;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0;margin-bottom:25px;color:var(--muted);font-size:13px}.visit-summary strong{color:var(--green);font-size:19px;margin-left:8px}.visit-list{border-top:1px solid var(--line)}.visit-row{display:grid;grid-template-columns:75px 1fr auto;gap:15px;padding:22px 10px;border-bottom:1px solid var(--line);align-items:start}.visit-month{color:var(--green);font-size:18px;font-weight:800}.visit-row h2{font-size:16px}.visit-row p{font-size:12px;color:var(--muted);margin-top:5px}.visit-note{margin-top:9px!important;color:#455e4d!important}.visit-badge{font-size:11px;border-radius:5px;padding:4px 8px;color:var(--green);background:var(--grass);white-space:nowrap}.community-list{border-top:1px solid var(--line)}.post{padding:24px 8px;border-bottom:1px solid var(--line)}.post-meta{display:flex;gap:10px;align-items:center;font-size:11px;color:var(--muted);margin-bottom:8px}.post-category{color:var(--green);font-weight:700}.post h2{font-size:18px;letter-spacing:-.5px;margin-bottom:7px}.post p{font-size:13px;color:#536959;max-width:70ch}.post-footer{display:flex;gap:15px;font-size:11px;color:var(--muted);margin-top:13px}.data-disclaimer{font-size:11px;color:var(--muted);margin-top:20px}
+    @media(max-width:520px){.home-tabs{gap:20px;margin-bottom:23px}.home-tab{font-size:12px;min-height:46px}.day-rest{font-size:9px;padding-top:5px}.data-heading h1{font-size:25px}.data-heading p{font-size:12px}.rank-table{font-size:11px}.rank-table td,.rank-table th{padding:12px 7px}.rank-table caption{padding:14px;font-size:11px}.rank-team{gap:5px}.rank-table .team-dot{width:7px;height:7px}.record-row{grid-template-columns:1fr auto;gap:8px;padding:18px 9px}.record-date{grid-column:1/-1}.record-score{font-size:12px;gap:7px}.record-score strong{font-size:18px}.record-result{font-size:11px}.visit-row{grid-template-columns:47px 1fr;gap:10px;padding:19px 5px}.visit-row h2{font-size:14px}.visit-month{font-size:14px}.visit-badge{grid-column:2;justify-self:start}.visit-summary{gap:15px;font-size:12px}.visit-summary strong{font-size:17px}.post{padding:20px 3px}.post h2{font-size:16px}.post p{font-size:12px}.wallet-header .btn{white-space:nowrap;flex-shrink:0}}
+    @media(max-width:520px){.home-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 8px;overflow:visible}.home-tab{min-width:0;text-align:center}}
+    @media(prefers-reduced-motion:reduce){*,*:before{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <button class="brand" id="brand" aria-label="만루티켓 캘린더로 이동"><span class="brand-mark"><svg width="25" height="25" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M16 4 28 16 16 28 4 16Z" stroke="currentColor" stroke-width="1.8"/><path d="M16 12 20 16 16 20 12 16Z" fill="currentColor"/><path d="M8 12 12 8M20 24 24 20" stroke="currentColor" stroke-width="1.5"/></svg></span>만루티켓</button>
+      <nav class="header-actions" aria-label="주요 메뉴">
+        <button class="btn plain" disabled title="로그인 기능은 준비 중입니다">로그인</button>
+        <button class="btn" id="wallet-button"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h16v5a2 2 0 0 0 0 4v5H4v-5a2 2 0 0 0 0-4V5Z" stroke="currentColor" stroke-width="1.6"/><path d="M15 7v2m0 2v2m0 2v2" stroke="currentColor" stroke-width="1.6"/></svg>내 티켓 <span class="ticket-count" id="ticket-count">0</span></button>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap" id="main">
+    <nav class="home-tabs" id="home-tabs" aria-label="홈 메뉴">
+      <button class="home-tab" data-view="calendar" aria-current="page">경기 캘린더</button>
+      <button class="home-tab" data-view="records">경기 기록</button>
+      <button class="home-tab" data-view="rankings">현재 순위</button>
+      <button class="home-tab" data-view="visits">나의 직관 기록</button>
+      <button class="home-tab" data-view="community">커뮤니티</button>
+    </nav>
+    <section id="calendar-view" aria-labelledby="calendar-title">
+      <div class="intro"><div><h1 id="calendar-title">통합 경기 캘린더</h1><p>어느 구단을 응원하든, 예매는 한곳에서.</p></div><span class="practice-label">연습용 앱</span></div>
+      <div class="filters" id="filters" role="group" aria-label="구단 필터, 여러 구단 선택 가능"></div>
+      <div class="workspace">
+        <div class="calendar-area">
+          <div class="calendar">
+            <div class="calendar-toolbar"><h2 id="month-title"></h2><button class="btn" id="today-button">오늘</button></div>
+            <div class="weekdays" aria-hidden="true"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+            <div class="days" id="days" aria-label="이번 달 경기 달력"></div>
+          </div>
+          <div class="calendar-foot"><span class="legend"><span></span>날짜를 선택하면 모든 경기를 볼 수 있어요</span><span>모든 일정은 가상 데이터입니다</span></div>
+          <div class="daily-heading"><h2 id="daily-title"></h2><span class="small-count" id="daily-count"></span></div>
+          <div class="match-list" id="match-list"></div>
+        </div>
+        <aside class="detail" id="detail" aria-label="선택한 경기 상세"></aside>
+      </div>
+    </section>
+    <section id="booking-view" class="flow-shell" hidden aria-label="통합 경기 예매"></section>
+    <section id="success-view" hidden aria-label="예매 완료"></section>
+    <section id="wallet-view" hidden aria-label="내 티켓"></section>
+    <section id="records-view" class="data-surface" hidden aria-label="경기 기록"></section>
+    <section id="rankings-view" class="data-surface" hidden aria-label="현재 순위"></section>
+    <section id="visits-view" class="data-surface" hidden aria-label="나의 직관 기록"></section>
+    <section id="community-view" class="data-surface" hidden aria-label="커뮤니티"></section>
+  </main>
+  <footer class="footer"><div class="wrap footer-inner"><strong>만루티켓 · 조류동맹</strong><span>가상 경기 · 모의 결제 · 알림 및 전달 기능 준비 중 · 새로고침하면 티켓이 초기화됩니다</span></div></footer>
+  <script>
+    'use strict';
+    const teams = [
+      {id:'lg',name:'LG 트윈스',short:'LG',color:'#c30452',stadium:'잠실야구장'},
+      {id:'kt',name:'KT 위즈',short:'KT',color:'#252525',stadium:'수원 KT 위즈파크'},
+      {id:'ssg',name:'SSG 랜더스',short:'SSG',color:'#ce0e2d',stadium:'인천 SSG 랜더스필드'},
+      {id:'nc',name:'NC 다이노스',short:'NC',color:'#315e8b',stadium:'창원 NC 파크'},
+      {id:'doosan',name:'두산 베어스',short:'두산',color:'#172951',stadium:'잠실야구장'},
+      {id:'kia',name:'KIA 타이거즈',short:'KIA',color:'#d52231',stadium:'광주 기아 챔피언스필드'},
+      {id:'lotte',name:'롯데 자이언츠',short:'롯데',color:'#5798bb',stadium:'사직야구장'},
+      {id:'samsung',name:'삼성 라이온즈',short:'삼성',color:'#1559b4',stadium:'대구 삼성 라이온즈파크'},
+      {id:'hanwha',name:'한화 이글스',short:'한화',color:'#f07722',stadium:'대전 한화생명 볼파크'},
+      {id:'kiwoom',name:'키움 히어로즈',short:'키움',color:'#7c173d',stadium:'고척 스카이돔'}
+    ];
+    const zones=[
+      {id:'first101',group:'first',code:101,name:'1루 응원석 101구역',price:22000,angle:315},
+      {id:'first102',group:'first',code:102,name:'1루 응원석 102구역',price:18000,angle:345},
+      {id:'first103',group:'first',code:103,name:'1루 지정석 103구역',price:16000,angle:15},
+      {id:'third301',group:'third',code:301,name:'3루 응원석 301구역',price:22000,angle:195},
+      {id:'third302',group:'third',code:302,name:'3루 응원석 302구역',price:18000,angle:165},
+      {id:'third303',group:'third',code:303,name:'3루 지정석 303구역',price:16000,angle:135},
+      {id:'center201',group:'center',code:201,name:'중앙 테이블석 201구역',price:35000,angle:45},
+      {id:'center202',group:'center',code:202,name:'중앙 프리미엄석 202구역',price:30000,angle:75},
+      {id:'center203',group:'center',code:203,name:'중앙 지정석 203구역',price:25000,angle:105},
+      {id:'outfield401',group:'outfield',code:401,name:'좌측 외야석 401구역',price:12000,angle:225},
+      {id:'outfield402',group:'outfield',code:402,name:'중앙 외야석 402구역',price:10000,angle:255},
+      {id:'outfield403',group:'outfield',code:403,name:'우측 외야석 403구역',price:12000,angle:285}
+    ];
+    const now=new Date(), year=now.getFullYear(), month=now.getMonth(), today=now.getDate();
+    const monthDays=new Date(year,month+1,0).getDate();
+    const weekdays=['일','월','화','수','목','금','토'];
+    const games=[],selectedTeams=new Set(),notifications=new Set(),tickets=[];
+    let selectedDay=today,selectedGame=null,step=1,selectedZone=null,quantity=0,selectedSeats=[],currentView='calendar',lastOrder=null,orderNumber=0;
+    const $=id=>document.getElementById(id);
+    const money=value=>value.toLocaleString('ko-KR')+'원';
+    const dateLabel=date=>`${date.getMonth()+1}월 ${date.getDate()}일 (${weekdays[date.getDay()]})`;
+    const timeLabel=date=>`${String(date.getHours()).padStart(2,'0')}:${String(date.getMinutes()).padStart(2,'0')}`;
+    const openLabel=date=>`${date.getMonth()+1}.${String(date.getDate()).padStart(2,'0')} (${weekdays[date.getDay()]}) ${timeLabel(date)}`;
+    const dot=team=>`<span class="team-dot" style="background:${team.color}" aria-hidden="true"></span>`;
+    const arrow='<svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    const backArrow='<svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m14 6-6 6 6 6M8 12h12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    // 월요일은 휴식일. 나머지 날짜는 10개 구단이 한 번씩 출전하는 5경기입니다.
+    for(let day=1;day<=monthDays;day++){
+      if(new Date(year,month,day).getDay()===1)continue;
+      const rotating=teams.slice(1), shift=(Math.floor((day-1)/3))%9;
+      const order=[teams[0],...rotating.slice(shift),...rotating.slice(0,shift)];
+      for(let i=0;i<5;i++){
+        const pair=[order[i],order[9-i]],home=pair[(Math.floor((day-1)/3)+i)%2],away=pair[(Math.floor((day-1)/3)+i+1)%2];
+        const date=new Date(year,month,day,[0,6].includes(new Date(year,month,day).getDay())?14+i%2*3:18,i%2?30:0);
+        games.push({id:`g-${day}-${i}`,day,home,away,date,stadium:home.stadium,preOpen:new Date(year,month,day-5,11),generalOpen:new Date(year,month,day-3,14)});
+      }
+    }
+    function matchingGames(day){return games.filter(g=>g.day===day&&(!selectedTeams.size||selectedTeams.has(g.home.id)||selectedTeams.has(g.away.id)));}
+    function statusLabel(g){const t=Date.now();return t>=g.date.getTime()?'모의 예매':t>=g.generalOpen.getTime()?'일반예매':t>=g.preOpen.getTime()?'선예매':'오픈 예정';}
+    function renderFilters(){
+      $('filters').innerHTML=teams.map(t=>`<button class="chip" data-team="${t.id}" aria-pressed="${selectedTeams.has(t.id)}">${dot(t)}${t.short}</button>`).join('')+'<button class="filter-reset" id="filter-reset">전체 구단</button>';
+    }
+    function renderCalendar(){
+      $('month-title').textContent=`${year}년 ${month+1}월`;
+      let cells='';
+      const start=new Date(year,month,1).getDay();
+      for(let i=0;i<start;i++)cells+='<div class="day blank" aria-hidden="true"></div>';
+      for(let day=1;day<=monthDays;day++){
+        const list=matchingGames(day),isToday=day===today,isMonday=new Date(year,month,day).getDay()===1;
+        cells+=`<div class="day${day===selectedDay?' selected':''}"><div class="day-top"><button class="day-number${isToday?' today':''}" data-day="${day}" aria-label="${month+1}월 ${day}일, ${list.length}경기" aria-pressed="${day===selectedDay}"${isToday?' aria-current="date"':''}>${day}</button>${isToday?'<span class="day-label">오늘</span>':''}</div>`;
+        cells+=list.slice(0,2).map(g=>`<button class="mini-match" data-game="${g.id}" aria-label="${day}일 ${g.home.name} 대 ${g.away.name}, ${timeLabel(g.date)}">${dot(g.home)}${g.home.short} <span class="versus">vs</span> ${g.away.short}</button>`).join('');
+        if(list.length>2)cells+=`<button class="more-games" data-day="${day}" aria-label="${day}일 전체 ${list.length}경기 보기">+ ${list.length-2}경기</button>`;
+        if(isMonday)cells+='<span class="day-rest">휴식일</span>';
+        cells+=`<button class="mobile-games" data-day="${day}" aria-label="${day}일 ${isMonday?'월요일 휴식일':list.length+'경기 보기'}"><span class="dot-strip">${list.map(g=>dot(g.home)).join('')}</span><span>${isMonday?'':list.length?list.length+'경기':'경기 없음'}</span></button></div>`;
+      }
+      const end=(start+monthDays)%7;
+      if(end)for(let i=end;i<7;i++)cells+='<div class="day blank" aria-hidden="true"></div>';
+      $('days').innerHTML=cells;
+      renderDaily();
+    }
+    function renderDaily(){
+      const list=matchingGames(selectedDay);
+      $('daily-title').textContent=dateLabel(new Date(year,month,selectedDay));
+      $('daily-count').textContent=`${list.length}경기`;
+      $('match-list').innerHTML=list.length?list.map(g=>`<button class="match-row${selectedGame&&selectedGame.id===g.id?' active':''}" data-game="${g.id}" aria-pressed="${!!selectedGame&&selectedGame.id===g.id}"><span class="match-time">${timeLabel(g.date)}</span><span class="match-main"><span class="match-title">${dot(g.home)}${g.home.name}<span class="versus">vs</span>${dot(g.away)}${g.away.name}</span><span class="match-stadium">${g.stadium} · 홈 ${g.home.short}</span></span><span class="match-status">${statusLabel(g)}</span>${arrow}</button>`).join(''):new Date(year,month,selectedDay).getDay()===1?'<p class="empty-list">월요일은 휴식일이에요. 다른 날짜의 경기를 확인해 주세요.</p>':'<p class="empty-list">선택한 구단의 경기가 없어요. 전체 구단을 선택해 보세요.</p>';
+    }
+    function renderDetail(){
+      const g=selectedGame;
+      if(!g){$('detail').innerHTML='<div class="detail-empty"><h2>오늘의 직관을 골라보세요</h2><p>달력에서 경기를 선택하면<br>경기 정보와 예매 일정을 볼 수 있어요.</p></div>';return;}
+      const enabled=notifications.has(g.id);
+      $('detail').innerHTML=`<div class="detail-top"><p class="detail-label">${dateLabel(g.date)} · ${timeLabel(g.date)}</p><h2 class="detail-versus"><span>${g.home.short}</span><span>vs</span><span>${g.away.short}</span></h2><p class="game-meta">${g.home.name} 홈경기</p></div><div class="detail-body"><div class="detail-info"><span>경기장</span><strong>${g.stadium}</strong></div><div class="open-times"><div class="open-line"><span>선예매 오픈</span><strong>${openLabel(g.preOpen)}</strong></div><div class="open-line"><span>일반예매 오픈</span><strong>${openLabel(g.generalOpen)}</strong></div></div><div class="countdown-box"><p id="countdown-label"></p><div class="countdown" id="countdown" role="timer" aria-live="off"></div></div><div class="notify-row"><div><strong>오픈 알림 받기</strong><p class="notification-status${enabled?' enabled':''}" id="notification-status" role="status">${enabled?'알림 설정됨 · 실제 발송은 준비 중':'예매 오픈 일정을 놓치지 마세요'}</p></div><button class="switch" id="notify-switch" role="switch" aria-label="오픈 알림 받기" aria-checked="${enabled}"></button></div><button class="btn primary full" id="book-button">예매하기 ${arrow}</button><p class="demo-note">연습용으로 오픈 전 경기에도 예매할 수 있어요.</p></div>`;
+      updateCountdown();
+    }
+    function updateCountdown(){
+      if(!selectedGame||!$('countdown'))return;
+      const g=selectedGame,t=Date.now();
+      let target,label;
+      if(t<g.preOpen.getTime()){target=g.preOpen;label='선예매 오픈까지';}
+      else if(t<g.generalOpen.getTime()){target=g.generalOpen;label='일반예매 오픈까지 · 선예매 진행 중';}
+      else{$('countdown-label').textContent=t>=g.date.getTime()?'경기 시작 시간이 지났어요':'일반예매가 열렸어요';$('countdown').textContent=t>=g.date.getTime()?'모의 예매 가능':'지금 예매 가능';return;}
+      const seconds=Math.max(0,Math.ceil((target.getTime()-t)/1000));
+      $('countdown-label').textContent=label;
+      $('countdown').textContent=`${Math.floor(seconds/86400)}일 ${String(Math.floor(seconds/3600)%24).padStart(2,'0')}:${String(Math.floor(seconds/60)%60).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`;
+    }
+    function selectDay(day){
+      selectedDay=day;
+      const list=matchingGames(day);
+      selectedGame=list[0]||null;
+      renderCalendar();renderDetail();
+    }
+    function selectGame(id,source='row'){
+      selectedGame=games.find(g=>g.id===id);selectedDay=selectedGame.day;
+      renderCalendar();renderDetail();
+      if(window.matchMedia('(max-width:800px)').matches){
+        const heading=$('detail').querySelector('h2');heading.tabIndex=-1;heading.focus({preventScroll:true});
+        $('detail').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth',block:'start'});
+      }else{
+        const match=document.querySelector(`.${source==='calendar'?'mini-match':'match-row'}[data-game="${id}"]`);
+        if(match)match.focus({preventScroll:true});
+      }
+    }
+    function showView(view){
+      currentView=view;
+      ['calendar','booking','success','wallet','records','rankings','visits','community'].forEach(name=>{const el=$(name+'-view');el.hidden=name!==view;el.classList.toggle('view-enter',name===view);});
+      $('home-tabs').hidden=['booking','success'].includes(view);
+      document.querySelectorAll('[data-view]').forEach(tab=>{if(tab.dataset.view===view)tab.setAttribute('aria-current','page');else tab.removeAttribute('aria-current');});
+      $('wallet-button').setAttribute('aria-current',view==='wallet'?'page':'false');
+      window.scrollTo(0,0);
+      const heading=$(view+'-view').querySelector('h1');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}
+    }
+    function startBooking(){step=1;selectedZone=null;quantity=0;selectedSeats=[];renderBooking();showView('booking');}
+    function stadiumSvg(){
+      const point=(angle,rx,ry)=>{const a=angle*Math.PI/180;return [240+Math.cos(a)*rx,195+Math.sin(a)*ry];};
+      const sectors=zones.map(z=>{
+        const a=point(z.angle,190,165),b=point(z.angle+30,190,165),c=point(z.angle+30,127,108),d=point(z.angle,127,108),label=point(z.angle+15,158,136),chosen=selectedZone&&selectedZone.id===z.id;
+        return `<path d="M${a} A190 165 0 0 1 ${b} L${c} A127 108 0 0 0 ${d} Z" class="zone group-${z.group}${chosen?' selected':''}" data-zone="${z.id}"/><text x="${label[0]}" y="${label[1]+5}" text-anchor="middle"${chosen?' class="on"':''}>${z.code}</text>`;
+      }).join('');
+      return `<div class="stadium"><svg viewBox="0 0 480 390" role="img" aria-label="12개 세부 구역 좌석도. 위쪽 외야 401~403, 왼쪽 3루 301~303, 오른쪽 1루 101~103, 아래쪽 중앙 201~203. 아래 구역 버튼으로도 선택할 수 있습니다."><ellipse cx="240" cy="195" rx="122" ry="104" fill="#eff4e9"/>${sectors}<path d="M240 278 156 194Q240 89 324 194Z" fill="#d4e5cb"/><path d="m240 185 44 44-44 44-44-44Z" fill="#d6c49d"/><path d="m240 195 34 34-34 34-34-34Z" fill="#84aa73"/><path d="M240 278 156 194M240 278 324 194" stroke="white" stroke-width="2"/><path d="m240 265 5 5-5 5-5-5Zm-39-40 4 4-4 4-4-4Zm78 0 4 4-4 4-4-4Zm-39-39 4 4-4 4-4-4Z" fill="white"/><circle cx="240" cy="229" r="3" fill="#e2d3b2"/><text x="240" y="147" text-anchor="middle" style="font-size:11px;fill:#536e4d">그라운드</text><text x="240" y="19" text-anchor="middle" style="font-size:12px">외야</text><text x="25" y="198" text-anchor="middle" style="font-size:12px">3루</text><text x="455" y="198" text-anchor="middle" style="font-size:12px">1루</text><text x="240" y="382" text-anchor="middle" style="font-size:12px">중앙 · 홈플레이트</text></svg></div>`;
+    }
+    function zoneOptions(){
+      return [['first','1루 · 홈 응원 구역'],['third','3루 · 원정 응원 구역'],['center','중앙 · 지정석 / 테이블석'],['outfield','외야 · 지정석']].map(([group,label])=>`<div class="zone-group"><h3>${label}</h3><div class="zone-options">${zones.filter(z=>z.group===group).map(z=>`<button class="zone-option" data-zone="${z.id}" aria-label="${z.name}, 1장 ${money(z.price)}" aria-pressed="${!!selectedZone&&selectedZone.id===z.id}"><strong>${z.code}구역</strong><span>${money(z.price)}</span></button>`).join('')}</div></div>`).join('');
+    }
+    function seatsForZone(){
+      return ['A','B','C','D','E'].flatMap(row=>Array.from({length:6},(_,i)=>({id:`${row}-${i+1}`,row,number:i+1,label:`${row}열 ${String(i+1).padStart(2,'0')}번`})));
+    }
+    function isSeatTaken(seat){
+      return ['A-4','B-2','C-5','E-6'].includes(seat.id)||tickets.some(t=>t.game.id===selectedGame.id&&t.zone.id===selectedZone.id&&t.seatId===seat.id);
+    }
+    function renderSeats(){
+      const seats=seatsForZone();
+      return `<h2 class="section-heading">내 자리를 직접 골라보세요</h2><p class="section-description">${selectedZone.name} · 1~4개 좌석을 선택하면 매수가 정해져요.</p><div class="seat-panel"><div class="seat-field">그라운드 방향</div><div class="seat-grid" role="group" aria-label="${selectedZone.name} 개별 좌석 선택">${['A','B','C','D','E'].map(row=>`<div class="seat-row"><span class="row-label">${row}열</span>${seats.filter(s=>s.row===row).map(s=>{const taken=isSeatTaken(s),chosen=selectedSeats.some(x=>x.id===s.id);return `<button class="seat-button" data-seat="${s.id}" aria-label="${s.label}${taken?', 판매 완료':''}" aria-pressed="${chosen}"${taken?' disabled':''}>${s.number}</button>`;}).join('')}</div>`).join('')}</div><div class="seat-legend"><span><i class="seat-key" aria-hidden="true"></i>선택 가능</span><span><i class="seat-key chosen" aria-hidden="true"></i>내 선택</span><span><i class="seat-key sold" aria-hidden="true"></i>판매 완료</span></div><p class="seat-selection-info" id="seat-selection-info" role="status">${selectedSeats.length?`선택 ${quantity}장 · ${selectedSeats.map(s=>s.label).join(', ')}`:'원하는 좌석을 눌러 주세요. 다시 누르면 선택이 해제됩니다.'}</p><p class="seat-feedback" id="seat-feedback" role="alert"></p></div>`;
+    }
+    function renderSummary(){
+      const g=selectedGame;
+      return `<aside class="order-summary"><h2>예매 내역</h2><div class="summary-line"><span>경기</span><span>${g.home.short} vs ${g.away.short}</span></div><div class="summary-line"><span>일시</span><span>${dateLabel(g.date)}<br>${timeLabel(g.date)}</span></div><div class="summary-line"><span>구장</span><span>${g.stadium}</span></div><div class="summary-line"><span>구역</span><span>${selectedZone?selectedZone.name:'구역을 선택해 주세요'}</span></div><div class="summary-line"><span>매수</span><span>${quantity}장</span></div>${selectedSeats.length?`<div class="summary-line"><span>좌석</span><span class="summary-seats">${selectedSeats.map(s=>s.label).join('<br>')}</span></div>`:''}<div class="total"><span>총 결제 금액</span><strong>${selectedZone&&quantity?money(selectedZone.price*quantity):'—'}</strong></div><button class="btn primary full" id="next-button"${!selectedZone||(step>1&&!selectedSeats.length)?' disabled':''}>${step===3?'결제하기':step===2?'결제 화면으로':'다음 · 좌석 선택'} ${arrow}</button><p class="demo-note">${step===3?'모의 결제이며 실제 금액은 청구되지 않습니다.':'모든 구장이 동일한 예매 방식으로 진행됩니다.'}</p></aside>`;
+    }
+    function renderBooking(){
+      const g=selectedGame;
+      const steps=['구역 선택','좌석 선택','결제'];
+      let content='';
+      if(step===1)content=`<h2 class="section-heading">어디에서 응원할까요?</h2><p class="section-description">12개 세부 구역 중 선택해 주세요. 가격은 1장 기준이에요.</p>${stadiumSvg()}${zoneOptions()}`;
+      else if(step===2)content=renderSeats();
+      else content=`<h2 class="section-heading">결제도 간편하게</h2><p class="section-description">등록된 간편결제로 예매를 마무리해 주세요.</p><div class="payment-card"><h3>등록된 간편결제</h3><div class="card-chip" aria-hidden="true"></div><p class="card-number">•••• &nbsp; •••• &nbsp; •••• &nbsp; 2026</p><div class="card-foot"><span>만루페이 · 연습용 카드</span><span>기본 결제수단</span></div></div><p class="payment-hint">가상의 결제수단입니다. 결제하기를 누르면<br>실제 결제 없이 내 티켓에 발급됩니다.</p>`;
+      $('booking-view').innerHTML=`<button class="btn plain back" id="booking-back">${backArrow}${step===1?'경기 캘린더로':'이전 단계'}</button><div class="flow-header"><div><h1>함께, 야구장으로</h1><p>${g.home.name} vs ${g.away.name} · ${dateLabel(g.date)} ${timeLabel(g.date)}</p></div><span class="practice-label">모의 예매</span></div><nav class="steps" aria-label="예매 진행 단계">${steps.map((name,i)=>`${i?'<span class="step-separator" aria-hidden="true"></span>':''}<span class="step ${step===i+1?'current':step>i+1?'done':''}"${step===i+1?' aria-current="step"':''}><span class="step-num">${i+1}</span>${name}</span>`).join('')}</nav><div class="booking-layout"><div>${content}</div>${renderSummary()}</div>`;
+    }
+    function completeBooking(){
+      if(step!==3||!selectedZone||currentView!=='booking'||!selectedSeats.length||selectedSeats.length>4)return;
+      if(selectedSeats.some(isSeatTaken)){step=2;selectedSeats=selectedSeats.filter(s=>!isSeatTaken(s));quantity=selectedSeats.length;renderBooking();$('seat-feedback').textContent='이미 예매된 좌석이 있어요. 다른 좌석을 선택해 주세요.';return;}
+      orderNumber++;
+      const issued=[];
+      for(let i=0;i<quantity;i++){
+        const ticket={id:`ML-${year}${String(month+1).padStart(2,'0')}-${String(tickets.length+1).padStart(4,'0')}`,game:selectedGame,zone:selectedZone,seat:selectedSeats[i].label,seatId:selectedSeats[i].id};
+        tickets.push(ticket);issued.push(ticket);
+      }
+      lastOrder={game:selectedGame,zone:selectedZone,quantity,total:selectedZone.price*quantity,issued};
+      $('ticket-count').textContent=tickets.length;
+      renderSuccess();showView('success');
+    }
+    function renderSuccess(){
+      const o=lastOrder,g=o.game;
+      $('success-view').innerHTML=`<div class="success"><div class="success-mark"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h1>야구장에서 만나요!</h1><p>모의 예매 완료 · 티켓 ${o.quantity}장이 발급되었어요.</p><div class="success-match"><strong>${g.home.name} vs ${g.away.name}</strong><span>${dateLabel(g.date)} ${timeLabel(g.date)} · ${g.stadium}</span><span>${o.zone.name} · ${o.quantity}장 · ${money(o.total)}</span></div><div class="success-actions"><button class="btn primary" id="success-wallet">내 티켓 확인하기 ${arrow}</button><button class="btn" id="success-calendar">다른 경기 둘러보기</button></div><p class="demo-note" style="margin-bottom:0">실제 결제가 발생하지 않았습니다.</p></div>`;
+    }
+    // 장식용 QR 패턴입니다. 실제 입장 코드나 외부 링크는 포함하지 않습니다.
+    function fakeQr(id){
+      const n=25;let seed=Array.from(id).reduce((v,c)=>v*31+c.charCodeAt(0),7)>>>0,rects='';
+      const finders=[[0,0],[18,0],[0,18]];
+      for(let y=0;y<n;y++)for(let x=0;x<n;x++){
+        const f=finders.find(([fx,fy])=>x>=fx-1&&x<=fx+7&&y>=fy-1&&y<=fy+7);
+        let dark=false;
+        if(f){const dx=x-f[0],dy=y-f[1];if(dx>=0&&dx<7&&dy>=0&&dy<7)dark=dx===0||dx===6||dy===0||dy===6||(dx>=2&&dx<=4&&dy>=2&&dy<=4);}
+        else{seed=(Math.imul(seed,1664525)+1013904223)>>>0;dark=(seed>>>29)%2===0;}
+        if(dark)rects+=`<rect x="${x+2}" y="${y+2}" width="1" height="1"/>`;
+      }
+      return `<svg class="qr" viewBox="0 0 29 29" role="img" aria-label="입장 불가, 연습용 가짜 QR 모양"><rect width="29" height="29" fill="white"/><g fill="#173c2a">${rects}</g></svg>`;
+    }
+    function renderWallet(){
+      $('wallet-view').innerHTML=`<div class="wallet-header"><div><h1>내 티켓 <span class="small-count">${tickets.length}장</span></h1><p>응원하는 팀은 달라도, 티켓은 한곳에.</p></div><button class="btn" id="wallet-calendar">경기 둘러보기</button></div>`+(tickets.length?`<div class="ticket-grid">${tickets.slice().reverse().map(t=>`<article class="ticket"><div class="ticket-head"><p class="ticket-tag">모의 예매 완료 · ${t.game.home.short} 홈경기</p><h2>${t.game.home.short} vs ${t.game.away.short}</h2><p>${dateLabel(t.game.date)} ${timeLabel(t.game.date)}<br>${t.game.stadium}</p></div><div class="ticket-body"><div class="ticket-seat"><strong>${t.zone.name}</strong><span>${t.seat}</span></div><div class="qr-area">${fakeQr(t.id)}<p class="qr-caption">연습용 QR 모양 · 실제 입장 불가</p><p class="ticket-id">${t.id}</p><button class="btn full" disabled title="친구에게 전달 기능은 준비 중입니다">친구에게 전달 · 준비 중</button></div></div></article>`).join('')}</div><p class="small-note" style="margin-top:22px">티켓은 현재 화면에만 저장되며, 새로고침하면 초기화됩니다.</p>`:`<div class="empty-wallet"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 5h18v5a2 2 0 0 0 0 4v5H3v-5a2 2 0 0 0 0-4V5Z" stroke="currentColor" stroke-width="1.3"/><path d="M16 7v2m0 2v2m0 2v2" stroke="currentColor" stroke-width="1.3"/></svg><h2>첫 직관을 기다리고 있어요</h2><p>경기를 예매하면 이곳에 티켓이 모여요.</p><button class="btn primary" id="empty-calendar">경기 캘린더 보기 ${arrow}</button></div>`);
+    }
+    function openWallet(){renderWallet();showView('wallet');}
+    function openCalendar(){renderCalendar();renderDetail();showView('calendar');}
+    // 아래 네 메뉴도 모두 가짜 데이터입니다. 실제 KBO 기록·순위를 불러오지 않습니다.
+    const mockRankings=['lotte','hanwha','lg','kia','samsung','ssg','kt','doosan','nc','kiwoom'].map((id,i)=>{
+      const wins=[91,88,84,80,75,71,67,63,57,49][i];return {team:teams.find(t=>t.id===id),wins,losses:141-wins,draws:3};
+    });
+    function pastDate(offset){const d=new Date(year,month,today-offset);while(d.getDay()===1)d.setDate(d.getDate()-1);return d;}
+    const mockRecords=[
+      {date:pastDate(1),home:'lotte',away:'hanwha',homeScore:7,awayScore:4,note:'8회 역전으로 롯데의 짜릿한 승리'},
+      {date:pastDate(2),home:'hanwha',away:'lg',homeScore:5,awayScore:2,note:'선발 투수의 7이닝 호투'},
+      {date:pastDate(3),home:'kia',away:'samsung',homeScore:3,awayScore:6,note:'삼성의 3점 홈런으로 승부 결정'},
+      {date:pastDate(4),home:'ssg',away:'kt',homeScore:4,awayScore:4,note:'연장 12회까지 이어진 팽팽한 승부'},
+      {date:pastDate(6),home:'doosan',away:'nc',homeScore:2,awayScore:1,note:'9회 말 끝내기 안타'}
+    ];
+    const mockVisits=[
+      {date:pastDate(10),home:'lotte',away:'kia',score:'6 : 3',result:'승리',seat:'1루 응원석 101구역 · B열 03번',note:'첫 직관부터 승리! 7회 응원가를 다 같이 불렀다.'},
+      {date:pastDate(17),home:'hanwha',away:'ssg',score:'5 : 2',result:'승리',seat:'중앙 지정석 203구역 · C열 02번',note:'친구와 함께한 야구장 나들이. 다음에도 이 자리로.'},
+      {date:pastDate(24),home:'lotte',away:'lg',score:'2 : 4',result:'패배',seat:'우측 외야석 403구역 · A열 06번',note:'아쉬운 경기였지만 외야에서 보는 노을은 최고였다.'},
+      {date:pastDate(31),home:'hanwha',away:'nc',score:'8 : 1',result:'승리',seat:'1루 응원석 102구역 · D열 04번',note:'홈런 두 번! 목이 쉬도록 응원한 날.'},
+      {date:pastDate(38),home:'lotte',away:'kt',score:'3 : 3',result:'무승부',seat:'중앙 테이블석 201구역 · B열 01번',note:'가족과 테이블석에서 편하게 즐긴 경기.'}
+    ];
+    const mockPosts=[
+      {category:'직관 후기',author:'사직의봄',time:'10분 전',title:'사직 101구역에서 응원하고 왔어요',body:'그라운드도 잘 보이고 응원 열기도 뜨거웠어요. 친구랑 다음 경기 티켓도 같이 골라보려고요.',comments:12,likes:34},
+      {category:'응원 이야기',author:'대전오렌지',time:'35분 전',title:'가상 순위 2위 한화! 다음 직관은 어디로?',body:'이번 연습 시즌 순위가 마음에 드네요. 대전에서 같이 응원할 날을 기다립니다.',comments:8,likes:27},
+      {category:'좌석 팁',author:'야구장산책',time:'1시간 전',title:'테이블석과 중앙 지정석, 어떤 자리가 좋을까요?',body:'편하게 먹으면서 보려면 테이블석, 경기 흐름을 가까이 보고 싶으면 중앙 지정석을 추천해요. 여러분의 최애 구역은요?',comments:16,likes:19},
+      {category:'직관 준비',author:'초록다이아몬드',time:'2시간 전',title:'첫 직관 준비물, 이것만 챙겨도 든든해요',body:'모자와 물, 휴대용 보조배터리부터 챙겼어요. 야간 경기에는 가벼운 겉옷도 있으면 좋더라고요.',comments:5,likes:42},
+      {category:'응원 이야기',author:'만루의순간',time:'3시간 전',title:'10개 구단 응원가 중 가장 기억에 남는 곡은?',body:'팀은 달라도 야구를 좋아하는 마음은 같죠. 경기 시작 전에 들으면 설레는 응원가 이야기를 나눠봐요.',comments:23,likes:31}
+    ];
+    const teamById=id=>teams.find(t=>t.id===id);
+    function dataHeading(title,description){return `<div class="data-heading"><div><h1>${title}</h1><p>${description}</p></div><span class="practice-label">가짜 데이터</span></div>`;}
+    function renderRecords(){
+      $('records-view').innerHTML=dataHeading('경기 기록','끝난 경기의 스코어와 이야기를 한눈에.')+`<div class="records-list">${mockRecords.map(r=>{
+        const home=teamById(r.home),away=teamById(r.away),result=r.homeScore===r.awayScore?'무승부':`${r.homeScore>r.awayScore?home.short:away.short} 승리`;
+        return `<article class="record-row"><span class="record-date">${dateLabel(r.date)}</span><div><h2 class="record-score"><span>${dot(home)} ${home.short}</span><strong>${r.homeScore} : ${r.awayScore}</strong><span>${dot(away)} ${away.short}</span></h2><p>${home.stadium} · 경기 종료</p><p>${r.note}</p></div><span class="record-result">${result}</span></article>`;
+      }).join('')}</div><p class="data-disclaimer">샘플 경기 5개입니다. 실제 경기 결과와 다르며, 실시간으로 갱신되지 않습니다.</p>`;
+    }
+    function renderRankings(){
+      $('rankings-view').innerHTML=dataHeading('현재 순위','우리 팀은 어디쯤? 10개 구단의 가상 시즌 순위.')+`<div class="table-wrap"><table class="rank-table"><caption>연습용 가상 순위 · 1위 롯데, 2위 한화</caption><thead><tr><th scope="col">순위</th><th scope="col">구단</th><th scope="col">승</th><th scope="col">패</th><th scope="col">무</th><th scope="col">승률</th><th scope="col">게임차</th></tr></thead><tbody>${mockRankings.map((r,i)=>`<tr${i<2?' class="leading"':''}><td class="rank-number">${i+1}</td><td><span class="rank-team">${dot(r.team)}${r.team.name}</span></td><td>${r.wins}</td><td>${r.losses}</td><td>${r.draws}</td><td>${(r.wins/(r.wins+r.losses)).toFixed(3)}</td><td>${i?((mockRankings[0].wins-r.wins+r.losses-mockRankings[0].losses)/2).toFixed(1):'—'}</td></tr>`).join('')}</tbody></table></div><p class="data-disclaimer">실제 KBO 순위가 아닌 가짜 데이터입니다. 승률은 무승부를 제외해 계산했습니다.</p>`;
+    }
+    function renderVisits(){
+      $('visits-view').innerHTML=dataHeading('나의 직관 기록','야구장에서 보낸 하루하루를 모아봐요.')+`<div class="visit-summary"><span>직관 경기<strong>5회</strong></span><span>승리<strong>3회</strong></span><span>다녀온 구장<strong>2곳</strong></span></div><div class="visit-list">${mockVisits.map(v=>{
+        const home=teamById(v.home),away=teamById(v.away);return `<article class="visit-row"><span class="visit-month">${v.date.getMonth()+1}.${String(v.date.getDate()).padStart(2,'0')}</span><div><h2>${dot(home)} ${home.short} vs ${away.short} · ${v.score}</h2><p>${home.stadium} · ${v.seat}</p><p class="visit-note">${v.note}</p></div><span class="visit-badge">${v.result}</span></article>`;
+      }).join('')}</div><p class="data-disclaimer">직관 기록 5개는 샘플입니다. 이번 앱에서 예매한 티켓은 ‘내 티켓’에서 확인할 수 있어요.</p>`;
+    }
+    function renderCommunity(){
+      $('community-view').innerHTML=dataHeading('커뮤니티','응원하는 팀은 달라도, 야구 이야기는 함께.')+`<div class="community-list">${mockPosts.map(p=>`<article class="post"><div class="post-meta"><span class="post-category">${p.category}</span><span>${p.author}</span><span>${p.time}</span></div><h2>${p.title}</h2><p>${p.body}</p><div class="post-footer"><span>댓글 ${p.comments}</span><span>공감 ${p.likes}</span></div></article>`).join('')}</div><p class="data-disclaimer">게시글 5개는 가짜 데이터입니다. 글쓰기·댓글·공감 기능은 준비 중입니다.</p>`;
+    }
+    function openHomeTab(view){
+      if(view==='calendar'){openCalendar();return;}
+      const renderers={records:renderRecords,rankings:renderRankings,visits:renderVisits,community:renderCommunity};
+      if(renderers[view]){renderers[view]();showView(view);}
+    }
+    function toggleSeat(id,target){
+      if(currentView!=='booking'||step!==2)return;
+      const seat=seatsForZone().find(s=>s.id===id);if(!seat||isSeatTaken(seat))return;
+      const index=selectedSeats.findIndex(s=>s.id===id);
+      if(index>=0)selectedSeats.splice(index,1);
+      else if(selectedSeats.length<4){selectedSeats.push(seat);selectedSeats.sort((a,b)=>a.id.localeCompare(b.id));}
+      else{$('seat-feedback').textContent='한 번에 최대 4개 좌석까지 선택할 수 있어요. 선택한 좌석을 해제해 주세요.';return;}
+      quantity=selectedSeats.length;
+      target.setAttribute('aria-pressed',String(selectedSeats.some(s=>s.id===id)));
+      $('seat-selection-info').textContent=quantity?`선택 ${quantity}장 · ${selectedSeats.map(s=>s.label).join(', ')}`:'원하는 좌석을 눌러 주세요. 다시 누르면 선택이 해제됩니다.';
+      $('seat-feedback').textContent='';
+      document.querySelector('.order-summary').outerHTML=renderSummary();
+    }
+    document.addEventListener('click',event=>{
+      const button=event.target.closest('button');
+      if(button&&button.disabled)return;
+      const target=event.target.closest('[data-team],[data-day],[data-game],[data-zone],[data-seat],[data-view],button');
+      if(!target)return;
+      if(target.dataset.view){openHomeTab(target.dataset.view);return;}
+      if(target.dataset.seat){toggleSeat(target.dataset.seat,target);return;}
+      if(target.dataset.team){
+        const id=target.dataset.team;selectedTeams.has(id)?selectedTeams.delete(id):selectedTeams.add(id);
+        const visible=matchingGames(selectedDay);if(!selectedGame||!visible.some(g=>g.id===selectedGame.id))selectedGame=visible[0]||null;
+        renderFilters();renderCalendar();renderDetail();$('filters').querySelector(`[data-team="${id}"]`).focus({preventScroll:true});return;
+      }
+      if(target.dataset.day){selectDay(Number(target.dataset.day));$('days').querySelector(`.day-number[data-day="${selectedDay}"]`).focus({preventScroll:true});return;}
+      if(target.dataset.game){selectGame(target.dataset.game,target.classList.contains('mini-match')?'calendar':'row');return;}
+      if(target.dataset.zone&&currentView==='booking'&&step===1){if(!selectedZone||selectedZone.id!==target.dataset.zone){selectedSeats=[];quantity=0;}selectedZone=zones.find(z=>z.id===target.dataset.zone);renderBooking();$('booking-view').querySelector(`button[data-zone="${selectedZone.id}"]`).focus({preventScroll:true});return;}
+      switch(target.id){
+        case 'brand':case 'success-calendar':case 'wallet-calendar':case 'empty-calendar':openCalendar();break;
+        case 'wallet-button':case 'success-wallet':openWallet();break;
+        case 'filter-reset':selectedTeams.clear();renderFilters();selectDay(selectedDay);$('filter-reset').focus({preventScroll:true});break;
+        case 'today-button':selectDay(today);break;
+        case 'notify-switch':{
+          const id=selectedGame.id;notifications.has(id)?notifications.delete(id):notifications.add(id);
+          const enabled=notifications.has(id);target.setAttribute('aria-checked',String(enabled));
+          $('notification-status').textContent=enabled?'알림 설정됨 · 실제 발송은 준비 중':'예매 오픈 일정을 놓치지 마세요';$('notification-status').classList.toggle('enabled',enabled);break;
+        }
+        case 'book-button':startBooking();break;
+        case 'booking-back':if(step===1)openCalendar();else{step--;renderBooking();const heading=$('booking-view').querySelector('.section-heading');heading.tabIndex=-1;heading.focus({preventScroll:true});}break;
+        case 'next-button':if(step<3&&selectedZone&&(step===1||selectedSeats.length)){step++;renderBooking();const heading=$('booking-view').querySelector('.section-heading');heading.tabIndex=-1;heading.focus({preventScroll:true});}else if(step===3)completeBooking();break;
+      }
+    });
+    renderFilters();selectDay(today);
+    setInterval(updateCountdown,1000);
+  </script>
+</body>
+</html>
