@@ -210,6 +210,14 @@
     .auth-error{min-height:21px;margin-bottom:12px;font-size:13px;font-weight:600;color:var(--danger)}
     .ticket-seats{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 0;padding:0;list-style:none}.ticket-seats li{padding:3px 10px;border:1px solid var(--blue-line);border-radius:999px;background:var(--blue-soft);color:var(--navy);font-size:11px;font-weight:700}.ticket-types{margin-top:10px;font-size:12px;color:var(--text-sub)}
     .btn.cancel-btn{margin-top:8px;border-color:#efc3bf;color:var(--danger)}.btn.cancel-btn:hover:not(:disabled){background:#fdecea;border-color:var(--danger)}
+    /* 응원 한마디 (경기 상세 패널 아래) */
+    .detail-column{display:grid;gap:var(--space-4);align-content:start;min-width:0}.detail-column .detail{position:static}
+    .cheers{padding:22px 24px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--white);box-shadow:var(--shadow)}.cheers h2{margin-bottom:12px;font-size:17px;font-weight:800;color:var(--navy)}
+    .cheer-teams{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}.cheer-team{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:5px 12px;border:1px solid var(--line);border-radius:999px;background:var(--white);font-size:12px;font-weight:700;color:var(--text);transition:background .15s,border-color .15s,color .15s}.cheer-team:hover{border-color:var(--blue)}.cheer-team[aria-pressed=true]{background:var(--navy);border-color:var(--navy);color:var(--white)}.cheer-team[aria-pressed=true] .home-tag{background:var(--white);color:var(--navy)}
+    .cheer-input{display:flex;gap:8px}.cheer-input input{flex:1;min-width:0;min-height:44px;padding:9px 12px;border:1px solid var(--line-strong);border-radius:var(--radius-btn);font:inherit;color:var(--text)}.cheer-input input:focus-visible{outline:3px solid var(--blue);outline-offset:1px;border-color:var(--blue)}.cheer-input .btn{flex-shrink:0}
+    .cheer-status{min-height:18px;margin-top:6px;font-size:12px;color:var(--danger)}
+    .cheer-list{max-height:340px;margin:6px 0 0;padding:0;overflow:auto;list-style:none}.cheer-list li{padding:11px 0;border-top:1px solid var(--line)}.cheer-list p{margin-top:5px;font-size:13px;color:var(--text);overflow-wrap:anywhere}
+    .cheer-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-sub)}.cheer-meta .team-badge{padding:1px 8px 1px 6px;font-size:11px}.cheer-author{font-weight:600;color:var(--text)}.cheer-list .cheer-empty{padding:18px 0;text-align:center;font-size:12px;color:var(--text-sub)}
   </style>
 </head>
 <body>
@@ -277,7 +285,18 @@
           </div>
           <div class="calendar-foot"><span class="legend"><span></span>초록 점은 경기가 있는 날이에요 · 날짜를 선택하면 모든 경기를 볼 수 있어요</span><span>모든 일정은 가상 데이터입니다</span></div>
         </div>
-        <aside class="detail" id="detail" aria-label="선택한 경기 상세"></aside>
+        <div class="detail-column">
+          <aside class="detail" id="detail" aria-label="선택한 경기 상세"></aside>
+          <section class="cheers" id="cheers" aria-labelledby="cheers-title" hidden>
+            <h2 id="cheers-title">응원 한마디</h2>
+            <form id="cheer-form">
+              <div class="cheer-teams" id="cheer-teams" role="group" aria-label="응원하는 팀"></div>
+              <div class="cheer-input"><input type="text" id="cheer-text" maxlength="50" autocomplete="off" aria-label="응원 한마디 (최대 50자)" placeholder="응원 한마디를 남겨 보세요 (최대 50자)"><button class="btn primary" id="cheer-submit" type="submit">남기기</button></div>
+              <p class="cheer-status" id="cheer-status" role="status"></p>
+            </form>
+            <ul class="cheer-list" id="cheer-list" aria-label="이 경기의 응원 목록"></ul>
+          </section>
+        </div>
       </div>
       <div class="daily-heading"><h2 id="daily-title"></h2><span class="small-count" id="daily-count"></span></div>
       <div class="match-list" id="match-list"></div>
@@ -460,10 +479,10 @@
     }
     function renderDetail(){
       const g=selectedGame;
-      if(!g){$('detail').innerHTML='<div class="detail-empty"><h2>오늘의 직관을 골라보세요</h2><p>달력에서 경기를 선택하면<br>경기 정보와 예매 일정을 볼 수 있어요.</p></div>';return;}
+      if(!g){$('detail').innerHTML='<div class="detail-empty"><h2>오늘의 직관을 골라보세요</h2><p>달력에서 경기를 선택하면<br>경기 정보와 예매 일정을 볼 수 있어요.</p></div>';syncCheers();return;}
       const enabled=notifications.has(g.id);
       $('detail').innerHTML=`<div class="detail-top"><p class="detail-label">${dateLabel(g.date)} · ${timeLabel(g.date)}</p><h2 class="detail-versus">${formatMatchup(g,{style:'badge',vs:'<span class="versus">VS</span>'})}</h2><p class="game-meta">${teamBadge(g.home.id,true)} 홈경기</p></div><div class="detail-body"><div class="detail-info"><span>경기장</span><strong>${g.stadium}</strong></div><div class="open-times"><div class="open-line"><span>선예매 오픈</span><strong>${openLabel(g.preOpen)}</strong></div><div class="open-line"><span>일반예매 오픈</span><strong>${openLabel(g.generalOpen)}</strong></div></div><div class="countdown-box"><p id="countdown-label"></p><div class="countdown" id="countdown" role="timer" aria-live="off"></div></div><div class="notify-row"><div><strong>오픈 알림 받기</strong><p class="notification-status${enabled?' enabled':''}" id="notification-status" role="status">${enabled?'알림 설정됨 · 실제 발송은 준비 중':'예매 오픈 일정을 놓치지 마세요'}</p></div><button class="switch" id="notify-switch" role="switch" aria-label="오픈 알림 받기" aria-checked="${enabled}"></button></div><button class="btn primary full" id="book-button">예매하기 ${arrow}</button><p class="demo-note">연습용으로 오픈 전 경기에도 예매할 수 있어요.</p></div>`;
-      updateCountdown();
+      updateCountdown();syncCheers();
     }
     function updateCountdown(){
       if(!selectedGame||!$('countdown'))return;
@@ -822,7 +841,7 @@
     // ----- 로그인(Firebase Authentication)과 내 티켓(Firestore) -----
     // Firebase와 직접 통신하는 코드는 firebaseService.js에 있고, 여기서는 window.TicketCloud만 씁니다.
     const cloudUnavailable=()=>Promise.reject(Object.assign(new Error('sdk'),{code:'app/sdk-load-failed'}));
-    const cloud=window.TicketCloud||{configured:true,onAuth:listener=>listener(null),signUp:cloudUnavailable,signIn:cloudUnavailable,signOut:cloudUnavailable,saveTicket:cloudUnavailable,loadMyTickets:cloudUnavailable,deleteTicket:cloudUnavailable};
+    const cloud=window.TicketCloud||{configured:true,onAuth:listener=>listener(null),signUp:cloudUnavailable,signIn:cloudUnavailable,signOut:cloudUnavailable,saveTicket:cloudUnavailable,loadMyTickets:cloudUnavailable,deleteTicket:cloudUnavailable,addCheer:cloudUnavailable,seedCheers:cloudUnavailable,watchCheers:(gameId,onData,onError)=>{onError();return()=>{};}};
     let currentUser=null,pendingBookingId=null,ticketsState='idle',savingOrder=false,authMode='login';
     const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     // Firebase 오류 코드를 한글 안내로 바꿉니다.
@@ -934,6 +953,61 @@
       const typeText=ticketTypes.filter(type=>Number(types[type.id])>0).map(type=>`${type.name} ${Number(types[type.id])}명`).join(' · ');
       return `<article class="ticket"><div class="ticket-head"><p class="ticket-tag">모의 예매 완료 · 예매자 ${esc(t.emailPrefix)}</p><h2>${game?formatMatchup(game,{short:true}):esc(t.gameLabel)}</h2>${game?`<p>${dateLabel(game.date)} ${timeLabel(game.date)}<br>${game.stadium}</p>`:''}</div><div class="ticket-body"><div class="ticket-seat"><strong>${section?`${gradeById(section.gradeId).name} ${section.id}구역`:esc(t.sectionId)+'구역'}</strong><span>${seats.length}석 · ${money(Number(t.totalPrice)||0)}</span></div><ul class="ticket-seats" aria-label="좌석">${seats.map(id=>`<li>${seatText(id)}</li>`).join('')}</ul>${typeText?`<p class="ticket-types">${typeText}</p>`:''}<div class="qr-area">${fakeQr(String(t.id))}<p class="qr-caption">연습용 QR 모양 · 실제 입장 불가</p><p class="ticket-id">${esc(t.id)}</p><button class="btn full" disabled title="친구에게 전달 기능은 준비 중입니다">친구에게 전달 · 준비 중</button><button class="btn full cancel-btn" data-cancel-ticket="${esc(t.id)}">예매 취소</button></div></div></article>`;
     }
+    // ----- 응원 한마디(Firestore cheers) -----
+    // 지금 열려 있는 경기의 응원만 최신순으로 실시간 표시합니다. 다른 경기를 열면 이전 구독을 해제하고 새 경기로 다시 구독합니다.
+    let cheerGameId=null,cheerTeam=null,cheerItems=null,stopCheers=null;
+    function relativeTime(date){
+      if(!(date instanceof Date))return '방금 전';
+      const minutes=Math.floor((Date.now()-date.getTime())/60000);
+      return minutes<1?'방금 전':minutes<60?`${minutes}분 전`:minutes<1440?`${Math.floor(minutes/60)}시간 전`:`${Math.floor(minutes/1440)}일 전`;
+    }
+    // 응원하는 팀 선택 토글: [원정팀] [홈팀], 기본값은 홈팀.
+    function renderCheerTeams(){
+      const game=games.find(g=>g.id===cheerGameId);if(!game)return;
+      $('cheer-teams').innerHTML=[game.away,game.home].map(t=>`<button type="button" class="cheer-team" data-cheer-team="${t.id}" aria-pressed="${t.id===cheerTeam}">${dot(t)}${t.shortName}${t.id===game.home.id?'<span class="home-tag">HOME</span>':''}</button>`).join('');
+    }
+    // 응원 글·작성자는 textContent로만 넣어 HTML이 실행되지 않게 합니다.
+    function renderCheerList(){
+      const list=$('cheer-list');list.textContent='';
+      const note=text=>{const li=document.createElement('li');li.className='cheer-empty';li.textContent=text;list.append(li);};
+      if(cheerItems===null){note('응원을 불러오는 중…');return;}
+      if(cheerItems==='error'){note('응원을 불러올 수 없어요. 잠시 후 다시 시도해 주세요.');return;}
+      if(!cheerItems.length){note('첫 응원을 남겨 보세요!');return;}
+      cheerItems.forEach(item=>{
+        const li=document.createElement('li'),meta=document.createElement('div'),badge=document.createElement('span'),author=document.createElement('span'),time=document.createElement('span'),text=document.createElement('p');
+        const team=teams.find(t=>t.id===item.team);
+        meta.className='cheer-meta';badge.className='team-badge';badge.textContent=team?team.shortName:'팬';
+        if(team)badge.style.setProperty('--team',team.color);
+        author.className='cheer-author';author.textContent=String(item.authorName||'익명 팬');
+        time.textContent=relativeTime(item.createdAt);text.textContent=String(item.text||'');
+        meta.append(badge,author,time);li.append(meta,text);list.append(li);
+      });
+    }
+    function syncCheers(){
+      const game=selectedGame,id=game?game.id:null;
+      $('cheers').hidden=!game;
+      if(id===cheerGameId)return;
+      if(stopCheers){stopCheers();stopCheers=null;}
+      cheerGameId=id;cheerItems=null;
+      if(!game)return;
+      cheerTeam=game.home.id;$('cheer-status').textContent='';renderCheerTeams();renderCheerList();
+      stopCheers=cloud.watchCheers(id,items=>{if(cheerGameId!==id)return;cheerItems=items;renderCheerList();},()=>{if(cheerGameId!==id)return;cheerItems='error';renderCheerList();});
+    }
+    function submitCheer(){
+      const input=$('cheer-text'),button=$('cheer-submit'),status=$('cheer-status'),text=input.value.trim();
+      if(!cheerGameId||button.disabled)return;
+      if(!text){status.textContent='응원 한마디를 입력해 주세요.';return;} // 빈 값은 저장하지 않습니다.
+      if(text.length>50){status.textContent='50자까지 남길 수 있어요.';return;}
+      button.disabled=true;button.textContent='저장 중…';status.textContent='';
+      cloud.addCheer({gameId:cheerGameId,team:cheerTeam,text,authorName:currentUser?currentUser.emailPrefix:'익명 팬'}).then(()=>{input.value='';},()=>{status.textContent='응원을 남기지 못했어요. 잠시 후 다시 시도해 주세요.';}).then(()=>{button.disabled=false;button.textContent='남기기';});
+    }
+    // cheers가 완전히 비어 있을 때만, 이번 주(월~일) 예시 경기마다 샘플 응원 5개를 넣습니다. 작성자는 "샘플 팬"입니다.
+    function seedSampleCheers(){
+      const monday=new Date(year,month,today-(now.getDay()+6)%7),nextMonday=new Date(monday.getFullYear(),monday.getMonth(),monday.getDate()+7);
+      const lines=['오늘은 무조건 위닝시리즈!','직관 승률 100% 가즈아','선발 믿습니다','끝까지 응원합니다','만루 홈런 한 방 부탁해요'];
+      const samples=games.filter(g=>g.date>=monday&&g.date<nextMonday).flatMap(g=>lines.map((text,i)=>({id:`sample-${g.id}-${i+1}`,gameId:g.id,team:(i%2?g.away:g.home).id,text,authorName:'샘플 팬',minutesAgo:(i+1)*12})));
+      cloud.seedCheers(samples).catch(()=>{});
+    }
     function renderWallet(){
       const icon='<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 5h18v5a2 2 0 0 0 0 4v5H3v-5a2 2 0 0 0 0-4V5Z" stroke="currentColor" stroke-width="1.3"/><path d="M16 7v2m0 2v2m0 2v2" stroke="currentColor" stroke-width="1.3"/></svg>';
       const notice=(title,text,button='')=>`<div class="empty-wallet">${icon}<h2>${title}</h2><p>${text}</p>${button}</div>`;
@@ -1037,6 +1111,7 @@
       if(!target)return;
       if(target.dataset.view){openHomeTab(target.dataset.view);return;}
       if(target.dataset.authTab){setAuthMode(target.dataset.authTab);return;}
+      if(target.dataset.cheerTeam){cheerTeam=target.dataset.cheerTeam;renderCheerTeams();$('cheer-teams').querySelector('[aria-pressed=true]').focus({preventScroll:true});return;}
       if(target.dataset.cancelTicket){cancelTicket(target.dataset.cancelTicket);return;}
       if(target.dataset.statTab){statsView.tab=target.dataset.statTab;renderStats();$('player-stats').querySelector(`[data-stat-tab="${statsView.tab}"]`).focus({preventScroll:true});return;}
       if(target.dataset.statSort){sortStats(target.dataset.statSort);return;}
@@ -1108,6 +1183,7 @@
     document.addEventListener('focusout',event=>{if(event.target.matches('[data-section]')&&$('map-tooltip'))$('map-tooltip').hidden=true;});
     $('selection-dialog').addEventListener('cancel',()=>pendingDialog=null);
     $('auth-form').addEventListener('submit',event=>{event.preventDefault();submitAuth();});
+    $('cheer-form').addEventListener('submit',event=>{event.preventDefault();submitCheer();});
     // 로그인하지 않고 모달을 닫으면, 이어서 하려던 예매는 잊습니다.
     $('auth-dialog').addEventListener('close',()=>{if(!currentUser)pendingBookingId=null;});
     // 가입/로그인 탭은 좌우 방향키로도 옮길 수 있습니다.
@@ -1139,6 +1215,8 @@
     renderFilters();selectDay(today);
     if(hashView())openHomeTab(hashView());
     renderAuth();cloud.onAuth(handleAuth);
+    seedSampleCheers();
+    setInterval(()=>{if(Array.isArray(cheerItems))renderCheerList();},30000); // "n분 전" 표시 갱신
     setInterval(updateCountdown,1000);
   </script>
 </body>

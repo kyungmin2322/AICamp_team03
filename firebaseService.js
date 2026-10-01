@@ -37,6 +37,32 @@
       const data=item.data();
       return {...data,id:item.id,createdAt:data.createdAt&&data.createdAt.toDate?data.createdAt.toDate():null};
     })),
-    deleteTicket:id=>withSdk(c=>c.store.deleteDoc(c.store.doc(c.db,'tickets',id)))
+    deleteTicket:id=>withSdk(c=>c.store.deleteDoc(c.store.doc(c.db,'tickets',id))),
+
+    // ----- 응원 한마디(cheers) -----
+    addCheer:data=>withSdk(c=>c.store.addDoc(c.store.collection(c.db,'cheers'),{...data,createdAt:c.store.serverTimestamp()})).then(ref=>ref.id),
+    // 한 경기의 응원을 최신순으로 실시간 구독합니다. 돌려주는 함수를 부르면 구독을 해제합니다.
+    // (gameId 조건 + createdAt 정렬이라 firestore.indexes.json의 복합 색인이 필요합니다.)
+    watchCheers(gameId,onData,onError){
+      let stop=null,cancelled=false;
+      withSdk(c=>{
+        if(cancelled)return;
+        const cheers=c.store.query(c.store.collection(c.db,'cheers'),c.store.where('gameId','==',gameId),c.store.orderBy('createdAt','desc'),c.store.limit(50));
+        stop=c.store.onSnapshot(cheers,snapshot=>onData(snapshot.docs.map(item=>{
+          // 방금 쓴 글은 서버 시각이 아직 없으므로 추정 시각을 씁니다.
+          const data=item.data({serverTimestamps:'estimate'});
+          return {id:item.id,gameId:data.gameId,team:data.team,text:data.text,authorName:data.authorName,createdAt:data.createdAt&&data.createdAt.toDate?data.createdAt.toDate():null};
+        })),onError);
+      }).catch(onError);
+      return ()=>{cancelled=true;if(stop)stop();};
+    },
+    // cheers가 완전히 비어 있을 때만 샘플을 한 번 넣습니다(넣었으면 true).
+    // 샘플은 문서 id를 고정해 두어, 여러 번 실행되거나 동시에 실행돼도 중복으로 쌓이지 않습니다.
+    seedCheers:samples=>withSdk(c=>c.store.getDocs(c.store.query(c.store.collection(c.db,'cheers'),c.store.limit(1))).then(snapshot=>{
+      if(!snapshot.empty||!samples.length)return false;
+      const batch=c.store.writeBatch(c.db);
+      samples.forEach(({id,minutesAgo,...data})=>batch.set(c.store.doc(c.db,'cheers',id),{...data,createdAt:c.store.Timestamp.fromMillis(Date.now()-minutesAgo*60000)}));
+      return batch.commit().then(()=>true);
+    }))
   };
 })();

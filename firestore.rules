@@ -1,3 +1,4 @@
+// 테스트용 규칙: 2026-10-31 만료. 이후 로그인 사용자만 작성하도록 잠글 것
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -7,6 +8,22 @@ service cloud.firestore {
       allow create: if request.auth != null && request.resource.data.uid == request.auth.uid;
       allow delete: if request.auth != null && resource.data.uid == request.auth.uid;
       allow update: if false;
+    }
+    // 응원 한마디(테스트용): 2026-10-31 전까지 누구나 읽고 남길 수 있습니다. 수정·삭제는 할 수 없습니다.
+    // 누구나 쓸 수 있는 동안에도 정해진 필드와 글자 수(1~50자)만 받습니다.
+    match /cheers/{cheerId} {
+      allow read: if request.time < timestamp.date(2026, 10, 31);
+      allow create: if request.time < timestamp.date(2026, 10, 31)
+                    && request.resource.data.keys().hasOnly(['gameId', 'team', 'text', 'authorName', 'createdAt'])
+                    && request.resource.data.gameId is string
+                    && request.resource.data.team is string
+                    && request.resource.data.text is string
+                    && request.resource.data.text.size() >= 1
+                    && request.resource.data.text.size() <= 50
+                    && request.resource.data.authorName is string
+                    && request.resource.data.authorName.size() <= 40
+                    && request.resource.data.createdAt is timestamp;
+      allow update, delete: if false;
     }
     // 그 외 모든 경로는 읽기·쓰기 모두 차단합니다.
     match /{document=**} {
