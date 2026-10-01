@@ -197,11 +197,7 @@
     .summary-line span.matchup{justify-content:flex-end;color:inherit}.summary-line span.home-tag{color:var(--white)}
     .success-match span.matchup,.success-match span.matchup-home{display:inline-flex;justify-content:center;margin-top:0;color:inherit;font-size:inherit}.success-match span.versus{margin-top:0}.success-match span.home-tag{margin-top:0;color:var(--white);font-size:9px}
     .seat-booking-header p span.matchup,.seat-booking-header p span.matchup-home{display:inline-flex}.seat-booking-header p .matchup,.seat-booking-header p .matchup span{margin-top:0}
-    /* 경기 기록 화면의 탭: 선택된 탭은 네이비 밑줄 + 굵은 글자 */
-    .record-tabs{display:flex;gap:28px;margin-bottom:24px;border-bottom:1px solid var(--line)}
-    .record-tab{margin-bottom:-1px;padding:10px 2px 12px;min-height:44px;border:0;border-bottom:3px solid transparent;background:none;font-size:15px;font-weight:500;color:var(--text-sub);transition:color .15s}.record-tab:hover{color:var(--navy)}
-    .record-tab[aria-selected=true]{border-bottom-color:var(--navy);font-weight:800;color:var(--navy)}
-    .record-panel .player-stats{margin-top:0}
+    #players-view .player-stats{margin-top:0}
   </style>
 </head>
 <body>
@@ -227,6 +223,7 @@
   <nav class="home-tabs" id="home-tabs" aria-label="홈 메뉴">
     <button class="home-tab" data-view="calendar" aria-current="page">경기 캘린더</button>
     <button class="home-tab" data-view="records">경기 기록</button>
+    <button class="home-tab" data-view="players">선수 순위</button>
     <button class="home-tab" data-view="rankings">현재 순위</button>
     <button class="home-tab" data-view="visits">나의 직관 기록</button>
     <button class="home-tab" data-view="community">커뮤니티</button>
@@ -277,6 +274,7 @@
     <section id="success-view" hidden aria-label="예매 완료"></section>
     <section id="wallet-view" hidden aria-label="내 티켓"></section>
     <section id="records-view" class="data-surface" hidden aria-label="경기 기록"></section>
+    <section id="players-view" class="data-surface" hidden aria-label="선수 순위"></section>
     <section id="rankings-view" class="data-surface" hidden aria-label="현재 순위"></section>
     <section id="visits-view" class="data-surface" hidden aria-label="나의 직관 기록"></section>
     <section id="community-view" class="data-surface" hidden aria-label="커뮤니티"></section>
@@ -467,9 +465,10 @@
     }
     function showView(view){
       currentView=view;
-      // 경기 기록 화면을 벗어나면 탭 해시를 지워, 새로고침했을 때 다른 화면에서 경기 기록이 열리지 않게 합니다.
-      if(view!=='records'&&hashTab())history.replaceState(null,'',location.href.split('#')[0]);
-      ['calendar','booking','success','wallet','records','rankings','visits','community'].forEach(name=>{const el=$(name+'-view');el.hidden=name!==view;el.classList.toggle('view-enter',name===view);});
+      // 해시를 현재 화면에 맞춥니다. 해시를 쓰지 않는 화면으로 가면 지웁니다.
+      const hash=Object.keys(hashViews).find(key=>hashViews[key]===view)||'';
+      if(location.hash.slice(1)!==hash&&(hash||hashView()))history.replaceState(null,'',location.href.split('#')[0]+(hash?'#'+hash:''));
+      ['calendar','booking','success','wallet','records','players','rankings','visits','community'].forEach(name=>{const el=$(name+'-view');el.hidden=name!==view;el.classList.toggle('view-enter',name===view);});
       $('home-tabs').hidden=['booking','success'].includes(view);
       document.querySelectorAll('[data-view]').forEach(tab=>{if(tab.dataset.view===view)tab.setAttribute('aria-current','page');else tab.removeAttribute('aria-current');});
       $('wallet-button').setAttribute('aria-current',view==='wallet'?'page':'false');
@@ -818,25 +817,17 @@
     ];
     const teamById=id=>teams.find(t=>t.id===id);
     function dataHeading(title,description){return `<div class="data-heading"><div><h1>${title}</h1><p>${description}</p></div><span class="practice-label">가짜 데이터</span></div>`;}
-    // 경기 기록 화면의 탭. 보던 탭은 URL 해시(#records, #rankings)에 남겨 새로고침해도 다시 열립니다.
-    const recordTabs=[['records','경기 기록'],['rankings','선수 순위']];
-    const hashTab=()=>recordTabs.some(([id])=>'#'+id===location.hash)?location.hash.slice(1):null;
-    let recordTab=hashTab()||'records';
-    function setRecordTab(tab,focus=false){
-      recordTab=tab;
-      recordTabs.forEach(([id])=>{
-        const button=$('tab-'+id),selected=id===tab;
-        button.setAttribute('aria-selected',String(selected));button.tabIndex=selected?0:-1;$('panel-'+id).hidden=!selected;
-        if(selected&&focus)button.focus({preventScroll:true});
-      });
-      if(location.hash!=='#'+tab)history.replaceState(null,'',location.href.split('#')[0]+'#'+tab);
-    }
+    // 경기 기록·선수 순위 화면은 URL 해시(#records, #rankings)에 남겨, 새로고침해도 보던 화면이 다시 열립니다.
+    const hashViews={records:'records',rankings:'players'};
+    const hashView=()=>hashViews[location.hash.slice(1)]||null;
     function renderRecords(){
-      $('records-view').innerHTML=dataHeading('경기 기록','끝난 경기의 스코어와 이야기를 한눈에.')+`<div class="record-tabs" role="tablist" aria-label="경기 기록 보기">${recordTabs.map(([id,label])=>`<button class="record-tab" role="tab" id="tab-${id}" aria-controls="panel-${id}" data-record-tab="${id}">${label}</button>`).join('')}</div><div class="record-panel" role="tabpanel" id="panel-records" aria-labelledby="tab-records" tabindex="0"><div class="records-list">${mockRecords.map(r=>{
+      $('records-view').innerHTML=dataHeading('경기 기록','끝난 경기의 스코어와 이야기를 한눈에.')+`<div class="records-list">${mockRecords.map(r=>{
         const home=teamById(r.home),away=teamById(r.away),result=r.homeScore===r.awayScore?'무승부':`${teamName((r.homeScore>r.awayScore?home:away).id,{short:true,size:16})} 승리`;
         return `<article class="record-row"><span class="record-date">${dateLabel(r.date)}</span><div><h2 class="record-score">${formatMatchup(r,{short:true,vs:`<strong>${r.awayScore} : ${r.homeScore}</strong>`})}</h2><p>${home.stadium} · 경기 종료</p><p>${r.note}</p></div><span class="record-result">${result}</span></article>`;
-      }).join('')}</div><p class="data-disclaimer">샘플 경기 5개입니다. 실제 경기 결과와 다르며, 실시간으로 갱신되지 않습니다.</p></div><div class="record-panel" role="tabpanel" id="panel-rankings" aria-labelledby="tab-rankings" tabindex="0"><section class="player-stats" id="player-stats" aria-label="선수 기록 TOP 10"></section></div>`;
-      setRecordTab(recordTab);
+      }).join('')}</div><p class="data-disclaimer">샘플 경기 5개입니다. 실제 경기 결과와 다르며, 실시간으로 갱신되지 않습니다.</p>`;
+    }
+    function renderPlayers(){
+      $('players-view').innerHTML=dataHeading('선수 순위','투수·타자 TOP 10을 한눈에.')+'<section class="player-stats" id="player-stats" aria-label="선수 기록 TOP 10"></section>';
       renderStats();
       if(!statsData&&window.StatsService)window.StatsService.load().then(data=>{statsData=data;renderStats();},()=>{statsError=true;renderStats();});
     }
@@ -879,7 +870,7 @@
     }
     function openHomeTab(view){
       if(view==='calendar'){openCalendar();return;}
-      const renderers={records:renderRecords,rankings:renderRankings,visits:renderVisits,community:renderCommunity};
+      const renderers={records:renderRecords,players:renderPlayers,rankings:renderRankings,visits:renderVisits,community:renderCommunity};
       if(renderers[view]){renderers[view]();showView(view);}
     }
     document.addEventListener('click',event=>{
@@ -888,7 +879,6 @@
       const target=event.target.closest('[data-team],[data-day],[data-game],[data-section],[data-seat],[data-view],[data-type],[data-grade],[data-remove-seat],button');
       if(!target)return;
       if(target.dataset.view){openHomeTab(target.dataset.view);return;}
-      if(target.dataset.recordTab){setRecordTab(target.dataset.recordTab,true);return;}
       if(target.dataset.statTab){statsView.tab=target.dataset.statTab;renderStats();$('player-stats').querySelector(`[data-stat-tab="${statsView.tab}"]`).focus({preventScroll:true});return;}
       if(target.dataset.statSort){sortStats(target.dataset.statSort);return;}
       if(target.dataset.section&&currentView==='booking'){activateSection(target.dataset.section);return;}
@@ -975,19 +965,9 @@
         if(game){selectedGame=game;selectedDay=game.day;renderCalendar();renderDetail();startBooking();}
       }
     });
-    // 경기 기록 탭: 좌우 방향키(와 Home/End)로 탭을 옮깁니다.
-    document.addEventListener('keydown',event=>{
-      if(!event.target.matches('[data-record-tab]')||!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
-      event.preventDefault();
-      const ids=recordTabs.map(([id])=>id),i=ids.indexOf(event.target.dataset.recordTab);
-      setRecordTab(event.key==='Home'?ids[0]:event.key==='End'?ids[ids.length-1]:ids[(i+(event.key==='ArrowRight'?1:-1)+ids.length)%ids.length],true);
-    });
-    window.addEventListener('hashchange',()=>{
-      const tab=hashTab();if(!tab)return;
-      if(currentView==='records')setRecordTab(tab);else{recordTab=tab;openHomeTab('records');}
-    });
+    window.addEventListener('hashchange',()=>{const view=hashView();if(view&&view!==currentView)openHomeTab(view);});
     renderFilters();selectDay(today);
-    if(hashTab())openHomeTab('records');
+    if(hashView())openHomeTab(hashView());
     setInterval(updateCountdown,1000);
   </script>
 </body>
