@@ -1,0 +1,3 @@
+# Firebase CLI가 만드는 캐시와 로그
+.firebase/
+firebase-debug.log
