@@ -31,6 +31,10 @@
     .type-count{font-size:14px;margin:6px 0 16px}.type-count strong{color:var(--green)}.type-list{background:white;border:1px solid var(--line);border-radius:14px;padding:4px 20px}.type-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 0;border-bottom:1px solid #edf0e9}.type-row:last-child{border-bottom:0}.type-row strong{display:block;font-size:15px}.type-row small{display:block;font-size:11px;color:var(--muted);margin-top:2px;font-variant-numeric:tabular-nums}.type-hint{font-size:12px;color:#a43c16;margin:14px 0;min-height:20px}.type-hint.ok{color:var(--green)}
     .toast{position:fixed;top:14px;left:0;right:0;margin:0 auto;width:fit-content;background:#223127;color:white;border-radius:24px;padding:11px 18px;font-size:13px;font-weight:700;z-index:60;max-width:calc(100% - 32px);text-align:center;box-shadow:0 5px 18px #17342640}
     @media(max-width:520px){.step-more{display:none}.type-list{padding:4px 14px}}
+    /* 경기 카드 날씨 · 선수 기록 TOP 10 */
+    .match-weather{display:block;font-size:11px;color:#466149;margin-top:4px;font-variant-numeric:tabular-nums}.match-weather.muted{color:var(--muted)}.weather-badge{display:inline-block;background:var(--grass);border:1px solid #cedeca;border-radius:5px;padding:0 6px;margin-right:5px;font-weight:700;color:var(--green)}
+    .player-stats{margin-top:38px}.stats-title{font-size:20px;letter-spacing:-.6px;margin-bottom:12px}.stat-tabs{display:flex;gap:8px;margin-bottom:14px}.stat-tab{min-height:44px;padding:9px 16px;border:1px solid var(--line);background:white;border-radius:24px;font-size:13px;font-weight:700;color:#4f6055}.stat-tab:hover{border-color:#84998b}.stat-tab[aria-selected=true]{background:var(--green);border-color:var(--green);color:white}.stat-table th{padding:4px 6px}.stat-sort{border:0;background:none;color:inherit;font-size:11px;font-weight:700;min-height:36px;padding:6px 4px;display:inline-flex;align-items:center;gap:3px}.stat-sort:hover,.stat-table th[aria-sort=ascending] .stat-sort,.stat-table th[aria-sort=descending] .stat-sort{color:var(--green)}.stat-table td.sorted{background:#f6faf2;font-weight:700}.team-badge{font-size:10px;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 5px}
+    @media(max-width:800px){.stat-table th:nth-child(2),.stat-table td:nth-child(2){position:sticky;left:0;z-index:1;background:white;box-shadow:1px 0 0 var(--line)}.stat-table th:nth-child(2){background:#f3f6ef}}
   </style>
 </head>
 <body>
@@ -81,6 +85,8 @@
   <div class="toast" id="toast" role="status" hidden></div>
   <script src="grades.js"></script>
   <script src="sections.js"></script>
+  <script src="weatherService.js"></script>
+  <script src="statsService.js"></script>
   <script>
     'use strict';
     const teams = [
@@ -94,6 +100,18 @@
       {id:'samsung',name:'삼성 라이온즈',short:'삼성',color:'#1559b4',stadium:'대구 삼성 라이온즈파크'},
       {id:'hanwha',name:'한화 이글스',short:'한화',color:'#f07722',stadium:'대전 한화생명 볼파크'},
       {id:'kiwoom',name:'키움 히어로즈',short:'키움',color:'#7c173d',stadium:'고척 스카이돔'}
+    ];
+    // 구장 위치. 날씨 조회 때 위경도를 기상청 격자(nx, ny)로 바꿔 씁니다. 좌표는 대략값이라 확인이 필요합니다.
+    const stadiums=[
+      {id:'jamsil',name:'잠실야구장',city:'서울',lat:37.5122,lng:127.0719},
+      {id:'suwon',name:'수원 KT 위즈파크',city:'수원',lat:37.2997,lng:127.0097},
+      {id:'incheon',name:'인천 SSG 랜더스필드',city:'인천',lat:37.4370,lng:126.6932},
+      {id:'changwon',name:'창원 NC 파크',city:'창원',lat:35.2225,lng:128.5822},
+      {id:'gwangju',name:'광주 기아 챔피언스필드',city:'광주',lat:35.1682,lng:126.8891},
+      {id:'sajik',name:'사직야구장',city:'부산',lat:35.1940,lng:129.0615},
+      {id:'daegu',name:'대구 삼성 라이온즈파크',city:'대구',lat:35.8411,lng:128.6817},
+      {id:'daejeon',name:'대전 한화생명 볼파크',city:'대전',lat:36.3170,lng:127.4291},
+      {id:'gocheok',name:'고척 스카이돔',city:'서울',lat:37.4982,lng:126.8671}
     ];
     const grades=window.TicketGrades,sections=window.TicketSections;
     const bookingOptions={dark:false};
@@ -149,7 +167,21 @@
       const list=matchingGames(selectedDay);
       $('daily-title').textContent=dateLabel(new Date(year,month,selectedDay));
       $('daily-count').textContent=`${list.length}경기`;
-      $('match-list').innerHTML=list.length?list.map(g=>`<button class="match-row${selectedGame&&selectedGame.id===g.id?' active':''}" data-game="${g.id}" aria-pressed="${!!selectedGame&&selectedGame.id===g.id}"><span class="match-time">${timeLabel(g.date)}</span><span class="match-main"><span class="match-title">${dot(g.home)}${g.home.name}<span class="versus">vs</span>${dot(g.away)}${g.away.name}</span><span class="match-stadium">${g.stadium} · 홈 ${g.home.short}</span></span><span class="match-status">${statusLabel(g)}</span>${arrow}</button>`).join(''):new Date(year,month,selectedDay).getDay()===1?'<p class="empty-list">월요일은 휴식일이에요. 다른 날짜의 경기를 확인해 주세요.</p>':'<p class="empty-list">선택한 구단의 경기가 없어요. 전체 구단을 선택해 보세요.</p>';
+      $('match-list').innerHTML=list.length?list.map(g=>`<button class="match-row${selectedGame&&selectedGame.id===g.id?' active':''}" data-game="${g.id}" aria-pressed="${!!selectedGame&&selectedGame.id===g.id}"><span class="match-time">${timeLabel(g.date)}</span><span class="match-main"><span class="match-title">${dot(g.home)}${g.home.name}<span class="versus">vs</span>${dot(g.away)}${g.away.name}</span><span class="match-stadium">${g.stadium} · 홈 ${g.home.short}</span><span class="match-weather muted" data-weather="${g.id}">날씨 확인 중…</span></span><span class="match-status">${statusLabel(g)}</span>${arrow}</button>`).join(''):new Date(year,month,selectedDay).getDay()===1?'<p class="empty-list">월요일은 휴식일이에요. 다른 날짜의 경기를 확인해 주세요.</p>':'<p class="empty-list">선택한 구단의 경기가 없어요. 전체 구단을 선택해 보세요.</p>';
+      list.forEach(loadGameWeather);
+    }
+    // 경기 카드의 날씨 영역만 따로 채웁니다. 실패해도 카드의 나머지 정보는 그대로 보입니다.
+    function setGameWeather(gameId,html,muted){
+      const el=$('match-list').querySelector(`[data-weather="${gameId}"]`);
+      if(el){el.innerHTML=html;el.classList.toggle('muted',muted);}
+    }
+    function loadGameWeather(g){
+      const failed=()=>setGameWeather(g.id,'날씨 정보를 불러올 수 없습니다',true);
+      if(!window.WeatherService){failed();return;}
+      window.WeatherService.getGameWeather(stadiums.find(s=>s.name===g.stadium),g.date).then(w=>{
+        if(w.status==='ok')setGameWeather(g.id,`<span class="weather-badge"><span aria-hidden="true">${w.icon}</span> ${w.label}</span>${w.temp}℃ · 강수확률 ${w.pop}%`,false);
+        else setGameWeather(g.id,'예보 준비 중 (경기 3~4일 전부터 제공)',true);
+      },failed);
     }
     function renderDetail(){
       const g=selectedGame;
@@ -533,7 +565,34 @@
       $('records-view').innerHTML=dataHeading('경기 기록','끝난 경기의 스코어와 이야기를 한눈에.')+`<div class="records-list">${mockRecords.map(r=>{
         const home=teamById(r.home),away=teamById(r.away),result=r.homeScore===r.awayScore?'무승부':`${r.homeScore>r.awayScore?home.short:away.short} 승리`;
         return `<article class="record-row"><span class="record-date">${dateLabel(r.date)}</span><div><h2 class="record-score"><span>${dot(home)} ${home.short}</span><strong>${r.homeScore} : ${r.awayScore}</strong><span>${dot(away)} ${away.short}</span></h2><p>${home.stadium} · 경기 종료</p><p>${r.note}</p></div><span class="record-result">${result}</span></article>`;
-      }).join('')}</div><p class="data-disclaimer">샘플 경기 5개입니다. 실제 경기 결과와 다르며, 실시간으로 갱신되지 않습니다.</p>`;
+      }).join('')}</div><p class="data-disclaimer">샘플 경기 5개입니다. 실제 경기 결과와 다르며, 실시간으로 갱신되지 않습니다.</p><section class="player-stats" id="player-stats" aria-label="선수 기록 TOP 10"></section>`;
+      renderStats();
+      if(!statsData&&window.StatsService)window.StatsService.load().then(data=>{statsData=data;renderStats();},()=>{statsError=true;renderStats();});
+    }
+    // 선수 기록 TOP 10. 데이터 로딩은 statsService.js가 맡고, 여기서는 정렬과 표시만 합니다.
+    const statColumns={
+      pitchers:[{key:'era',label:'ERA',asc:true,qualifiedOnly:'규정이닝',format:v=>v.toFixed(2)},{key:'war',label:'WAR',format:v=>v.toFixed(2)},{key:'wins',label:'승'},{key:'losses',label:'패'},{key:'saves',label:'세이브'},{key:'holds',label:'홀드'},{key:'games',label:'경기수'}],
+      batters:[{key:'avg',label:'타율',qualifiedOnly:'규정타석',format:v=>v.toFixed(3).replace(/^0/,'')},{key:'war',label:'WAR',format:v=>v.toFixed(2)},{key:'hits',label:'안타'},{key:'homeRuns',label:'홈런'},{key:'rbi',label:'타점'},{key:'runs',label:'득점'},{key:'stolenBases',label:'도루'}]
+    };
+    let statsData=null,statsError=!window.StatsService;
+    const statsView={tab:'pitchers',sort:{pitchers:{key:'war',asc:false},batters:{key:'war',asc:false}}};
+    function renderStats(){
+      const box=$('player-stats');if(!box)return;
+      const tab=statsView.tab,cols=statColumns[tab],sort=statsView.sort[tab],col=cols.find(c=>c.key===sort.key);
+      const head=`<h2 class="stats-title">선수 기록 TOP 10</h2><div class="stat-tabs" role="tablist" aria-label="선수 기록 종류">${[['pitchers','투수 TOP 10'],['batters','타자 TOP 10']].map(([id,label])=>`<button class="stat-tab" role="tab" data-stat-tab="${id}" aria-selected="${tab===id}">${label}</button>`).join('')}</div>`;
+      if(!statsData){box.innerHTML=head+`<p class="empty-list">${statsError?'선수 기록을 불러올 수 없습니다':'선수 기록을 불러오는 중…'}</p>`;return;}
+      // 정렬할 때마다 전체 선수에서 상위 10명을 다시 뽑습니다. ERA·타율은 규정이닝/규정타석을 채운 선수만 대상입니다.
+      const rows=statsData[tab].filter(p=>!col.qualifiedOnly||p.qualified).sort((a,b)=>(a[sort.key]-b[sort.key])*(sort.asc?1:-1)||b.war-a.war).slice(0,10);
+      box.innerHTML=head+`<p class="small-note" style="margin-bottom:10px">${col.label} ${sort.asc?'오름차순':'내림차순'} 상위 10명${col.qualifiedOnly?` · ${col.qualifiedOnly}을 채운 선수만`:''} · 열 이름을 누르면 다시 정렬해요</p><div class="table-wrap"><table class="rank-table stat-table" aria-label="${tab==='pitchers'?'투수':'타자'} TOP 10"><thead><tr><th scope="col">순위</th><th scope="col">선수명(소속팀)</th>${cols.map(c=>`<th scope="col" aria-sort="${c.key===sort.key?(sort.asc?'ascending':'descending'):'none'}"><button class="stat-sort" data-stat-sort="${c.key}">${c.label}<span aria-hidden="true">${c.key===sort.key?(sort.asc?'▲':'▼'):''}</span></button></th>`).join('')}</tr></thead><tbody>${rows.map((p,i)=>{
+        const team=teamById(p.team);
+        return `<tr><td class="rank-number">${i+1}</td><td><span class="rank-team">${dot(team)}${p.name}<span class="team-badge">${team.short}</span></span></td>${cols.map(c=>`<td${c.key===sort.key?' class="sorted"':''}>${c.format?c.format(p[c.key]):p[c.key]}</td>`).join('')}</tr>`;
+      }).join('')}</tbody></table></div><p class="data-disclaimer">기준일: ${statsData.asOf} · WAR 출처: ${statsData.warSource}</p>`;
+    }
+    function sortStats(key){
+      const tab=statsView.tab,sort=statsView.sort[tab];
+      // 같은 열을 다시 누르면 방향을 뒤집고, 다른 열이면 그 열의 기본 방향(ERA만 오름차순)으로 정렬합니다.
+      statsView.sort[tab]=sort.key===key?{key,asc:!sort.asc}:{key,asc:!!statColumns[tab].find(c=>c.key===key).asc};
+      renderStats();$('player-stats').querySelector(`[data-stat-sort="${key}"]`).focus({preventScroll:true});
     }
     function renderRankings(){
       $('rankings-view').innerHTML=dataHeading('현재 순위','우리 팀은 어디쯤? 10개 구단의 가상 시즌 순위.')+`<div class="table-wrap"><table class="rank-table"><caption>연습용 가상 순위 · 1위 롯데, 2위 한화</caption><thead><tr><th scope="col">순위</th><th scope="col">구단</th><th scope="col">승</th><th scope="col">패</th><th scope="col">무</th><th scope="col">승률</th><th scope="col">게임차</th></tr></thead><tbody>${mockRankings.map((r,i)=>`<tr${i<2?' class="leading"':''}><td class="rank-number">${i+1}</td><td><span class="rank-team">${dot(r.team)}${r.team.name}</span></td><td>${r.wins}</td><td>${r.losses}</td><td>${r.draws}</td><td>${(r.wins/(r.wins+r.losses)).toFixed(3)}</td><td>${i?((mockRankings[0].wins-r.wins+r.losses-mockRankings[0].losses)/2).toFixed(1):'—'}</td></tr>`).join('')}</tbody></table></div><p class="data-disclaimer">실제 KBO 순위가 아닌 가짜 데이터입니다. 승률은 무승부를 제외해 계산했습니다.</p>`;
@@ -557,6 +616,8 @@
       const target=event.target.closest('[data-team],[data-day],[data-game],[data-section],[data-seat],[data-view],[data-type],[data-grade],[data-remove-seat],button');
       if(!target)return;
       if(target.dataset.view){openHomeTab(target.dataset.view);return;}
+      if(target.dataset.statTab){statsView.tab=target.dataset.statTab;renderStats();$('player-stats').querySelector(`[data-stat-tab="${statsView.tab}"]`).focus({preventScroll:true});return;}
+      if(target.dataset.statSort){sortStats(target.dataset.statSort);return;}
       if(target.dataset.section&&currentView==='booking'){activateSection(target.dataset.section);return;}
       if(target.dataset.seat&&currentView==='booking'&&bookingState.phase==='seats'){toggleSeat(target.dataset.seat);return;}
       if(target.dataset.type){adjustType(target.dataset.type,Number(target.dataset.delta));return;}
