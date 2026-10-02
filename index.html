@@ -218,6 +218,40 @@
     .cheer-status{min-height:18px;margin-top:6px;font-size:12px;color:var(--danger)}
     .cheer-list{max-height:340px;margin:6px 0 0;padding:0;overflow:auto;list-style:none}.cheer-list li{padding:11px 0;border-top:1px solid var(--line)}.cheer-list p{margin-top:5px;font-size:13px;color:var(--text);overflow-wrap:anywhere}
     .cheer-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-sub)}.cheer-meta .team-badge{padding:1px 8px 1px 6px;font-size:11px}.cheer-author{font-weight:600;color:var(--text)}.cheer-list .cheer-empty{padding:18px 0;text-align:center;font-size:12px;color:var(--text-sub)}
+    /* 좌석 시야 확인 링크 */
+    .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+    a.home-tab{display:inline-flex;align-items:center;gap:4px;text-decoration:none;cursor:pointer}.seat-view-tab{margin-left:auto}
+    .seat-view-link{color:var(--blue);font-weight:600;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}.seat-view-link:hover{color:var(--blue-dark)}
+    /* 간편결제 수단 */
+    .pay-area{margin-top:0}.pay-hint{margin-bottom:12px;font-size:12px;color:var(--text-sub)}.pay-empty{margin:4px 0 14px;padding:26px 16px;border:1px dashed var(--line-strong);border-radius:var(--radius-card);background:var(--surface-soft);text-align:center;font-size:13px;color:var(--text-sub)}
+    .pay-list{display:grid;gap:10px;margin:0 0 12px;padding:0;list-style:none}.pay-card{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--white);transition:border-color .15s,box-shadow .15s}.pay-card.selected{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue)}
+    .pay-select{flex:1 1 200px;display:flex;align-items:center;gap:10px;min-width:0;min-height:44px;padding:0;border:0;background:none;text-align:left;color:var(--text)}.pay-label{font-size:14px;font-weight:700}.pay-using{margin-left:auto;font-size:12px;font-weight:600;color:var(--text-sub)}.pay-card.selected .pay-using{color:var(--blue)}
+    .pay-badge{position:relative;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;min-width:74px;height:28px;padding:0 10px;border-radius:6px;overflow:hidden;font-size:11px;font-weight:800;letter-spacing:-.02em}.pay-badge i{font-style:normal}.pay-badge img{position:absolute;inset:4px;width:calc(100% - 8px);height:calc(100% - 8px);object-fit:contain;opacity:0}.pay-badge.loaded{background:var(--white)!important}.pay-badge.loaded img{opacity:1}.pay-badge.loaded i{visibility:hidden}
+    .pay-default{display:inline-flex;align-items:center;gap:6px;min-height:36px;font-size:12px;color:var(--text-sub);cursor:pointer}.pay-default input{width:16px;height:16px;accent-color:var(--blue)}
+    .btn.pay-remove{min-height:36px;padding:6px 12px;font-size:12px;color:var(--danger)}
+    .sheet-text{margin:10px 0 18px;font-size:13px;color:var(--text-sub)}.pay-options{display:grid;gap:8px;margin-bottom:12px}.pay-option{display:flex;align-items:center;gap:12px;min-height:56px;padding:10px 14px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--white);text-align:left;color:var(--text);transition:border-color .15s,background .15s}.pay-option:hover:not(:disabled){border-color:var(--blue);background:var(--blue-soft)}.pay-state{margin-left:auto;font-size:12px;font-weight:700;color:var(--blue)}.pay-option:disabled .pay-state{color:var(--text-sub)}
+    .confirm-actions{display:grid;gap:8px}
+    /* 식음료 원격 주문 */
+    .btn.food-btn{margin-bottom:8px;border-color:var(--blue-line);background:var(--blue-soft);color:var(--navy);font-weight:700}
+    .food-summary{margin-bottom:20px;padding:16px 18px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--white);font-size:13px;color:var(--text-sub)}.food-summary-title{margin-bottom:4px;font-size:16px;font-weight:800;color:var(--navy)}
+    .food-zones{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}.store-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-4)}
+    .store-card{display:flex;flex-direction:column;gap:5px;min-width:0;padding:16px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--white);box-shadow:var(--shadow);text-align:left;color:var(--text);transition:transform .16s,box-shadow .16s,border-color .16s}.store-card:hover:not(:disabled){transform:translateY(-3px);border-color:var(--blue);box-shadow:var(--shadow-lg)}
+    .store-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}.store-top strong{font-size:15px}.store-meta{font-size:12px;color:var(--text-sub)}.store-state{flex-shrink:0;padding:2px 9px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface-soft);font-size:11px;font-weight:700;color:var(--text-sub)}.store-state.open{border-color:var(--grass-line);background:var(--grass-soft);color:var(--grass-dark)}
+    .food-store-info{margin:-8px 0 16px}.menu-list{display:grid;gap:10px}.menu-card{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 18px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--white)}.menu-info{display:grid;gap:4px;min-width:0}.menu-info strong{font-size:15px}.menu-info>span{font-size:13px;color:var(--text-sub);font-variant-numeric:tabular-nums}
+    .menu-option{display:flex;align-items:center;gap:8px;margin-top:4px;font-size:12px;color:var(--text-sub)}.menu-option select{min-height:36px;padding:4px 8px;border:1px solid var(--line-strong);border-radius:8px;background:var(--white);font:inherit;font-size:12px;color:var(--text)}.sold-tag{margin-left:8px;padding:1px 7px;border-radius:4px;background:var(--line);font-size:11px;color:var(--text-sub)}
+    .cart-bar{position:sticky;bottom:12px;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:18px;padding:12px 14px 12px 18px;border-radius:var(--radius-card);background:var(--navy);color:var(--white);box-shadow:var(--shadow-lg)}.cart-info{display:grid;min-width:0}.cart-info strong{font-size:14px}.cart-info span{font-size:13px;color:#c9d6f2;font-variant-numeric:tabular-nums}
+    .pickup-list{display:grid;gap:8px;margin-bottom:26px}.pickup-option{display:flex;align-items:center;gap:10px;min-height:48px;padding:10px 14px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--white);font-size:14px;cursor:pointer}.pickup-option:has(input:checked){border-color:var(--blue);box-shadow:0 0 0 1px var(--blue)}.pickup-option input{width:16px;height:16px;accent-color:var(--blue)}
+    .order-card{max-width:560px;margin:0 auto;padding:30px 28px;border:1px solid var(--line);border-radius:var(--radius-panel);background:var(--white);box-shadow:var(--shadow);text-align:center}.order-label{font-size:12px;font-weight:700;color:var(--text-sub)}.order-number{font-size:52px;font-weight:900;line-height:1.15;letter-spacing:-.03em;color:var(--navy)}.order-store{margin-top:6px;font-size:15px;font-weight:700}
+    .order-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:24px 0 14px;padding:0;list-style:none;font-size:12px;color:#8a93a6}.order-steps li{position:relative;display:grid;justify-items:center;gap:6px;padding-top:12px}.order-steps li::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;border-radius:3px;background:var(--line)}.order-step-dot{display:grid;place-items:center;width:24px;height:24px;border:1px solid var(--line-strong);border-radius:50%;background:var(--white);font-size:11px}
+    .order-steps .done{color:var(--blue)}.order-steps .done::before,.order-steps .done .order-step-dot{background:var(--blue);border-color:var(--blue)}.order-steps .current{color:var(--navy);font-weight:800}.order-steps .current::before,.order-steps .current .order-step-dot{background:var(--navy);border-color:var(--navy)}.order-steps .done .order-step-dot,.order-steps .current .order-step-dot{color:var(--white)}
+    .order-note{min-height:22px;font-size:14px;font-weight:600;color:var(--navy)}.order-items{margin:18px 0;padding:14px 0 0;border-top:1px solid var(--line);list-style:none;text-align:left;font-size:13px}.order-items li{display:flex;justify-content:space-between;gap:12px;padding:5px 0}.order-total{margin-top:6px;padding-top:10px!important;border-top:1px dashed var(--line-strong)}.order-total strong{color:var(--navy)}
+    .pickup-banner{position:fixed;top:0;left:0;right:0;z-index:55;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px 14px;padding:12px 56px 12px 16px;background:var(--grass-dark);color:var(--white);font-size:14px;font-weight:700;box-shadow:var(--shadow-lg)}.pickup-banner .btn{min-height:36px;padding:6px 14px;font-size:12px}.pickup-banner-close{position:absolute;right:10px;top:50%;width:36px;height:36px;transform:translateY(-50%);border:0;border-radius:50%;background:none;color:var(--white);font-size:22px;line-height:1}
+    @media(max-width:1024px){.store-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.seat-view-tab{margin-left:0}}
+    @media(max-width:640px){
+      .store-grid{grid-template-columns:1fr}.order-number{font-size:42px}.order-card{padding:24px 18px}.menu-card{padding:14px}.home-tabs .seat-view-tab{flex-shrink:0;white-space:nowrap}
+      /* 모바일에서는 간편결제 추가 창을 바텀시트로 띄웁니다. */
+      .sheet-dialog{width:100%;max-width:none;margin:auto 0 0;border-radius:var(--radius-panel) var(--radius-panel) 0 0}
+    }
   </style>
 </head>
 <body>
@@ -247,6 +281,7 @@
     <button class="home-tab" data-view="rankings">현재 순위</button>
     <button class="home-tab" data-view="visits">나의 직관 기록</button>
     <button class="home-tab" data-view="community">커뮤니티</button>
+    <a class="home-tab seat-view-tab" data-seat-view href="https://myseatcheck.com/" target="_blank" rel="noopener noreferrer">좌석 시야 확인 <span aria-hidden="true">↗</span><span class="sr-only">(새 탭에서 열림)</span></a>
   </nav>
   <section class="hero" aria-label="만루티켓 소개">
     <svg class="hero-art" viewBox="0 0 1440 480" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
@@ -304,6 +339,7 @@
     <section id="booking-view" class="flow-shell seat-booking" hidden aria-label="통합 경기 예매"></section>
     <section id="success-view" hidden aria-label="예매 완료"></section>
     <section id="wallet-view" hidden aria-label="내 티켓"></section>
+    <section id="food-view" class="data-surface" hidden aria-label="식음료 주문"></section>
     <section id="records-view" class="data-surface" hidden aria-label="경기 기록"></section>
     <section id="players-view" class="data-surface" hidden aria-label="선수 순위"></section>
     <section id="rankings-view" class="data-surface" hidden aria-label="현재 순위"></section>
@@ -338,6 +374,18 @@
       <button class="btn primary full" id="auth-submit" type="submit">로그인</button>
     </form>
   </dialog>
+  <dialog id="pay-dialog" class="auth-dialog sheet-dialog" aria-labelledby="pay-dialog-title">
+    <h2 id="pay-dialog-title">간편결제 추가</h2>
+    <p class="sheet-text">연결할 간편결제를 선택하세요. 실제 결제 연동 없이 모의로 등록됩니다.</p>
+    <div class="pay-options" id="pay-options"></div>
+    <button class="btn plain full" id="pay-dialog-close" type="button">닫기</button>
+  </dialog>
+  <dialog id="confirm-dialog" class="auth-dialog" aria-labelledby="confirm-title">
+    <h2 id="confirm-title"></h2>
+    <p class="sheet-text" id="confirm-text"></p>
+    <div class="confirm-actions"><button class="btn primary full" id="confirm-ok" type="button">확인</button><button class="btn plain full" id="confirm-cancel" type="button">취소</button></div>
+  </dialog>
+  <div class="pickup-banner" id="pickup-banner" role="alert" hidden><span id="pickup-banner-text"></span><button class="btn" id="pickup-banner-open" type="button">주문 현황 보기</button><button class="pickup-banner-close" id="pickup-banner-close" type="button" aria-label="알림 닫기">×</button></div>
   <div class="toast" id="toast" role="status" hidden></div>
   <script src="teams.js"></script>
   <script src="grades.js"></script>
@@ -346,21 +394,15 @@
   <script src="statsService.js"></script>
   <script src="firebase-config.js"></script>
   <script src="firebaseService.js"></script>
+  <script src="stadiums.js"></script>
+  <script src="stores.js"></script>
+  <script src="paymentService.js"></script>
+  <script src="orderService.js"></script>
   <script>
     'use strict';
     const teams=window.Teams;
-    // 구장 위치. 날씨 조회 때 위경도를 기상청 격자(nx, ny)로 바꿔 씁니다. 좌표는 대략값이라 확인이 필요합니다.
-    const stadiums=[
-      {id:'jamsil',name:'잠실야구장',city:'서울',lat:37.5122,lng:127.0719},
-      {id:'suwon',name:'수원 KT 위즈파크',city:'수원',lat:37.2997,lng:127.0097},
-      {id:'incheon',name:'인천 SSG 랜더스필드',city:'인천',lat:37.4370,lng:126.6932},
-      {id:'changwon',name:'창원 NC 파크',city:'창원',lat:35.2225,lng:128.5822},
-      {id:'gwangju',name:'광주 기아 챔피언스필드',city:'광주',lat:35.1682,lng:126.8891},
-      {id:'sajik',name:'사직야구장',city:'부산',lat:35.1940,lng:129.0615},
-      {id:'daegu',name:'대구 삼성 라이온즈파크',city:'대구',lat:35.8411,lng:128.6817},
-      {id:'daejeon',name:'대전 한화생명 볼파크',city:'대전',lat:36.3170,lng:127.4291},
-      {id:'gocheok',name:'고척 스카이돔',city:'서울',lat:37.4982,lng:126.8671}
-    ];
+    // 구장 이름·위치와 좌석 시야 확인 링크는 stadiums.js에서 관리합니다.
+    const stadiums=window.Stadiums;
     const grades=window.TicketGrades,sections=window.TicketSections;
     const bookingOptions={dark:false};
     let bookingState=createBookingState(),pendingDialog=null;
@@ -479,10 +521,10 @@
     }
     function renderDetail(){
       const g=selectedGame;
-      if(!g){$('detail').innerHTML='<div class="detail-empty"><h2>오늘의 직관을 골라보세요</h2><p>달력에서 경기를 선택하면<br>경기 정보와 예매 일정을 볼 수 있어요.</p></div>';syncCheers();return;}
+      if(!g){$('detail').innerHTML='<div class="detail-empty"><h2>오늘의 직관을 골라보세요</h2><p>달력에서 경기를 선택하면<br>경기 정보와 예매 일정을 볼 수 있어요.</p></div>';syncCheers();syncSeatViewLinks();return;}
       const enabled=notifications.has(g.id);
       $('detail').innerHTML=`<div class="detail-top"><p class="detail-label">${dateLabel(g.date)} · ${timeLabel(g.date)}</p><h2 class="detail-versus">${formatMatchup(g,{style:'badge',vs:'<span class="versus">VS</span>'})}</h2><p class="game-meta">${teamBadge(g.home.id,true)} 홈경기</p></div><div class="detail-body"><div class="detail-info"><span>경기장</span><strong>${g.stadium}</strong></div><div class="open-times"><div class="open-line"><span>선예매 오픈</span><strong>${openLabel(g.preOpen)}</strong></div><div class="open-line"><span>일반예매 오픈</span><strong>${openLabel(g.generalOpen)}</strong></div></div><div class="countdown-box"><p id="countdown-label"></p><div class="countdown" id="countdown" role="timer" aria-live="off"></div></div><div class="notify-row"><div><strong>오픈 알림 받기</strong><p class="notification-status${enabled?' enabled':''}" id="notification-status" role="status">${enabled?'알림 설정됨 · 실제 발송은 준비 중':'예매 오픈 일정을 놓치지 마세요'}</p></div><button class="switch" id="notify-switch" role="switch" aria-label="오픈 알림 받기" aria-checked="${enabled}"></button></div><button class="btn primary full" id="book-button">예매하기 ${arrow}</button><p class="demo-note">연습용으로 오픈 전 경기에도 예매할 수 있어요.</p></div>`;
-      updateCountdown();syncCheers();
+      updateCountdown();syncCheers();syncSeatViewLinks();
     }
     function updateCountdown(){
       if(!selectedGame||!$('countdown'))return;
@@ -513,11 +555,11 @@
       }
     }
     function showView(view){
-      currentView=view;
+      currentView=view;syncSeatViewLinks();
       // 해시를 현재 화면에 맞춥니다. 해시를 쓰지 않는 화면으로 가면 지웁니다.
       const hash=Object.keys(hashViews).find(key=>hashViews[key]===view)||'';
       if(location.hash.slice(1)!==hash&&(hash||hashView()))history.replaceState(null,'',location.href.split('#')[0]+(hash?'#'+hash:''));
-      ['calendar','booking','success','wallet','records','players','rankings','visits','community'].forEach(name=>{const el=$(name+'-view');el.hidden=name!==view;el.classList.toggle('view-enter',name===view);});
+      ['calendar','booking','success','wallet','food','records','players','rankings','visits','community'].forEach(name=>{const el=$(name+'-view');el.hidden=name!==view;el.classList.toggle('view-enter',name===view);});
       $('home-tabs').hidden=['booking','success'].includes(view);
       document.querySelectorAll('[data-view]').forEach(tab=>{if(tab.dataset.view===view)tab.setAttribute('aria-current','page');else tab.removeAttribute('aria-current');});
       $('wallet-button').setAttribute('aria-current',view==='wallet'?'page':'false');
@@ -636,7 +678,7 @@
         const available=seatAvailable(seat),chosen=bookingState.selectedSeatIds.includes(seat.id);
         return `${seat.col===1?`<span class="rc-label rc-row">${seat.row}</span>`:''}<button class="dot-seat${chosen?' chosen':''}${freshSoldIds.has(seat.id)?' just-sold':''}" data-seat="${seat.id}" aria-pressed="${chosen}" aria-label="${seatFullLabel(seat)}, ${available?'선택 가능':'판매완료'}" title="${seatLabel(seat)}"${available?'':' disabled'}></button>`;
       }).join('');
-      return `<div class="seat-stage-heading"><h2 class="section-heading">${section.id}구역 · ${grade.name}</h2><p>좌석을 눌러 최대 ${MAX_SEATS}석까지 선택하세요. 선택한 좌석을 다시 누르면 해제돼요.</p></div><div class="seat-stage-grid"><div class="section-context"><h3>현재 구역</h3>${stadiumSvg(true,'context-')}<p>${section.id}구역<br>${money(grade.price)} / 1석</p><small>미니맵에서 다른 구역으로 이동</small></div><div class="seat-detail-canvas"><p class="field-direction">▲ 그라운드 방향 · 왼쪽 숫자는 열, 위쪽 숫자는 좌석 번호</p><div class="rc-scroll" id="seat-scroll" tabindex="0" role="group" aria-label="${section.id}구역 좌석 배치도, ${section.rows}열 × ${section.cols}번"><div class="rc-grid" style="grid-template-columns:repeat(${section.cols+1},34px)"><span class="rc-label rc-corner" aria-hidden="true"></span>${colLabels}${cells}</div></div><div class="dot-legend"><span><i class="dot-key available"></i>선택 가능</span><span><i class="dot-key selected"></i>선택됨</span><span><i class="dot-key sold"></i>판매완료</span></div><div class="picked-seats" id="picked-seats">${pickedSeatsHtml()}</div></div></div>`;
+      return `<div class="seat-stage-heading"><h2 class="section-heading">${section.id}구역 · ${grade.name}</h2><p>좌석을 눌러 최대 ${MAX_SEATS}석까지 선택하세요. 선택한 좌석을 다시 누르면 해제돼요.</p></div><div class="seat-stage-grid"><div class="section-context"><h3>현재 구역</h3>${stadiumSvg(true,'context-')}<p>${section.id}구역<br>${money(grade.price)} / 1석</p><small>미니맵에서 다른 구역으로 이동</small></div><div class="seat-detail-canvas"><p class="field-direction">▲ 그라운드 방향 · 왼쪽 숫자는 열, 위쪽 숫자는 좌석 번호 · ${seatViewLink('이 구장 좌석 시야 보기')}</p><div class="rc-scroll" id="seat-scroll" tabindex="0" role="group" aria-label="${section.id}구역 좌석 배치도, ${section.rows}열 × ${section.cols}번"><div class="rc-grid" style="grid-template-columns:repeat(${section.cols+1},34px)"><span class="rc-label rc-corner" aria-hidden="true"></span>${colLabels}${cells}</div></div><div class="dot-legend"><span><i class="dot-key available"></i>선택 가능</span><span><i class="dot-key selected"></i>선택됨</span><span><i class="dot-key sold"></i>판매완료</span></div><div class="picked-seats" id="picked-seats">${pickedSeatsHtml()}</div></div></div>`;
     }
     function renderBookingSide(){
       const selected=chosenSeats(),seatsPhase=bookingState.phase==='seats',total=selected.length?selected.length*bookingPrice():0;
@@ -650,7 +692,7 @@
     }
     function renderOrderSummary(payment){
       const selected=chosenSeats(),lines=orderLines();
-      return `<aside class="order-summary"><h2>예매 내역</h2><div class="summary-line"><span>경기</span><span>${formatMatchup(selectedGame,{short:true})}</span></div><div class="summary-line"><span>일시</span><span>${dateLabel(selectedGame.date)} ${timeLabel(selectedGame.date)}</span></div>${selected.map((s,i)=>`<div class="summary-line"><span>좌석 ${i+1}</span><span>${seatFullLabel(s)}</span></div>`).join('')}${lines.map(l=>`<div class="summary-line"><span>${l.type.name} ${l.count}명</span><span>${money(l.amount)}</span></div>`).join('')}<div class="total"><span>총 결제 금액</span><strong>${money(orderTotal())}</strong></div>${payment?'<button class="btn orange full" id="mock-payment">결제하기</button><p class="demo-note">모의 결제이며 실제 금액은 청구되지 않습니다.</p>':''}</aside>`;
+      return `<aside class="order-summary"><h2>예매 내역</h2><div class="summary-line"><span>경기</span><span>${formatMatchup(selectedGame,{short:true})}</span></div><div class="summary-line"><span>일시</span><span>${dateLabel(selectedGame.date)} ${timeLabel(selectedGame.date)}</span></div>${selected.map((s,i)=>`<div class="summary-line"><span>좌석 ${i+1}</span><span>${seatFullLabel(s)}</span></div>`).join('')}${lines.map(l=>`<div class="summary-line"><span>${l.type.name} ${l.count}명</span><span>${money(l.amount)}</span></div>`).join('')}<div class="total"><span>총 결제 금액</span><strong>${money(orderTotal())}</strong></div>${payment?`<button class="btn orange full" id="mock-payment"${selectedPayMethod()?'':' disabled'}>${selectedPayMethod()?esc(selectedPayMethod().label)+'로 결제하기':'결제하기'}</button>${selectedPayMethod()?'':'<p class="type-hint">간편결제를 먼저 추가해 주세요</p>'}<p class="demo-note">모의 결제이며 실제 금액은 청구되지 않습니다.</p>`:''}</aside>`;
     }
     function renderTypes(){
       const n=bookingState.selectedSeatIds.length,m=typeTotal(),match=n===m;
@@ -660,7 +702,7 @@
       }).join('')}</div><p class="type-hint${match?' ok':''}" role="status">${match?'인원 합계가 좌석 수와 같아요. 결제로 이동할 수 있어요.':`인원 합계를 좌석 수(${n}석)와 맞춰주세요`}</p><button class="btn orange full" id="types-next"${match?'':' disabled'}>결제하기로</button></div>${renderOrderSummary(false)}</div>`;
     }
     function renderPayment(){
-      return `<div class="booking-layout"><div><h2 class="section-heading">등록된 간편결제</h2><div class="payment-card"><h3>만루페이 · 연습용 카드</h3><div class="card-chip" aria-hidden="true"></div><p class="card-number">•••• &nbsp; •••• &nbsp; •••• &nbsp; 2026</p><div class="card-foot"><span>기본 결제수단</span><span>모의 결제</span></div></div><p class="payment-hint">실제 결제 없이 선택한 좌석이 내 티켓에 발급됩니다.</p></div>${renderOrderSummary(true)}</div>`;
+      return `<div class="booking-layout"><div>${payAreaHtml()}<p class="payment-hint">실제 결제 없이 선택한 좌석이 내 티켓에 발급됩니다.</p></div>${renderOrderSummary(true)}</div>`;
     }
     function renderBooking(){
       syncInventory();
@@ -747,9 +789,11 @@
       const game=selectedGame,section=sectionById(bookingState.sectionId),grade=gradeById(section.gradeId);
       // Firestore tickets 컬렉션에 저장할 예매 내역. 실제 결제는 하지 않습니다.
       const order={uid:currentUser.uid,emailPrefix:currentUser.emailPrefix,gameId:game.id,gameLabel:gameLabel(game),sectionId:section.id,seats:selected.map(s=>s.id),ticketTypes:{...bookingState.typeCounts},totalPrice:orderTotal()};
-      const button=$('mock-payment');
+      const method=selectedPayMethod(),button=$('mock-payment');
+      if(!method)return;
       savingOrder=true;button.disabled=true;button.textContent='처리 중…';
-      cloud.saveTicket(order).then(id=>{
+      // 선택한 간편결제로 결제(mock)한 뒤 예매 내역을 저장합니다.
+      payApi.requestPayment({methodId:method.id,amount:order.totalPrice,orderName:order.gameLabel}).then(()=>cloud.saveTicket(order)).then(id=>{
         selected.forEach(seat=>seat.status='sold'); // 내가 결제한 좌석도 구역 데이터에서 판매완료로 바꿉니다.
         tickets.unshift({...order,id,createdAt:new Date()});ticketsState='ready';
         lastOrder={game,zone:{name:`${grade.name} ${section.id}구역`},quantity:selected.length,total:order.totalPrice};
@@ -922,7 +966,7 @@
         // 로그아웃하면 내 티켓 목록을 화면에서 바로 비웁니다.
         tickets.length=0;ticketsState='idle';updateTicketCount();
         if(currentView==='wallet')renderWallet();
-        if(wasLoggedIn&&['booking','success'].includes(currentView))openCalendar();
+        if(wasLoggedIn&&['booking','success','food'].includes(currentView))openCalendar();
       }
     }
     // Firestore에서 내 uid의 티켓만 불러옵니다.
@@ -951,7 +995,200 @@
       const game=games.find(g=>g.id===t.gameId),section=sectionById(String(t.sectionId)),seats=Array.isArray(t.seats)?t.seats:[],types=t.ticketTypes||{};
       const seatText=id=>{const m=/^\w+-(\d+)-(\d+)$/.exec(String(id));return m?`${m[1]}열 ${m[2]}번`:esc(id);};
       const typeText=ticketTypes.filter(type=>Number(types[type.id])>0).map(type=>`${type.name} ${Number(types[type.id])}명`).join(' · ');
-      return `<article class="ticket"><div class="ticket-head"><p class="ticket-tag">모의 예매 완료 · 예매자 ${esc(t.emailPrefix)}</p><h2>${game?formatMatchup(game,{short:true}):esc(t.gameLabel)}</h2>${game?`<p>${dateLabel(game.date)} ${timeLabel(game.date)}<br>${game.stadium}</p>`:''}</div><div class="ticket-body"><div class="ticket-seat"><strong>${section?`${gradeById(section.gradeId).name} ${section.id}구역`:esc(t.sectionId)+'구역'}</strong><span>${seats.length}석 · ${money(Number(t.totalPrice)||0)}</span></div><ul class="ticket-seats" aria-label="좌석">${seats.map(id=>`<li>${seatText(id)}</li>`).join('')}</ul>${typeText?`<p class="ticket-types">${typeText}</p>`:''}<div class="qr-area">${fakeQr(String(t.id))}<p class="qr-caption">연습용 QR 모양 · 실제 입장 불가</p><p class="ticket-id">${esc(t.id)}</p><button class="btn full" disabled title="친구에게 전달 기능은 준비 중입니다">친구에게 전달 · 준비 중</button><button class="btn full cancel-btn" data-cancel-ticket="${esc(t.id)}">예매 취소</button></div></div></article>`;
+      return `<article class="ticket"><div class="ticket-head"><p class="ticket-tag">모의 예매 완료 · 예매자 ${esc(t.emailPrefix)}</p><h2>${game?formatMatchup(game,{short:true}):esc(t.gameLabel)}</h2>${game?`<p>${dateLabel(game.date)} ${timeLabel(game.date)}<br>${game.stadium}</p>`:''}</div><div class="ticket-body"><div class="ticket-seat"><strong>${section?`${gradeById(section.gradeId).name} ${section.id}구역`:esc(t.sectionId)+'구역'}</strong><span>${seats.length}석 · ${money(Number(t.totalPrice)||0)}</span></div><ul class="ticket-seats" aria-label="좌석">${seats.map(id=>`<li>${seatText(id)}</li>`).join('')}</ul>${typeText?`<p class="ticket-types">${typeText}</p>`:''}<div class="qr-area">${fakeQr(String(t.id))}<p class="qr-caption">연습용 QR 모양 · 실제 입장 불가</p><p class="ticket-id">${esc(t.id)}</p>${foodButton(t)}<button class="btn full" disabled title="친구에게 전달 기능은 준비 중입니다">친구에게 전달 · 준비 중</button><button class="btn full cancel-btn" data-cancel-ticket="${esc(t.id)}">예매 취소</button></div></div></article>`;
+    }
+    // ----- 좌석 시야 확인(외부 링크) -----
+    // 지금 보고 있는 경기(식음료 주문 중이면 그 예매의 경기)의 구장 페이지로 연결하고, 구장을 알 수 없으면 기본 주소로 연결합니다.
+    function seatViewUrl(){
+      const foodTicket=currentView==='food'?tickets.find(t=>t.id===food.ticketId):null;
+      const game=foodTicket?ticketGame(foodTicket):selectedGame;
+      const stadium=game&&stadiumOf(game);
+      return stadium&&stadium.seatViewUrl||window.SeatViewDefaultUrl;
+    }
+    function syncSeatViewLinks(){document.querySelectorAll('a[data-seat-view]').forEach(link=>{link.href=seatViewUrl();});}
+    const seatViewLink=text=>`<a class="seat-view-link" data-seat-view href="${seatViewUrl()}" target="_blank" rel="noopener noreferrer">${text} <span aria-hidden="true">↗</span><span class="sr-only">(새 탭에서 열림)</span></a>`;
+
+    // ----- 간편결제 수단(mock) -----
+    // 결제 처리는 paymentService.js가 맡고, 여기서는 목록 표시와 선택만 합니다. 카드번호 같은 민감정보는 받지 않습니다.
+    const payApi=window.PaymentService;
+    let selectedPayId=null,payBusy=null;
+    // 결제사 로고 파일이 있으면 로고를, 없으면 브랜드명 텍스트 배지를 보여 줍니다.
+    function payBadge(providerId){
+      const p=payApi.providers.find(provider=>provider.id===providerId);
+      return p?`<span class="pay-badge${imageState.get(p.logoUrl)==='ok'?' loaded':''}" style="background:${p.color};color:${p.text}"><i>${p.name}</i>${fallbackImage(p.logoUrl,p.name+' 로고',20)}</span>`:'';
+    }
+    // 기본 결제수단이 먼저 선택되고, 선택해 둔 수단이 사라지면 다시 기본 결제수단으로 돌아갑니다.
+    function currentPayMethods(){
+      const list=payApi.listPayMethods();
+      if(!list.some(m=>m.id===selectedPayId)){const first=list.find(m=>m.isDefault)||list[0];selectedPayId=first?first.id:null;}
+      return list;
+    }
+    const selectedPayMethod=()=>currentPayMethods().find(m=>m.id===selectedPayId)||null;
+    function payAreaHtml(){
+      const list=currentPayMethods();
+      return `<section class="pay-area" id="pay-area" aria-labelledby="pay-area-title"><h2 class="section-heading" id="pay-area-title">등록된 결제수단</h2>${list.length?`<p class="pay-hint">결제에 사용할 수단을 선택하세요. 기본 결제수단이 먼저 선택됩니다.</p><ul class="pay-list">${list.map(m=>{
+        const using=m.id===selectedPayId;
+        return `<li class="pay-card${using?' selected':''}"><button type="button" class="pay-select" data-pay-select="${esc(m.id)}" aria-pressed="${using}">${payBadge(m.provider)}<span class="pay-label">${esc(m.label)}</span><span class="pay-using">${using?'이번 결제에 사용':'선택'}</span></button><label class="pay-default"><input type="radio" name="pay-default" data-pay-default="${esc(m.id)}"${m.isDefault?' checked':''}>기본 결제수단</label><button type="button" class="btn pay-remove" data-pay-remove="${esc(m.id)}" aria-label="${esc(m.label)} 삭제">삭제</button></li>`;
+      }).join('')}</ul>`:'<p class="pay-empty">등록된 간편결제가 없습니다</p>'}<button type="button" class="btn full" id="pay-add">+ 간편결제 추가</button></section>`;
+    }
+    // 결제수단이 바뀌면 그 영역이 들어 있는 화면(예매 결제 단계 또는 식음료 주문)을 다시 그립니다.
+    function refreshPayArea(focusSelector='#pay-add'){
+      if(currentView==='booking'&&bookingState.phase==='payment')renderBooking();
+      else if(currentView==='food')renderFood();
+      const scope=$(currentView+'-view'),focusTarget=scope.querySelector(focusSelector)||scope.querySelector('#pay-add');
+      if(focusTarget)focusTarget.focus({preventScroll:true});
+    }
+    function renderPayOptions(){
+      const registered=new Set(payApi.listPayMethods().map(m=>m.provider));
+      $('pay-options').innerHTML=payApi.providers.map(p=>{
+        const done=registered.has(p.id),busy=payBusy===p.id;
+        return `<button type="button" class="pay-option" data-pay-provider="${p.id}"${done||payBusy?' disabled':''}>${payBadge(p.id)}<span class="pay-label">${p.name}</span><span class="pay-state">${busy?'연결 중…':done?'등록됨':'추가'}</span></button>`;
+      }).join('');
+    }
+    function openPayDialog(){payBusy=null;renderPayOptions();if(!$('pay-dialog').open)$('pay-dialog').showModal();}
+    function registerPay(providerId){
+      if(payBusy)return;
+      payBusy=providerId;renderPayOptions();
+      payApi.registerPayMethod(providerId).then(method=>{
+        if(!selectedPayId)selectedPayId=method.id;
+        $('pay-dialog').close();showToast(`${method.label} 등록이 완료됐어요`);
+      },()=>showToast('결제수단을 등록하지 못했어요. 잠시 후 다시 시도해 주세요.')).then(()=>{payBusy=null;if($('pay-dialog').open)renderPayOptions();refreshPayArea();});
+    }
+    function removePay(id){
+      const method=payApi.listPayMethods().find(m=>m.id===id);
+      payApi.removePayMethod(id).then(()=>{if(method)showToast(`${method.label}를 삭제했어요`);refreshPayArea();});
+    }
+
+    // ----- 구장 식음료 원격 주문·픽업(mock) -----
+    // 매장 데이터는 stores.js, 주문 처리는 orderService.js가 맡습니다. 예매(티켓) 1건을 기준으로 그 경기 구장의 매장을 보여 줍니다.
+    const orderApi=window.OrderService,storeData=window.StadiumStores||{};
+    const GAME_HOURS=4; // 경기 시작 후 이 시간이 지나면 종료된 것으로 보고 주문 버튼을 숨깁니다.
+    const pickupTimes=['지금 바로','3회말 종료 후','5회말 종료 후 (클리닝타임)','7회말 종료 후'];
+    const orderLabels={received:'주문접수',cooking:'조리중',ready:'픽업대기',done:'픽업완료'};
+    const orderNotes={received:'매장에서 주문을 확인하고 있어요.',cooking:'메뉴를 조리하고 있어요.',ready:'메뉴가 준비됐어요. 매장에서 픽업해 주세요!',done:'픽업이 완료됐어요. 맛있게 드세요!'};
+    const newFoodState=ticketId=>({phase:'stores',ticketId,zone:'전체',storeId:null,cart:{storeId:null,items:[]},picks:{},pickup:pickupTimes[0],orderId:null,busy:false});
+    let food=newFoodState(null),bannerOrderId=null;
+    const stadiumOf=game=>stadiums.find(s=>s.name===game.stadium);
+    const ticketGame=ticket=>games.find(g=>g.id===ticket.gameId);
+    const gameEnded=game=>Date.now()>game.date.getTime()+GAME_HOURS*3600000;
+    const findStore=id=>Object.values(storeData).flat().find(s=>s.id===id);
+    const menuOption=menu=>menu.options&&menu.options.length?(food.picks[menu.id]||menu.options[0].choices[0]):undefined;
+    const cartCount=()=>food.cart.items.reduce((n,item)=>n+item.qty,0);
+    function cartLines(){
+      const store=findStore(food.cart.storeId);
+      return store?food.cart.items.map(item=>{const menu=store.menus.find(m=>m.id===item.menuId);return {...item,name:menu.name,amount:menu.price*item.qty};}):[];
+    }
+    const cartTotal=()=>cartLines().reduce((n,line)=>n+line.amount,0);
+    // 내 티켓 카드에 붙는 버튼: 관람 예정인 예매에만 보이고, 진행 중인 주문이 있으면 [주문 현황 보기]로 바뀝니다.
+    function foodButton(ticket){
+      const game=ticketGame(ticket);
+      if(!game||gameEnded(game))return '';
+      return orderApi.getActiveOrder(ticket.id)?`<button class="btn full food-btn" data-food-status="${esc(ticket.id)}">주문 현황 보기</button>`:`<button class="btn full food-btn" data-food-order="${esc(ticket.id)}">🍴 식음료 주문</button>`;
+    }
+    function openFood(ticketId){
+      const ticket=tickets.find(t=>t.id===ticketId);
+      if(!ticket||!ticketGame(ticket))return;
+      const active=orderApi.getActiveOrder(ticketId);
+      if(food.ticketId!==ticketId)food=newFoodState(ticketId);
+      food.phase=active?'status':'stores';food.orderId=active?active.id:null;
+      renderFood();showView('food');
+    }
+    function foodSummary(ticket,game){
+      const section=sectionById(String(ticket.sectionId));
+      return `<div class="food-summary"><p class="food-summary-title">${formatMatchup(game,{short:true})}</p><p>${dateLabel(game.date)} ${timeLabel(game.date)} · ${game.stadium}</p><p>내 좌석 ${section?gradeById(section.gradeId).name+' ':''}${esc(ticket.sectionId)}구역</p></div>`;
+    }
+    function cartBar(){
+      const store=findStore(food.cart.storeId),count=cartCount();
+      return `<div class="cart-bar" role="region" aria-label="장바구니"><div class="cart-info"><strong>${count?`${esc(store.brand)} · ${count}개`:'장바구니가 비어 있어요'}</strong><span>${money(cartTotal())}</span></div><button class="btn primary" id="food-checkout"${count?'':' disabled'}>주문하기</button></div>`;
+    }
+    function renderFoodStores(stadium){
+      const stores=storeData[stadium.id]||[];
+      if(!stores.length)return '<div class="empty-wallet"><h2>이 구장은 아직 원격 주문을 지원하지 않습니다</h2><p>지원 구장을 준비하고 있어요.</p><button class="btn" id="food-wallet">내 티켓으로</button></div>';
+      const shown=stores.filter(s=>food.zone==='전체'||s.zone===food.zone);
+      return `<div class="food-zones" role="group" aria-label="매장 위치 필터">${['전체','1루','3루','외야'].map(zone=>`<button class="chip" data-food-zone="${zone}" aria-pressed="${food.zone===zone}">${zone}</button>`).join('')}</div>${shown.length?`<div class="store-grid">${shown.map(s=>`<button class="store-card" data-food-store="${s.id}"${s.isOpen?'':' disabled'}><span class="store-top"><strong>${esc(s.name)}</strong><span class="store-state${s.isOpen?' open':''}">${s.isOpen?'주문 가능':'준비 중'}</span></span><span class="store-meta">${esc(s.locationDetail)}</span><span class="store-meta">대표 메뉴 · ${esc(s.menus[0].name)}</span><span class="store-meta">예상 대기 ${s.waitMinutes}분</span></button>`).join('')}</div>`:'<p class="empty-list">이 구역에는 매장이 없어요.</p>'}<p class="data-disclaimer">※ 메뉴·가격은 예시이며 실제와 다를 수 있습니다</p>${cartCount()?cartBar():''}`;
+    }
+    function renderFoodMenu(){
+      const store=findStore(food.storeId),mine=food.cart.storeId===store.id;
+      return `<p class="store-meta food-store-info">${esc(store.locationDetail)} · 예상 대기 ${store.waitMinutes}분</p><div class="menu-list">${store.menus.map(menu=>{
+        const option=menuOption(menu),item=mine&&food.cart.items.find(i=>i.menuId===menu.id&&i.option===option),qty=item?item.qty:0;
+        return `<div class="menu-card"><div class="menu-info"><strong>${esc(menu.name)}${menu.soldOut?'<span class="sold-tag">품절</span>':''}</strong><span>${money(menu.price)}</span>${menu.options&&menu.options.length?`<label class="menu-option">${esc(menu.options[0].name)}<select data-food-option="${menu.id}"${menu.soldOut?' disabled':''}>${menu.options[0].choices.map(choice=>`<option${choice===option?' selected':''}>${esc(choice)}</option>`).join('')}</select></label>`:''}</div><div class="quantity-controls" role="group" aria-label="${esc(menu.name)} 수량"><button class="btn" data-food-minus="${menu.id}" aria-label="${esc(menu.name)} 수량 줄이기"${qty?'':' disabled'}>−</button><output>${qty}</output><button class="btn" data-food-plus="${menu.id}" aria-label="${esc(menu.name)} 수량 늘리기"${menu.soldOut?' disabled':''}>+</button></div></div>`;
+      }).join('')}</div><p class="data-disclaimer">※ 메뉴·가격은 예시이며 실제와 다를 수 있습니다</p>${cartBar()}`;
+    }
+    function renderFoodCheckout(){
+      const store=findStore(food.cart.storeId),total=cartTotal(),method=selectedPayMethod(),ready=!!method&&cartCount()>0;
+      return `<div class="booking-layout"><div><h2 class="section-heading">픽업 희망 시간</h2><div class="pickup-list" role="radiogroup" aria-label="픽업 희망 시간">${pickupTimes.map(time=>`<label class="pickup-option"><input type="radio" name="food-pickup" data-food-pickup="${time}"${food.pickup===time?' checked':''}>${time}</label>`).join('')}</div>${payAreaHtml()}</div><aside class="order-summary"><h2>주문 내역</h2><div class="summary-line"><span>매장</span><span>${esc(store.name)}</span></div><div class="summary-line"><span>위치</span><span>${esc(store.locationDetail)}</span></div>${cartLines().map(line=>`<div class="summary-line"><span>${esc(line.name)}${line.option?` (${esc(line.option)})`:''} × ${line.qty}</span><span>${money(line.amount)}</span></div>`).join('')}<div class="total"><span>총 결제 금액</span><strong>${money(total)}</strong></div><button class="btn primary full" id="food-pay"${ready&&!food.busy?'':' disabled'}>${food.busy?'처리 중…':ready?`${esc(method.label)}로 결제하고 주문하기`:'결제하고 주문하기'}</button>${method?'':'<p class="type-hint">간편결제를 먼저 추가해 주세요</p>'}<p class="demo-note">모의 주문이며 실제 금액은 청구되지 않습니다.</p></aside></div>`;
+    }
+    function renderFoodStatus(){
+      const order=orderApi.getOrder(food.orderId);
+      if(!order)return '<p class="empty-list">주문 정보를 찾을 수 없어요.</p><button class="btn" id="food-wallet">내 티켓으로</button>';
+      const store=findStore(order.storeId),current=orderApi.steps.indexOf(order.status);
+      return `<div class="order-card"><p class="order-label">주문번호</p><p class="order-number">${esc(order.id)}</p><p class="order-store">${esc(store.name)} · ${esc(store.locationDetail)}</p><p class="store-meta">픽업 희망 · ${esc(order.pickupTime)}</p><ol class="order-steps" aria-label="주문 진행 단계">${orderApi.steps.map((step,i)=>`<li class="${i<current?'done':i===current?'current':''}"${i===current?' aria-current="step"':''}><span class="order-step-dot">${i+1}</span>${orderLabels[step]}</li>`).join('')}</ol><p class="order-note" role="status">${orderNotes[order.status]}</p><ul class="order-items">${order.items.map(item=>{const menu=store.menus.find(m=>m.id===item.menuId);return `<li><span>${esc(menu?menu.name:item.menuId)}${item.option?` (${esc(item.option)})`:''} × ${item.qty}</span></li>`;}).join('')}<li class="order-total"><span>결제 금액</span><strong>${money(order.totalPrice)}</strong></li></ul><button class="btn full" id="food-wallet">내 티켓으로</button></div>`;
+    }
+    function renderFood(){
+      const ticket=tickets.find(t=>t.id===food.ticketId),game=ticket&&ticketGame(ticket),view=$('food-view');
+      if(!ticket||!game){view.innerHTML='<div class="empty-wallet"><h1>식음료 주문</h1><p>예매 내역을 찾을 수 없어요.</p><button class="btn" id="food-wallet">내 티켓으로</button></div>';return;}
+      const store=findStore(food.phase==='checkout'?food.cart.storeId:food.storeId);
+      const title={stores:'식음료 주문',menu:store?esc(store.name):'메뉴 선택',checkout:'주문·결제',status:'주문 현황'}[food.phase];
+      const back={stores:'내 티켓으로',menu:'매장 목록',checkout:'메뉴 선택',status:'내 티켓으로'}[food.phase];
+      const body=food.phase==='stores'?renderFoodStores(stadiumOf(game)):food.phase==='menu'?renderFoodMenu():food.phase==='checkout'?renderFoodCheckout():renderFoodStatus();
+      view.innerHTML=`<button class="btn plain back" id="food-back">${backArrow}${back}</button><div class="data-heading"><div><h1>${title}</h1></div><span class="practice-label">모의 주문</span></div>${foodSummary(ticket,game)}${body}`;
+    }
+    function setFoodPhase(phase){food.phase=phase;renderFood();window.scrollTo(0,0);const heading=$('food-view').querySelector('h1');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}}
+    function foodBack(){
+      if(food.phase==='menu')setFoodPhase('stores');
+      else if(food.phase==='checkout'){food.storeId=food.cart.storeId||food.storeId;setFoodPhase(food.storeId?'menu':'stores');}
+      else openWallet();
+    }
+    // 확인 모달: [확인]이면 true, 닫거나 [취소]면 false. 버튼을 누른 즉시 결과를 돌려줍니다.
+    let finishConfirm=null;
+    function askConfirm(title,text,okLabel='확인'){
+      const dialog=$('confirm-dialog');
+      if(finishConfirm)finishConfirm(false);
+      $('confirm-title').textContent=title;$('confirm-text').textContent=text;$('confirm-ok').textContent=okLabel;
+      dialog.showModal();
+      return new Promise(resolve=>{finishConfirm=answer=>{finishConfirm=null;if(dialog.open)dialog.close();resolve(answer);};});
+    }
+    // 장바구니에는 한 매장의 메뉴만 담을 수 있습니다. 다른 매장 메뉴를 담으려 하면 비울지 먼저 묻습니다.
+    async function changeCart(menuId,delta){
+      const store=findStore(food.storeId),menu=store&&store.menus.find(m=>m.id===menuId);
+      if(!menu||(delta>0&&menu.soldOut))return;
+      const option=menuOption(menu);
+      if(delta>0&&food.cart.items.length&&food.cart.storeId!==store.id){
+        if(!await askConfirm('장바구니를 비우고 담을까요?','장바구니에는 한 매장의 메뉴만 담을 수 있어요. 기존에 담은 메뉴는 삭제됩니다.','비우고 담기'))return;
+        food.cart={storeId:null,items:[]};
+      }
+      if(delta>0&&!food.cart.items.length)food.cart.storeId=store.id;
+      if(food.cart.storeId!==store.id)return;
+      let item=food.cart.items.find(i=>i.menuId===menuId&&i.option===option);
+      if(!item){if(delta<0)return;item={menuId,qty:0,option};food.cart.items.push(item);}
+      item.qty=Math.max(0,Math.min(20,item.qty+delta));
+      food.cart.items=food.cart.items.filter(i=>i.qty>0);
+      renderFood();
+      const button=document.querySelector(`[data-food-${delta>0?'plus':'minus'}="${menuId}"]`),other=document.querySelector(`[data-food-plus="${menuId}"]`);
+      (button&&!button.disabled?button:other).focus({preventScroll:true});
+    }
+    function placeFoodOrder(){
+      const method=selectedPayMethod(),store=findStore(food.cart.storeId);
+      if(food.busy||!method||!store||!cartCount())return;
+      const ticketId=food.ticketId,total=cartTotal();
+      food.busy=true;renderFood();
+      payApi.requestPayment({methodId:method.id,amount:total,orderName:`${store.name} 식음료 주문`})
+        .then(()=>orderApi.createOrder({reservationId:ticketId,storeId:store.id,items:food.cart.items.map(i=>({...i})),pickupTime:food.pickup,totalPrice:total}))
+        .then(order=>{
+          if(food.ticketId!==ticketId)return;
+          food.busy=false;food.cart={storeId:null,items:[]};food.orderId=order.id;
+          if(currentView==='food')setFoodPhase('status');else food.phase='status';
+        },()=>{food.busy=false;showToast('주문하지 못했어요. 잠시 후 다시 시도해 주세요.');if(currentView==='food')renderFood();});
+    }
+    // 주문 상태가 바뀔 때마다: 주문 현황·내 티켓 화면을 갱신하고, 픽업대기가 되면 화면 상단에 알림 배너를 띄웁니다.
+    function handleOrderChange(order){
+      if(currentView==='food'&&food.phase==='status'&&food.orderId===order.id)renderFood();
+      if(currentView==='wallet')renderWallet();
+      const banner=$('pickup-banner');
+      if(order.status==='ready'){
+        const store=findStore(order.storeId);
+        bannerOrderId=order.id;$('pickup-banner-text').textContent=`주문 ${order.id} 메뉴가 준비됐어요. ${store?store.name:'매장'}에서 픽업해 주세요!`;banner.hidden=false;
+      }else if(order.status==='done'&&bannerOrderId===order.id){banner.hidden=true;bannerOrderId=null;}
     }
     // ----- 응원 한마디(Firestore cheers) -----
     // 지금 열려 있는 경기의 응원만 최신순으로 실시간 표시합니다. 다른 경기를 열면 이전 구독을 해제하고 새 경기로 다시 구독합니다.
@@ -1184,6 +1421,44 @@
     $('selection-dialog').addEventListener('cancel',()=>pendingDialog=null);
     $('auth-form').addEventListener('submit',event=>{event.preventDefault();submitAuth();});
     $('cheer-form').addEventListener('submit',event=>{event.preventDefault();submitCheer();});
+    // 간편결제 · 식음료 주문 · 좌석 시야 링크의 클릭과 입력 처리. (기존 클릭 처리와 따로 둡니다)
+    document.addEventListener('click',event=>{
+      const target=event.target.closest('button');
+      if(!target||target.disabled)return;
+      const d=target.dataset;
+      if(target.id==='pay-add')openPayDialog();
+      else if(target.id==='pay-dialog-close')$('pay-dialog').close();
+      else if(d.payProvider)registerPay(d.payProvider);
+      else if(d.paySelect){selectedPayId=d.paySelect;refreshPayArea(`[data-pay-select="${CSS.escape(d.paySelect)}"]`);}
+      else if(d.payRemove)removePay(d.payRemove);
+      else if(d.foodOrder||d.foodStatus)openFood(d.foodOrder||d.foodStatus);
+      else if(d.foodZone){food.zone=d.foodZone;renderFood();document.querySelector(`[data-food-zone="${d.foodZone}"]`).focus({preventScroll:true});}
+      else if(d.foodStore){food.storeId=d.foodStore;setFoodPhase('menu');}
+      else if(d.foodPlus)changeCart(d.foodPlus,1);
+      else if(d.foodMinus)changeCart(d.foodMinus,-1);
+      else if(target.id==='food-checkout'){food.storeId=food.cart.storeId;setFoodPhase('checkout');}
+      else if(target.id==='food-pay')placeFoodOrder();
+      else if(target.id==='food-back')foodBack();
+      else if(target.id==='food-wallet')openWallet();
+      else if(target.id==='confirm-ok'){if(finishConfirm)finishConfirm(true);}
+      else if(target.id==='confirm-cancel'){if(finishConfirm)finishConfirm(false);}
+      else if(target.id==='pickup-banner-close')$('pickup-banner').hidden=true;
+      else if(target.id==='pickup-banner-open'){
+        const order=orderApi.getOrder(bannerOrderId);$('pickup-banner').hidden=true;
+        if(order&&tickets.some(t=>t.id===order.reservationId)){if(food.ticketId!==order.reservationId)food=newFoodState(order.reservationId);food.orderId=order.id;food.phase='status';renderFood();showView('food');}
+      }
+    });
+    document.addEventListener('change',event=>{
+      const d=event.target.dataset;
+      if(d.payDefault){payApi.setDefaultPayMethod(d.payDefault);refreshPayArea(`[data-pay-default="${CSS.escape(d.payDefault)}"]`);}
+      else if(d.foodOption){food.picks[d.foodOption]=event.target.value;renderFood();document.querySelector(`[data-food-option="${d.foodOption}"]`).focus({preventScroll:true});}
+      else if(d.foodPickup)food.pickup=d.foodPickup;
+    });
+    // 좌석 시야 링크는 누르는 순간의 경기 구장 주소로 맞춘 뒤 새 탭으로 엽니다.
+    document.addEventListener('click',event=>{const link=event.target.closest('a[data-seat-view]');if(link)link.href=seatViewUrl();},true);
+    // Esc로 닫힌 경우의 처리. close 이벤트는 늦게 오므로, 그 사이 모달이 다시 열렸으면(이전 닫힘의 이벤트) 무시합니다.
+    $('confirm-dialog').addEventListener('close',event=>{if(finishConfirm&&!event.target.open)finishConfirm(false);});
+    orderApi.onChange(handleOrderChange);
     // 로그인하지 않고 모달을 닫으면, 이어서 하려던 예매는 잊습니다.
     $('auth-dialog').addEventListener('close',()=>{if(!currentUser)pendingBookingId=null;});
     // 가입/로그인 탭은 좌우 방향키로도 옮길 수 있습니다.
