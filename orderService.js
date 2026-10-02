@@ -47,6 +47,8 @@
       resolve(copy(order));
     },config.createDelay)),
     getOrder:id=>copy(orders.find(order=>order.id===id)),
+    // 전체 주문 목록(오래된 순). 마이페이지의 식음료 주문 내역에서 씁니다.
+    listOrders:()=>orders.map(copy),
     // 한 예매에서 아직 픽업이 끝나지 않은 가장 최근 주문.
     getActiveOrder:reservationId=>copy(orders.filter(order=>order.reservationId===reservationId&&order.status!=='done').pop()),
     // 주문이 생기거나 상태가 바뀔 때마다 호출됩니다.

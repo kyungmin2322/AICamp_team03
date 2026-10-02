@@ -278,6 +278,21 @@
     @media(min-width:768px) and (max-width:800px){.workspace{grid-template-columns:minmax(0,1fr) 280px}}
     /* 식음료 주문: 경기 당일 전 안내 */
     .food-note{margin:-2px 0 8px;font-size:11px;color:var(--text-sub);text-align:center}.btn.food-btn:disabled{border-color:var(--line);background:var(--surface-soft);color:var(--text-sub)}
+    /* 마이페이지 */
+    .my-profile{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:14px;padding:22px 24px;border-radius:var(--radius-panel);background:var(--navy);color:var(--white)}.my-name{font-size:22px;font-weight:800;letter-spacing:-.03em}.my-name small{display:block;font-size:12px;font-weight:400;letter-spacing:0;color:#c9d6f2}.my-team{margin-top:8px;font-size:14px;color:#dce6fa}.my-profile .btn{border-color:#ffffff66;background:transparent;color:var(--white)}.my-profile .btn:hover{background:#ffffff24}
+    .my-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:26px}.my-stat{display:grid;gap:4px;padding:16px 18px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--white);box-shadow:var(--shadow);text-align:left;color:var(--text);transition:transform .16s,box-shadow .16s,border-color .16s}.my-stat:hover{transform:translateY(-2px);border-color:var(--blue);box-shadow:var(--shadow-lg)}.my-stat span{font-size:12px;color:var(--text-sub)}.my-stat strong{font-size:24px;font-weight:800;letter-spacing:-.03em;color:var(--navy);font-variant-numeric:tabular-nums}
+    .my-group{margin-bottom:22px}.my-group h2{margin-bottom:8px;font-size:13px;font-weight:700;color:var(--text-sub)}.my-list{margin:0;padding:0;list-style:none;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--white);overflow:hidden}.my-list li+li{border-top:1px solid var(--line)}
+    .my-item{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:54px;padding:12px 18px;border:0;background:none;text-align:left;font-size:15px;font-weight:600;color:var(--text);transition:background .15s}.my-item:hover{background:var(--blue-soft)}.my-item small{display:block;font-size:12px;font-weight:400;color:var(--text-sub)}.my-item .icon{color:var(--text-sub)}.my-item:focus-visible{outline-offset:-3px}
+    .my-version{margin-top:6px;text-align:center;font-size:12px;color:var(--text-sub)}
+    .my-form{display:grid;gap:12px;max-width:560px;margin-bottom:22px;padding:22px 24px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--white)}.my-form .section-heading{margin-bottom:2px;font-size:17px}.my-form label{display:grid;gap:6px;font-size:13px;font-weight:600}.my-form small{font-size:11px;font-weight:400;color:var(--text-sub)}
+    .my-form input:not([type=checkbox]):not([type=file]),.my-form select,.my-form textarea{min-height:44px;padding:9px 12px;border:1px solid var(--line-strong);border-radius:var(--radius-btn);background:var(--white);font:inherit;font-weight:400;color:var(--text)}.my-form textarea{resize:vertical;line-height:1.6}.my-form input:focus-visible,.my-form select:focus-visible,.my-form textarea:focus-visible{outline:3px solid var(--blue);outline-offset:1px;border-color:var(--blue)}.my-form .btn{justify-self:start}
+    .my-toggle{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 18px;font-size:14px;font-weight:600}.my-form .my-toggle{padding:0}.my-toggle small{display:block;margin-top:2px;font-size:12px;font-weight:400;color:var(--text-sub)}.my-toggles{max-width:560px}
+    .team-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:14px}.team-pick{display:grid;justify-items:center;gap:10px;padding:18px 8px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--white);font-size:13px;font-weight:700;color:var(--text);transition:transform .16s,border-color .16s,box-shadow .16s}.team-pick:hover{transform:translateY(-2px);border-color:var(--blue)}.team-pick[aria-pressed=true]{border-color:var(--navy);box-shadow:0 0 0 2px var(--navy);background:var(--blue-soft)}
+    .faq-item{border:1px solid var(--line);border-radius:var(--radius-card);background:var(--white);margin-bottom:8px}.faq-item summary{padding:14px 18px;font-size:14px;font-weight:600;cursor:pointer}.faq-item summary:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:var(--radius-card)}.faq-item p{padding:0 18px 16px;font-size:13px;color:var(--text-sub)}
+    .my-notes{margin:0;padding-left:18px;font-size:13px;color:var(--text-sub)}.my-notes li{margin:4px 0}.my-check{display:flex!important;align-items:center;gap:8px;font-weight:500!important}.my-check input{width:18px;height:18px;accent-color:var(--blue)}
+    /* 관심구단 강조: 달력의 ★와 경기 표시, 경기 카드의 라벨 */
+    .day.has-fav .day-top::after{content:"★";margin-left:2px;font-size:11px;line-height:1;color:#d9a514}.mini-match.fav{background:var(--blue-soft);font-weight:700;color:var(--navy)}.fav-label{font-size:10px;font-weight:700;color:#8a6500;border:1px solid #e2c35c;background:#fff8dc;border-radius:4px;padding:0 6px;white-space:nowrap}
+    @media(max-width:640px){.my-stats{grid-template-columns:1fr}.team-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.my-profile,.my-form{padding:18px 16px}}
   </style>
 </head>
 <body>
@@ -305,7 +320,6 @@
     <button class="home-tab" data-view="records">경기 기록</button>
     <button class="home-tab" data-view="players">선수 순위</button>
     <button class="home-tab" data-view="rankings">현재 순위</button>
-    <button class="home-tab" data-view="visits">나의 직관 기록</button>
     <button class="home-tab" data-view="community">커뮤니티</button>
     <a class="home-tab seat-view-tab" data-seat-view href="https://myseatcheck.com/" target="_blank" rel="noopener noreferrer">좌석 시야 확인 <span aria-hidden="true">↗</span><span class="sr-only">(새 탭에서 열림)</span></a>
   </nav>
@@ -371,7 +385,7 @@
     <section id="records-view" class="data-surface" hidden aria-label="경기 기록"></section>
     <section id="players-view" class="data-surface" hidden aria-label="선수 순위"></section>
     <section id="rankings-view" class="data-surface" hidden aria-label="현재 순위"></section>
-    <section id="visits-view" class="data-surface" hidden aria-label="나의 직관 기록"></section>
+    <section id="mypage-view" class="data-surface" hidden aria-label="마이페이지"></section>
     <section id="community-view" class="data-surface" hidden aria-label="커뮤니티"></section>
   </main>
   <section class="promo" aria-label="만루티켓 안내">
@@ -416,19 +430,20 @@
   <div class="pickup-banner" id="pickup-banner" role="alert" hidden><span id="pickup-banner-text"></span><button class="btn" id="pickup-banner-open" type="button">주문 현황 보기</button><button class="pickup-banner-close" id="pickup-banner-close" type="button" aria-label="알림 닫기">×</button></div>
   <div class="toast" id="toast" role="status" hidden></div>
   <!-- 스크립트 파일을 고치면 ?v= 값을 함께 바꿉니다. 이전 방문자의 브라우저 캐시에 남은 예전 파일과 섞이지 않게 하기 위해서입니다. -->
-  <script src="teams.js?v=20261002b"></script>
-  <script src="grades.js?v=20261002b"></script>
-  <script src="sections.js?v=20261002b"></script>
-  <script src="weatherService.js?v=20261002b"></script>
-  <script src="statsService.js?v=20261002b"></script>
-  <script src="firebase-config.js?v=20261002b"></script>
-  <script src="firebaseService.js?v=20261002b"></script>
-  <script src="stadiums.js?v=20261002b"></script>
-  <script src="stores.js?v=20261002b"></script>
-  <script src="paymentService.js?v=20261002b"></script>
-  <script src="orderService.js?v=20261002b"></script>
-  <script src="transferService.js?v=20261002b"></script>
-  <script src="settlementService.js?v=20261002b"></script>
+  <script src="teams.js?v=20261002c"></script>
+  <script src="grades.js?v=20261002c"></script>
+  <script src="sections.js?v=20261002c"></script>
+  <script src="weatherService.js?v=20261002c"></script>
+  <script src="statsService.js?v=20261002c"></script>
+  <script src="firebase-config.js?v=20261002c"></script>
+  <script src="firebaseService.js?v=20261002c"></script>
+  <script src="stadiums.js?v=20261002c"></script>
+  <script src="stores.js?v=20261002c"></script>
+  <script src="paymentService.js?v=20261002c"></script>
+  <script src="orderService.js?v=20261002c"></script>
+  <script src="transferService.js?v=20261002c"></script>
+  <script src="settlementService.js?v=20261002c"></script>
+  <script src="feedbackService.js?v=20261002c"></script>
   <script>
     'use strict';
     const teams=window.Teams;
@@ -504,7 +519,10 @@
         games.push({id:`g-${year}${String(month+1).padStart(2,'0')}${String(day).padStart(2,'0')}-${i}`,day,home,away,date,stadium:home.stadium,preOpen:new Date(year,month,day-5,11),generalOpen:new Date(year,month,day-3,14)});
       }
     }
-    function matchingGames(day){return games.filter(g=>g.day===day&&(!selectedTeams.size||selectedTeams.has(g.home.id)||selectedTeams.has(g.away.id)));}
+    function matchingGames(day){
+      // 관심구단 경기를 먼저 보여 줍니다(나머지 순서는 그대로).
+      return games.filter(g=>g.day===day&&(!selectedTeams.size||selectedTeams.has(g.home.id)||selectedTeams.has(g.away.id))).sort((a,b)=>isFavoriteGame(b)-isFavoriteGame(a));
+    }
     function statusLabel(g){const t=Date.now();return t>=g.date.getTime()?'모의 예매':t>=g.generalOpen.getTime()?'일반예매':t>=g.preOpen.getTime()?'선예매':'오픈 예정';}
     function renderFilters(){
       $('filters').innerHTML=teams.map(t=>`<button class="chip" data-team="${t.id}" aria-pressed="${selectedTeams.has(t.id)}">${dot(t)}${t.shortName}</button>`).join('')+'<button class="filter-reset" id="filter-reset">전체 구단</button>';
@@ -516,8 +534,8 @@
       for(let i=0;i<start;i++)cells+='<div class="day blank" aria-hidden="true"></div>';
       for(let day=1;day<=monthDays;day++){
         const list=matchingGames(day),isToday=day===today,isMonday=new Date(year,month,day).getDay()===1;
-        cells+=`<div class="day${day===selectedDay?' selected':''}${list.length?' has-games':''}"><div class="day-top"><button class="day-number${isToday?' today':''}" data-day="${day}" aria-label="${month+1}월 ${day}일, ${list.length}경기" aria-pressed="${day===selectedDay}"${isToday?' aria-current="date"':''}>${day}</button>${isToday?'<span class="day-label">오늘</span>':''}</div>`;
-        cells+=list.slice(0,2).map(g=>`<button class="mini-match" data-game="${g.id}" aria-label="${day}일 ${formatMatchup(g,{style:'text'})}, ${timeLabel(g.date)}">${formatMatchup(g,{short:true,size:10,tag:'홈'})}</button>`).join('');
+        cells+=`<div class="day${day===selectedDay?' selected':''}${list.length?' has-games':''}${list.some(isFavoriteGame)?' has-fav':''}"><div class="day-top"><button class="day-number${isToday?' today':''}" data-day="${day}" aria-label="${month+1}월 ${day}일, ${list.length}경기" aria-pressed="${day===selectedDay}"${isToday?' aria-current="date"':''}>${day}</button>${isToday?'<span class="day-label">오늘</span>':''}</div>`;
+        cells+=list.slice(0,2).map(g=>`<button class="mini-match${isFavoriteGame(g)?' fav':''}" data-game="${g.id}" aria-label="${day}일 ${formatMatchup(g,{style:'text'})}, ${timeLabel(g.date)}">${formatMatchup(g,{short:true,size:10,tag:'홈'})}</button>`).join('');
         if(list.length>2)cells+=`<button class="more-games" data-day="${day}" aria-label="${day}일 전체 ${list.length}경기 보기">+ ${list.length-2}경기</button>`;
         if(isMonday)cells+='<span class="day-rest">휴식일</span>';
         cells+=`<button class="mobile-games" data-day="${day}" aria-label="${day}일 ${isMonday?'월요일 휴식일':list.length+'경기 보기'}"><span class="dot-strip">${list.map(g=>dot(g.home)).join('')}</span><span>${isMonday?'':list.length?list.length+'경기':'경기 없음'}</span></button></div>`;
@@ -533,7 +551,7 @@
       $('daily-count').textContent=`${list.length}경기`;
       $('match-list').innerHTML=list.length?list.map(g=>{
         const active=!!selectedGame&&selectedGame.id===g.id;
-        return `<article class="game-card${active?' active':''}"><button class="match-row${active?' active':''}" data-game="${g.id}" aria-pressed="${active}"><span class="game-card-top"><span class="game-when">${dateLabel(g.date)} · ${timeLabel(g.date)}</span><span class="match-status">${statusLabel(g)}</span></span><span class="match-title">${formatMatchup(g,{style:'badge',vs:'<span class="versus">VS</span>'})}</span><span class="match-stadium">${g.stadium}<span class="sample-label">예시 경기</span></span><span class="match-weather muted" data-weather="${g.id}">날씨 확인 중…</span></button><button class="btn primary full" data-book="${g.id}">예매하기</button></article>`;
+        return `<article class="game-card${active?' active':''}"><button class="match-row${active?' active':''}" data-game="${g.id}" aria-pressed="${active}"><span class="game-card-top"><span class="game-when">${dateLabel(g.date)} · ${timeLabel(g.date)}</span><span class="match-status">${statusLabel(g)}</span></span><span class="match-title">${formatMatchup(g,{style:'badge',vs:'<span class="versus">VS</span>'})}</span><span class="match-stadium">${g.stadium}<span class="sample-label">예시 경기</span>${isFavoriteGame(g)?'<span class="fav-label">★ 관심구단</span>':''}</span><span class="match-weather muted" data-weather="${g.id}">날씨 확인 중…</span></button><button class="btn primary full" data-book="${g.id}">예매하기</button></article>`;
       }).join(''):new Date(year,month,selectedDay).getDay()===1?'<p class="empty-list">월요일은 휴식일이에요. 다른 날짜의 경기를 확인해 주세요.</p>':'<p class="empty-list">선택한 구단의 경기가 없어요. 전체 구단을 선택해 보세요.</p>';
       list.forEach(loadGameWeather);
     }
@@ -588,9 +606,9 @@
     function showView(view){
       currentView=view;syncSeatViewLinks();
       // 해시를 현재 화면에 맞춥니다. 해시를 쓰지 않는 화면으로 가면 지웁니다.
-      const hash=Object.keys(hashViews).find(key=>hashViews[key]===view)||'';
-      if(view!=='link'&&location.hash.slice(1)!==hash&&(hash||hashView()))history.replaceState(null,'',location.href.split('#')[0]+(hash?'#'+hash:''));
-      ['calendar','booking','success','wallet','food','share','link','records','players','rankings','visits','community'].forEach(name=>{const el=$(name+'-view');el.hidden=name!==view;el.classList.toggle('view-enter',name===view);});
+      const hash=view==='mypage'?'/mypage'+(mypage.page==='home'?'':'/'+mypage.page):Object.keys(hashViews).find(key=>hashViews[key]===view)||'';
+      if(view!=='link'&&location.hash.slice(1)!==hash&&(hash||hashView()))history[view==='mypage'?'pushState':'replaceState'](null,'',location.href.split('#')[0]+(hash?'#'+hash:''));
+      ['calendar','booking','success','wallet','food','share','link','mypage','records','players','rankings','community'].forEach(name=>{const el=$(name+'-view');el.hidden=name!==view;el.classList.toggle('view-enter',name===view);});
       $('home-tabs').hidden=['booking','success'].includes(view);
       document.querySelectorAll('[data-view]').forEach(tab=>{if(tab.dataset.view===view)tab.setAttribute('aria-current','page');else tab.removeAttribute('aria-current');});
       $('wallet-button').setAttribute('aria-current',view==='wallet'?'page':'false');
@@ -919,7 +937,7 @@
     // ----- 로그인(Firebase Authentication)과 내 티켓(Firestore) -----
     // Firebase와 직접 통신하는 코드는 firebaseService.js에 있고, 여기서는 window.TicketCloud만 씁니다.
     const cloudUnavailable=()=>Promise.reject(Object.assign(new Error('sdk'),{code:'app/sdk-load-failed'}));
-    const cloud=window.TicketCloud||{configured:true,onAuth:listener=>listener(null),signUp:cloudUnavailable,signIn:cloudUnavailable,signOut:cloudUnavailable,saveTicket:cloudUnavailable,loadMyTickets:cloudUnavailable,deleteTicket:cloudUnavailable,addCheer:cloudUnavailable,seedCheers:cloudUnavailable,watchCheers:(gameId,onData,onError)=>{onError();return()=>{};}};
+    const cloud=window.TicketCloud||{configured:true,onAuth:listener=>listener(null),signUp:cloudUnavailable,signIn:cloudUnavailable,signOut:cloudUnavailable,changePassword:cloudUnavailable,saveTicket:cloudUnavailable,loadMyTickets:cloudUnavailable,deleteTicket:cloudUnavailable,addCheer:cloudUnavailable,seedCheers:cloudUnavailable,watchCheers:(gameId,onData,onError)=>{onError();return()=>{};}};
     let currentUser=null,pendingBookingId=null,ticketsState='idle',savingOrder=false,authMode='login';
     const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     // Firebase 오류 코드를 한글 안내로 바꿉니다.
@@ -993,6 +1011,9 @@
       const wasLoggedIn=!!currentUser;
       currentUser=user;renderAuth();
       if(currentView==='link')renderLink();
+      loadSettings();
+      if(currentView==='mypage')renderMypage();
+      if(currentView==='calendar'){renderCalendar();renderDetail();}
       if(user){
         if($('auth-dialog').open)$('auth-dialog').close();
         loadTickets();
@@ -1063,17 +1084,19 @@
       return list;
     }
     const selectedPayMethod=()=>currentPayMethods().find(m=>m.id===selectedPayId)||null;
-    function payAreaHtml(){
+    // manage=true: 마이페이지의 결제수단 관리 화면(결제에 쓸 수단을 고르지 않고 목록·기본값만 관리).
+    function payAreaHtml(manage=false){
       const list=currentPayMethods();
-      return `<section class="pay-area" id="pay-area" aria-labelledby="pay-area-title"><h2 class="section-heading" id="pay-area-title">등록된 결제수단</h2>${list.length?`<p class="pay-hint">결제에 사용할 수단을 선택하세요. 기본 결제수단이 먼저 선택됩니다.</p><ul class="pay-list">${list.map(m=>{
-        const using=m.id===selectedPayId;
-        return `<li class="pay-card${using?' selected':''}"><button type="button" class="pay-select" data-pay-select="${esc(m.id)}" aria-pressed="${using}">${payBadge(m.provider)}<span class="pay-label">${esc(m.label)}</span><span class="pay-using">${using?'이번 결제에 사용':'선택'}</span></button><label class="pay-default"><input type="radio" name="pay-default" data-pay-default="${esc(m.id)}"${m.isDefault?' checked':''}>기본 결제수단</label><button type="button" class="btn pay-remove" data-pay-remove="${esc(m.id)}" aria-label="${esc(m.label)} 삭제">삭제</button></li>`;
+      return `<section class="pay-area" id="pay-area" aria-labelledby="pay-area-title"><h2 class="section-heading" id="pay-area-title">등록된 결제수단</h2>${list.length?`<p class="pay-hint">${manage?'결제 화면에 들어가면 기본 결제수단이 먼저 선택됩니다.':'결제에 사용할 수단을 선택하세요. 기본 결제수단이 먼저 선택됩니다.'}</p><ul class="pay-list">${list.map(m=>{
+        const using=!manage&&m.id===selectedPayId;
+        return `<li class="pay-card${using?' selected':''}"><button type="button" class="pay-select" data-pay-select="${esc(m.id)}" aria-pressed="${using}">${payBadge(m.provider)}<span class="pay-label">${esc(m.label)}</span><span class="pay-using">${manage?(m.isDefault?'기본':''):using?'이번 결제에 사용':'선택'}</span></button><label class="pay-default"><input type="radio" name="pay-default" data-pay-default="${esc(m.id)}"${m.isDefault?' checked':''}>기본 결제수단</label><button type="button" class="btn pay-remove" data-pay-remove="${esc(m.id)}" aria-label="${esc(m.label)} 삭제">삭제</button></li>`;
       }).join('')}</ul>`:'<p class="pay-empty">등록된 간편결제가 없습니다</p>'}<button type="button" class="btn full" id="pay-add">+ 간편결제 추가</button></section>`;
     }
     // 결제수단이 바뀌면 그 영역이 들어 있는 화면(예매 결제 단계 또는 식음료 주문)을 다시 그립니다.
     function refreshPayArea(focusSelector='#pay-add'){
       if(currentView==='booking'&&bookingState.phase==='payment')renderBooking();
       else if(currentView==='food')renderFood();
+      else if(currentView==='mypage')renderMypage();
       const scope=$(currentView+'-view'),focusTarget=scope.querySelector(focusSelector)||scope.querySelector('#pay-add');
       if(focusTarget)focusTarget.focus({preventScroll:true});
     }
@@ -1379,6 +1402,153 @@
       if(!currentUser){openAuthDialog('login','로그인 후 티켓을 받을 수 있어요');return;}
       transferApi.acceptTransfer(target.token,{uid:currentUser.uid,name:currentUser.emailPrefix}).then(()=>{renderLink();showToast('티켓을 받았어요. 내 티켓에서 확인할 수 있어요');},()=>{renderLink();showToast('티켓을 받을 수 없어요');});
     }
+    // ----- 마이페이지 -----
+    // 주소는 #/mypage, #/mypage/records 처럼 해시 경로를 씁니다(파일을 직접 열어도 동작하도록).
+    const APP_VERSION='v1.0.0';
+    const NOTIFY_BEFORE_HOURS=3; // "관람 예정 경기 시작 N시간 전 알림"의 N
+    const feedbackApi=window.FeedbackService;
+    const mypagePages={home:'마이페이지',records:'나의 직관 기록',transfers:'티켓 전달·정산 내역',orders:'식음료 주문 내역',profile:'개인정보 관리',team:'관심구단 선택',notifications:'알림 설정',payments:'결제수단 관리',feedback:'개발자에게 피드백 보내기',faq:'자주 묻는 질문',terms:'이용약관',privacy:'개인정보처리방침',withdraw:'회원 탈퇴'};
+    // 로그인하지 않아도 볼 수 있는 화면.
+    const mypagePublic=['records','faq','terms','privacy'];
+    let mypage={page:'home',feedbackDone:false};
+    // 주소에서 마이페이지 화면을 읽습니다. 예전 직관 기록 주소(#visits)와 #/mypage/reservations(예매 내역)도 여기서 처리합니다.
+    function mypageRoute(){
+      if(location.hash==='#visits')return 'records';
+      const m=/^#\/mypage(?:\/([a-z]+))?$/.exec(location.hash);
+      return m?(!m[1]?'home':m[1]==='reservations'?'reservations':mypagePages[m[1]]?m[1]:'home'):null;
+    }
+    // 설정 값(관심구단·알림·개인정보)은 앱 전역 상태 userSettings 한 곳에 두고, 계정별로 localStorage에도 저장합니다.
+    const settingsKey=uid=>'manru.settings.'+uid;
+    const defaultSettings=()=>({favoriteTeam:null,profile:{name:'',phone:'',email:'',marketing:false},notifications:{open:true,beforeGame:true,gameChange:true,pickup:true,transfer:true}});
+    let userSettings=defaultSettings();
+    function loadSettings(){
+      userSettings=defaultSettings();
+      if(!currentUser)return;
+      try{
+        const saved=JSON.parse(localStorage.getItem(settingsKey(currentUser.uid))||'null');
+        if(saved&&typeof saved==='object')userSettings={favoriteTeam:teams.some(t=>t.id===saved.favoriteTeam)?saved.favoriteTeam:null,profile:{...userSettings.profile,...saved.profile},notifications:{...userSettings.notifications,...saved.notifications}};
+      }catch(error){}
+    }
+    function saveSettings(patch){
+      userSettings={...userSettings,...patch};
+      if(!currentUser)return;
+      try{localStorage.setItem(settingsKey(currentUser.uid),JSON.stringify(userSettings));}catch(error){}
+    }
+    const isFavoriteGame=game=>!!userSettings.favoriteTeam&&(game.home.id===userSettings.favoriteTeam||game.away.id===userSettings.favoriteTeam);
+    const displayName=()=>userSettings.profile.name||(currentUser?currentUser.emailPrefix:'');
+    // 알림 항목. 마케팅 알림은 개인정보 관리의 마케팅 수신 동의와 같은 값을 씁니다.
+    const notifyItems=[
+      {id:'open',label:'관심구단 경기 예매 오픈 알림'},
+      {id:'beforeGame',label:`관람 예정 경기 시작 ${NOTIFY_BEFORE_HOURS}시간 전 알림`},
+      {id:'gameChange',label:'우천 취소 등 경기 변경 알림'},
+      {id:'pickup',label:'식음료 주문 픽업 준비 완료 알림'},
+      {id:'transfer',label:'티켓 전달 수락 / 정산 요청·완료 알림'},
+      {id:'marketing',label:'마케팅·이벤트 알림',note:'개인정보 관리의 마케팅 정보 수신 동의와 함께 바뀝니다.'}
+    ];
+    const notifyOn=id=>id==='marketing'?!!userSettings.profile.marketing:!!userSettings.notifications[id];
+    function setNotify(id,on){
+      if(id==='marketing')saveSettings({profile:{...userSettings.profile,marketing:on}});
+      else saveSettings({notifications:{...userSettings.notifications,[id]:on}});
+    }
+    const mySwitch=(attr,id,on,label)=>`<button type="button" class="switch" role="switch" ${attr}="${id}" aria-checked="${on}" aria-label="${label}"></button>`;
+    // 자주 묻는 질문(예시 텍스트)
+    const faqItems=[
+      {group:'예매·취소',items:[['예매는 몇 석까지 할 수 있나요?','한 번의 예매에서 한 구역의 좌석을 최대 4석까지 선택할 수 있어요.'],['예매를 취소하려면 어떻게 하나요?','예매 내역의 티켓 카드에서 [예매 취소]를 누르면 됩니다. 친구가 이미 받은 좌석이 있는 예매는 취소할 수 없어요.']]},
+      {group:'티켓 전달',items:[['친구에게 티켓을 보내려면요?','2석 이상 예매한 건의 [티켓 전달·정산]에서 좌석마다 받는 사람을 지정하거나 전달 링크를 복사해 보낼 수 있어요.'],['보낸 티켓을 되돌릴 수 있나요?','친구가 수락하기 전(전달 대기)에는 [전달 취소]가 가능하고, 수락한 뒤에는 회수할 수 없어요.']]},
+      {group:'식음료 주문',items:[['식음료 주문은 언제 할 수 있나요?','경기 당일에만 주문할 수 있어요. 경기가 끝나면 주문 버튼이 사라져요.'],['내 자리로 가져다주나요?','지금은 매장 픽업 주문만 가능하고, 자리 배달은 준비 중이에요.']]},
+      {group:'정산',items:[['정산 금액은 어떻게 정해지나요?','전달한 좌석의 가격을 기준으로 자동 계산되고, 요청 전에는 금액을 직접 고칠 수 있어요.'],['실제로 송금이 되나요?','아니요. 받는 사람이 송금 완료를 알리고 예매자가 입금을 확인하는 방식이며, 실제 송금 기능은 없어요.']]}
+    ];
+    const visitStats=()=>{const wins=mockVisits.filter(v=>v.result==='승리').length,losses=mockVisits.filter(v=>v.result==='패배').length;return {count:mockVisits.length,rate:wins+losses?Math.round(wins/(wins+losses)*100):0};};
+    const upcomingCount=()=>[...tickets,...giftTickets()].filter(t=>{const game=ticketGame(t);return game&&foodWindow(game)!=='ended';}).length;
+    const myOrders=()=>{const ids=new Set([...tickets,...giftTickets()].map(t=>t.id));return orderApi.listOrders().filter(order=>ids.has(order.reservationId)).reverse();};
+    function openMypage(page='home'){
+      if(page==='reservations'){openWallet();return;}
+      mypage={page:mypagePages[page]?page:'home',feedbackDone:false};
+      renderMypage();showView('mypage');
+    }
+    function mypageHome(){
+      const stats=visitStats(),fav=userSettings.favoriteTeam;
+      const item=(page,label,note='')=>`<li><button class="my-item" data-my-open="${page}"><span>${label}${note?`<small>${note}</small>`:''}</span>${arrow}</button></li>`;
+      const group=(title,items)=>`<section class="my-group"><h2>${title}</h2><ul class="my-list">${items.join('')}</ul></section>`;
+      return `<div class="my-profile"><div class="my-profile-main"><p class="my-name">${esc(displayName())}<small>${esc(currentUser.email)}</small></p><p class="my-team">${fav?teamName(fav,{size:28}):'관심구단을 선택해 주세요'}</p></div><button class="btn" data-my-open="profile">프로필 수정</button></div><div class="my-stats"><button class="my-stat" data-my-open="records"><span>이번 시즌 직관 횟수</span><strong>${stats.count}회</strong></button><button class="my-stat" data-my-open="records"><span>직관 승률</span><strong>${stats.rate}%</strong></button><button class="my-stat" data-my-open="reservations"><span>관람 예정 경기 수</span><strong>${upcomingCount()}경기</strong></button></div>${group('나의 야구',[item('records','나의 직관 기록'),item('reservations','예매 내역'),item('transfers','티켓 전달·정산 내역'),item('orders','식음료 주문 내역')])}${group('설정',[item('profile','개인정보 관리'),item('team','관심구단 선택',fav?teams.find(t=>t.id===fav).name:'선택 안 함'),item('notifications','알림 설정'),item('payments','결제수단 관리')])}${group('고객 지원',[item('feedback','개발자에게 피드백 보내기'),item('faq','자주 묻는 질문'),item('terms','이용약관'),item('privacy','개인정보처리방침')])}${group('계정',[`<li><button class="my-item" id="my-logout"><span>로그아웃</span>${arrow}</button></li>`,item('withdraw','회원 탈퇴')])}<p class="my-version">앱 버전 ${APP_VERSION}</p>`;
+    }
+    function mypageTransfers(){
+      const list=tickets.filter(t=>t.seats.length>=2);
+      if(!list.length)return '<p class="pay-empty">2석 이상 예매한 내역이 있으면 여기에서 전달·정산 현황을 볼 수 있어요.</p>';
+      return `<ul class="share-list">${list.map(t=>{
+        const game=ticketGame(t),transfers=activeTransfers(t.id),settlements=settleApi.listByReservation(t.id),sum=items=>items.reduce((n,s)=>n+s.amount,0);
+        return `<li class="share-seat"><div class="share-seat-head"><strong>${game?formatMatchup(game,{short:true}):esc(t.gameLabel)}</strong><span>${game?`${dateLabel(game.date)} ${timeLabel(game.date)}`:''}</span></div><p class="share-note">좌석 ${t.seats.length}석 · 전달 대기 ${transfers.filter(x=>x.status==='pending').length}석 · 전달 완료 ${transfers.filter(x=>x.status==='accepted').length}석</p><p class="share-note">받을 금액 ${money(sum(settlements))} · 받은 금액 ${money(sum(settlements.filter(s=>s.status==='done')))}</p><div class="share-actions"><button class="btn" data-share-open="${esc(t.id)}">전달·정산 열기</button></div></li>`;
+      }).join('')}</ul>`;
+    }
+    function mypageOrders(){
+      const list=myOrders();
+      if(!list.length)return '<p class="pay-empty">식음료 주문 내역이 없습니다</p><p class="share-note">주문 내역은 이 화면을 새로고침하기 전까지만 보관됩니다(모의 주문).</p>';
+      return `<ul class="share-list">${list.map(order=>{
+        const store=findStore(order.storeId),menus=order.items.map(item=>{const menu=store&&store.menus.find(m=>m.id===item.menuId);return `${esc(menu?menu.name:item.menuId)}${item.option?` (${esc(item.option)})`:''} × ${item.qty}`;}).join(', ');
+        const day=new Date(order.createdAt);
+        return `<li class="share-seat"><div class="share-seat-head"><strong>${esc(store?store.name:'매장')}</strong><span>${dateLabel(day)} ${timeLabel(day)}</span><span class="share-state${order.status==='done'?' done':' wait'}">${orderLabels[order.status]}</span></div><p class="share-note">${menus}</p><p class="settle-fixed">${money(order.totalPrice)}</p>${order.status!=='done'?`<div class="share-actions"><button class="btn" data-food-status="${esc(order.reservationId)}">주문 현황 보기</button></div>`:''}</li>`;
+      }).join('')}</ul>`;
+    }
+    function mypageProfile(){
+      const p=userSettings.profile;
+      return `<form class="my-form" id="my-profile-form" novalidate><h2 class="section-heading">기본 정보</h2><label>이름(닉네임)<input type="text" id="my-name" maxlength="20" autocomplete="nickname" value="${esc(p.name||currentUser.emailPrefix)}"></label><label>휴대폰 번호<input type="tel" id="my-phone" maxlength="13" inputmode="numeric" autocomplete="off" placeholder="새 번호를 입력하면 바뀝니다"><small>${p.phone?`현재 등록된 번호: ${maskPhone(p.phone)}`:'등록된 번호가 없어요.'}</small></label><label>이메일(연락용)<input type="email" id="my-email" maxlength="80" autocomplete="email" value="${esc(p.email||currentUser.email)}"><small>로그인 계정은 ${esc(currentUser.email)} 그대로이며, 여기서는 연락받을 주소만 바뀝니다.</small></label><p class="share-error" id="my-profile-error" role="alert"></p><button class="btn primary" type="submit">저장</button></form><form class="my-form" id="my-password-form" novalidate><h2 class="section-heading">비밀번호 변경</h2><label>현재 비밀번호<input type="password" id="my-pw-current" autocomplete="current-password"></label><label>새 비밀번호<input type="password" id="my-pw-new" autocomplete="new-password"><small>6자 이상</small></label><label>새 비밀번호 확인<input type="password" id="my-pw-confirm" autocomplete="new-password"></label><p class="share-error" id="my-password-error" role="alert"></p><button class="btn primary" type="submit" id="my-password-submit">비밀번호 변경</button></form><div class="my-form"><h2 class="section-heading">마케팅 정보 수신</h2><div class="my-toggle"><span>마케팅 정보 수신 동의<small>이벤트·혜택 소식을 받습니다. 알림 설정의 마케팅·이벤트 알림과 함께 바뀝니다.</small></span>${mySwitch('data-my-notify','marketing',notifyOn('marketing'),'마케팅 정보 수신 동의')}</div></div>`;
+    }
+    const mypageTeam=()=>`<p class="share-note">대표로 응원할 구단을 하나 고르세요. 달력에서 그 팀 경기에 ★가 붙고, 경기 카드에서 먼저 보여요.</p><div class="team-grid" role="group" aria-label="관심구단 선택">${teams.map(t=>`<button class="team-pick" data-my-team="${t.id}" aria-pressed="${userSettings.favoriteTeam===t.id}">${teamLogo(t.id,56)}<span>${t.name}</span></button>`).join('')}</div>`;
+    const mypageNotifications=()=>`<p class="share-note">설정 값만 저장하며, 실제 알림은 발송되지 않아요.</p><ul class="my-list my-toggles">${notifyItems.map(n=>`<li class="my-toggle"><span>${n.label}${n.note?`<small>${n.note}</small>`:''}</span>${mySwitch('data-my-notify',n.id,notifyOn(n.id),n.label)}</li>`).join('')}</ul>`;
+    function mypageFeedback(){
+      if(mypage.feedbackDone)return '<div class="order-card link-card"><div class="success-mark"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h1>소중한 의견 감사합니다</h1><p class="order-note">보내 주신 내용은 서비스 개선에 참고할게요. (모의 전송)</p><button class="btn full" data-my-open="home">마이페이지로</button></div>';
+      const {minLength,maxLength}=feedbackApi.limits;
+      return `<form class="my-form" id="my-feedback-form" novalidate><label>카테고리<select id="fb-category">${feedbackApi.categories.map(c=>`<option value="${c.id}">${c.name}</option>`).join('')}</select></label><label>내용<textarea id="fb-message" rows="7" maxlength="${maxLength}" placeholder="불편했던 점이나 바라는 기능을 알려 주세요 (최소 ${minLength}자)"></textarea><small id="fb-count">0 / ${maxLength}자</small></label><label>스크린샷 첨부 (선택)<input type="file" id="fb-file" accept="image/*"><small>이미지 1장, 5MB 이하</small></label><label>답변 받을 이메일 (선택)<input type="email" id="fb-email" maxlength="80" value="${esc(userSettings.profile.email||currentUser.email)}"></label><p class="share-error" id="fb-error" role="alert"></p><button class="btn primary" type="submit" id="fb-submit">보내기</button></form>`;
+    }
+    const mypageFaq=()=>faqItems.map(g=>`<section class="my-group"><h2>${g.group}</h2>${g.items.map(([question,answer])=>`<details class="faq-item"><summary>${question}</summary><p>${answer}</p></details>`).join('')}</section>`).join('')+'<p class="data-disclaimer">내용은 예시 텍스트입니다.</p>';
+    const mypageWithdraw=()=>`<div class="my-form"><h2 class="section-heading">탈퇴 전에 확인해 주세요</h2><ul class="my-notes"><li>이 브라우저에 저장된 관심구단·알림·개인정보 설정이 삭제됩니다.</li><li>연습용 앱이라 모의로 처리되며, 로그인 계정과 서버에 저장된 예매 내역은 실제로 삭제되지 않습니다.</li><li>탈퇴 처리 후 자동으로 로그아웃됩니다.</li></ul><label class="my-check"><input type="checkbox" id="my-withdraw-check">안내 내용을 확인했으며 탈퇴에 동의합니다.</label><button class="btn share-danger" id="my-withdraw" disabled>회원 탈퇴</button></div>`;
+    function renderMypage(){
+      const page=mypage.page,view=$('mypage-view');
+      const head=`${page==='home'?'':`<button class="btn plain back" data-my-open="home">${backArrow}마이페이지</button>`}`;
+      // 직관 기록은 기존 화면을 그대로 옮겨 보여 줍니다.
+      if(page==='records'){view.innerHTML=head+visitsHtml();return;}
+      const title=`<div class="data-heading"><div><h1>${mypagePages[page]}</h1></div></div>`;
+      if(!currentUser&&!mypagePublic.includes(page)){view.innerHTML=head+title+'<div class="empty-wallet"><h2>로그인이 필요해요</h2><p>로그인하면 마이페이지를 이용할 수 있어요</p><button class="btn primary" id="wallet-login">로그인</button></div>';return;}
+      const body={home:mypageHome,transfers:mypageTransfers,orders:mypageOrders,profile:mypageProfile,team:mypageTeam,notifications:mypageNotifications,payments:()=>payAreaHtml(true),feedback:mypageFeedback,faq:mypageFaq,terms:()=>'<p class="pay-empty">이용약관은 준비 중입니다.</p>',privacy:()=>'<p class="pay-empty">개인정보처리방침은 준비 중입니다.</p>',withdraw:mypageWithdraw}[page]();
+      view.innerHTML=head+title+body;
+    }
+    function saveProfile(){
+      const name=$('my-name').value.trim(),phone=$('my-phone').value.replace(/\D/g,''),email=$('my-email').value.trim(),error=$('my-profile-error');
+      if(!name){error.textContent='이름을 입력해 주세요.';return;}
+      if(phone&&!/^01\d{8,9}$/.test(phone)){error.textContent='휴대폰 번호를 정확히 입력해 주세요.';return;}
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){error.textContent='이메일 형식이 올바르지 않아요.';return;}
+      saveSettings({profile:{...userSettings.profile,name,email,phone:phone||userSettings.profile.phone}});
+      renderMypage();showToast('개인정보를 저장했어요');
+    }
+    function changePassword(){
+      const current=$('my-pw-current').value,next=$('my-pw-new').value,confirm=$('my-pw-confirm').value,error=$('my-password-error'),button=$('my-password-submit');
+      if(!current){error.textContent='현재 비밀번호를 입력해 주세요.';return;}
+      if(next.length<6){error.textContent='새 비밀번호는 6자 이상이어야 해요.';return;}
+      if(next!==confirm){error.textContent='새 비밀번호가 서로 달라요.';return;}
+      button.disabled=true;button.textContent='처리 중…';error.textContent='';
+      cloud.changePassword(current,next).then(()=>{$('my-password-form').reset();showToast('비밀번호를 변경했어요');},failure=>{
+        const code=failure&&failure.code;
+        error.textContent=['auth/invalid-credential','auth/wrong-password','auth/invalid-login-credentials'].includes(code)?'현재 비밀번호가 틀렸어요.':authMessages[String(code).split('.')[0]]||authMessages.default;
+      }).then(()=>{if($('my-password-submit')){button.disabled=false;button.textContent='비밀번호 변경';}});
+    }
+    function sendFeedback(){
+      const file=$('fb-file').files[0],data={category:$('fb-category').value,message:$('fb-message').value,email:$('fb-email').value.trim(),screenshot:file||null},button=$('fb-submit');
+      const messages={'feedback/too-short':`내용을 ${feedbackApi.limits.minLength}자 이상 입력해 주세요.`,'feedback/too-long':`내용은 ${feedbackApi.limits.maxLength}자까지 입력할 수 있어요.`,'feedback/email':'이메일 형식이 올바르지 않아요.','feedback/not-image':'스크린샷은 이미지 파일만 첨부할 수 있어요.','feedback/image-too-large':'스크린샷은 5MB 이하만 첨부할 수 있어요.','feedback/category':'카테고리를 선택해 주세요.'};
+      const problem=feedbackApi.validate(data);
+      if(problem){$('fb-error').textContent=messages[problem];return;}
+      button.disabled=true;button.textContent='보내는 중…';$('fb-error').textContent='';
+      feedbackApi.sendFeedback(data).then(()=>{mypage.feedbackDone=true;if(currentView==='mypage'&&mypage.page==='feedback'){renderMypage();window.scrollTo(0,0);}},()=>{button.disabled=false;button.textContent='보내기';$('fb-error').textContent='보내지 못했어요. 잠시 후 다시 시도해 주세요.';});
+    }
+    async function logoutFromMypage(){
+      if(!await askConfirm('로그아웃할까요?','예매 내역은 다시 로그인하면 볼 수 있어요.','로그아웃'))return;
+      cloud.signOut().then(()=>showToast('로그아웃했어요'),()=>showToast('로그아웃하지 못했어요. 잠시 후 다시 시도해 주세요.'));
+    }
+    async function withdrawAccount(){
+      if(!currentUser||!$('my-withdraw-check').checked)return;
+      if(!await askConfirm('정말 탈퇴할까요?','이 브라우저에 저장된 설정이 삭제되고 로그아웃됩니다. 연습용 앱이라 실제 계정은 삭제되지 않아요.','탈퇴하기'))return;
+      try{localStorage.removeItem(settingsKey(currentUser.uid));}catch(error){}
+      cloud.signOut().then(()=>{openCalendar();showToast('탈퇴 처리되었습니다 (모의 처리)');},()=>showToast('처리하지 못했어요. 잠시 후 다시 시도해 주세요.'));
+    }
     // ----- 응원 한마디(Firestore cheers) -----
     // 지금 열려 있는 경기의 응원만 최신순으로 실시간 표시합니다. 다른 경기를 열면 이전 구독을 해제하고 새 경기로 다시 구독합니다.
     let cheerGameId=null,cheerTeam=null,cheerItems=null,stopCheers=null;
@@ -1442,7 +1612,7 @@
         :ticketsState==='error'?notice('예매 내역을 불러올 수 없습니다','잠시 후 다시 시도해 주세요.','<button class="btn" id="wallet-retry">다시 불러오기</button>')
         :!tickets.length&&!giftTickets().length?notice('첫 직관을 기다리고 있어요','경기를 예매하면 이곳에 티켓이 모여요.',`<button class="btn primary" id="empty-calendar">경기 캘린더 보기 ${arrow}</button>`)
         :`<div class="ticket-grid">${tickets.map(ticketCard).join('')}${giftTickets().map(ticketCard).join('')}</div><p class="small-note" style="margin-top:22px">예매 내역은 로그인한 계정에 저장됩니다. 실제 결제·입장은 되지 않는 연습용 티켓입니다.</p>`;
-      $('wallet-view').innerHTML=`<div class="wallet-header"><div><h1>내 티켓 <span class="small-count">${currentUser?ticketSeatCount()+'장':''}</span></h1><p>응원하는 팀은 달라도, 티켓은 한곳에.</p></div><button class="btn" id="wallet-calendar">경기 둘러보기</button></div>`+body;
+      $('wallet-view').innerHTML=`<button class="btn plain back" id="wallet-mypage">${backArrow}마이페이지</button><div class="wallet-header"><div><h1>내 티켓 <span class="small-count">${currentUser?ticketSeatCount()+'장':''}</span></h1><p>응원하는 팀은 달라도, 티켓은 한곳에.</p></div><button class="btn" id="wallet-calendar">경기 둘러보기</button></div>`+body;
     }
     function openWallet(){if(currentUser&&ticketsState!=='loading')loadTickets();renderWallet();showView('wallet');}
     function openCalendar(){renderCalendar();renderDetail();showView('calendar');}
@@ -1476,7 +1646,7 @@
     function dataHeading(title,description){return `<div class="data-heading"><div><h1>${title}</h1><p>${description}</p></div><span class="practice-label">가짜 데이터</span></div>`;}
     // 경기 기록·선수 순위 화면은 URL 해시(#records, #rankings)에 남겨, 새로고침해도 보던 화면이 다시 열립니다.
     const hashViews={records:'records',rankings:'players'};
-    const hashView=()=>hashViews[location.hash.slice(1)]||(linkTarget()?'link':null);
+    const hashView=()=>hashViews[location.hash.slice(1)]||(linkTarget()?'link':null)||(mypageRoute()?'mypage':null);
     function renderRecords(){
       $('records-view').innerHTML=dataHeading('경기 기록','끝난 경기의 스코어와 이야기를 한눈에.')+`<div class="records-list">${mockRecords.map(r=>{
         const home=teamById(r.home),away=teamById(r.away),result=r.homeScore===r.awayScore?'무승부':`${teamName((r.homeScore>r.awayScore?home:away).id,{short:true,size:16})} 승리`;
@@ -1517,8 +1687,8 @@
     function renderRankings(){
       $('rankings-view').innerHTML=dataHeading('현재 순위','우리 팀은 어디쯤? 10개 구단의 가상 시즌 순위.')+`<div class="table-wrap"><table class="rank-table"><caption>연습용 가상 순위 · 1위 ${teamName(mockRankings[0].team.id,{short:true,size:16})}, 2위 ${teamName(mockRankings[1].team.id,{short:true,size:16})}</caption><thead><tr><th scope="col">순위</th><th scope="col">구단</th><th scope="col">승</th><th scope="col">패</th><th scope="col">무</th><th scope="col">승률</th><th scope="col">게임차</th></tr></thead><tbody>${mockRankings.map((r,i)=>`<tr${i<2?' class="leading"':''}><td class="rank-number">${i+1}</td><td>${teamName(r.team.id)}</td><td>${r.wins}</td><td>${r.losses}</td><td>${r.draws}</td><td>${(r.wins/(r.wins+r.losses)).toFixed(3)}</td><td>${i?((mockRankings[0].wins-r.wins+r.losses-mockRankings[0].losses)/2).toFixed(1):'—'}</td></tr>`).join('')}</tbody></table></div><p class="data-disclaimer">실제 KBO 순위가 아닌 가짜 데이터입니다. 승률은 무승부를 제외해 계산했습니다.</p>`;
     }
-    function renderVisits(){
-      $('visits-view').innerHTML=dataHeading('나의 직관 기록','야구장에서 보낸 하루하루를 모아봐요.')+`<div class="visit-summary"><span>직관 경기<strong>5회</strong></span><span>승리<strong>3회</strong></span><span>다녀온 구장<strong>2곳</strong></span></div><div class="visit-list">${mockVisits.map(v=>{
+    function visitsHtml(){
+      return dataHeading('나의 직관 기록','야구장에서 보낸 하루하루를 모아봐요.')+`<div class="visit-summary"><span>직관 경기<strong>5회</strong></span><span>승리<strong>3회</strong></span><span>다녀온 구장<strong>2곳</strong></span></div><div class="visit-list">${mockVisits.map(v=>{
         const home=teamById(v.home),away=teamById(v.away);return `<article class="visit-row"><span class="visit-month">${v.date.getMonth()+1}.${String(v.date.getDate()).padStart(2,'0')}</span><div><h2>${formatMatchup(v,{short:true})} · ${v.awayScore} : ${v.homeScore}</h2><p>${home.stadium} · ${v.seat}</p><p class="visit-note">${v.note}</p></div><span class="visit-badge">${v.result}</span></article>`;
       }).join('')}</div><p class="data-disclaimer">직관 기록 5개는 샘플입니다. 이번 앱에서 예매한 티켓은 ‘내 티켓’에서 확인할 수 있어요.</p>`;
     }
@@ -1527,7 +1697,10 @@
     }
     function openHomeTab(view){
       if(view==='calendar'){openCalendar();return;}
-      const renderers={link:renderLink,records:renderRecords,players:renderPlayers,rankings:renderRankings,visits:renderVisits,community:renderCommunity};
+      // 예전 '나의 직관 기록' 탭은 마이페이지로 옮겼습니다. 예전 경로로 들어오면 그쪽으로 보냅니다.
+      if(view==='visits'){openMypage('records');return;}
+      if(view==='mypage'){openMypage(mypageRoute()||'home');return;}
+      const renderers={link:renderLink,records:renderRecords,players:renderPlayers,rankings:renderRankings,community:renderCommunity};
       if(renderers[view]){renderers[view]();showView(view);}
     }
     document.addEventListener('click',event=>{
@@ -1555,7 +1728,8 @@
       if(target.dataset.game){selectGame(target.dataset.game,target.classList.contains('mini-match')?'calendar':'row');return;}
       switch(target.id){
         case 'brand':case 'success-calendar':case 'wallet-calendar':case 'empty-calendar':openCalendar();break;
-        case 'wallet-button':case 'success-wallet':case 'mypage-button':openWallet();break;
+        case 'wallet-button':case 'success-wallet':openWallet();break;
+        case 'mypage-button':case 'wallet-mypage':openMypage('home');break;
         case 'login-button':case 'wallet-login':openAuthDialog('login');break;
         case 'logout-button':cloud.signOut().then(()=>showToast('로그아웃했어요'),()=>showToast('로그아웃하지 못했어요. 잠시 후 다시 시도해 주세요.'));break;
         case 'auth-close':$('auth-dialog').close();break;
@@ -1649,6 +1823,35 @@
     // Esc로 닫힌 경우의 처리. close 이벤트는 늦게 오므로, 그 사이 모달이 다시 열렸으면(이전 닫힘의 이벤트) 무시합니다.
     $('confirm-dialog').addEventListener('close',event=>{if(finishConfirm&&!event.target.open)finishConfirm(false);});
     orderApi.onChange(handleOrderChange);
+    // 마이페이지의 클릭·입력 처리.
+    document.addEventListener('click',event=>{
+      const target=event.target.closest('button');
+      if(!target||target.disabled)return;
+      const d=target.dataset;
+      if(d.myOpen)openMypage(d.myOpen);
+      else if(d.myTeam){
+        if(userSettings.favoriteTeam!==d.myTeam){saveSettings({favoriteTeam:d.myTeam});showToast('관심구단이 변경되었습니다');}
+        renderMypage();$('mypage-view').querySelector(`[data-my-team="${d.myTeam}"]`).focus({preventScroll:true});
+      }
+      else if(d.myNotify){
+        setNotify(d.myNotify,target.getAttribute('aria-checked')!=='true');
+        renderMypage();$('mypage-view').querySelector(`[data-my-notify="${d.myNotify}"]`).focus({preventScroll:true});
+      }
+      else if(target.id==='my-logout')logoutFromMypage();
+      else if(target.id==='my-withdraw')withdrawAccount();
+    });
+    document.addEventListener('submit',event=>{
+      const id=event.target.id;
+      if(!['my-profile-form','my-password-form','my-feedback-form'].includes(id))return;
+      event.preventDefault();
+      if(id==='my-profile-form')saveProfile();else if(id==='my-password-form')changePassword();else sendFeedback();
+    });
+    document.addEventListener('input',event=>{
+      if(event.target.id==='fb-message')$('fb-count').textContent=`${event.target.value.trim().length} / ${feedbackApi.limits.maxLength}자`;
+    });
+    document.addEventListener('change',event=>{
+      if(event.target.id==='my-withdraw-check')$('my-withdraw').disabled=!event.target.checked;
+    });
     // 티켓 전달·정산과 링크 화면의 클릭·입력 처리.
     document.addEventListener('click',event=>{
       const target=event.target.closest('button');
@@ -1704,7 +1907,11 @@
         requestBooking(games.find(g=>g.id===target.dataset.book));
       }
     });
-    window.addEventListener('hashchange',()=>{const view=hashView();if(view&&(view!==currentView||view==='link'))openHomeTab(view);});
+    window.addEventListener('hashchange',()=>{
+      const view=hashView();
+      if(view&&(view!==currentView||view==='link'||view==='mypage'))openHomeTab(view);
+      else if(!view&&currentView==='mypage')openCalendar(); // 뒤로가기로 마이페이지를 벗어난 경우
+    });
     renderFilters();selectDay(today);
     if(hashView())openHomeTab(hashView());
     renderAuth();cloud.onAuth(handleAuth);

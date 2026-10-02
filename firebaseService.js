@@ -30,6 +30,12 @@
     signUp:(email,password)=>withSdk(c=>c.auth.createUserWithEmailAndPassword(c.authInstance,email,password)).then(()=>{}),
     signIn:(email,password)=>withSdk(c=>c.auth.signInWithEmailAndPassword(c.authInstance,email,password)).then(()=>{}),
     signOut:()=>withSdk(c=>c.auth.signOut(c.authInstance)),
+    // 비밀번호 변경: 현재 비밀번호로 다시 인증한 뒤 새 비밀번호로 바꿉니다.
+    changePassword:(currentPassword,newPassword)=>withSdk(c=>{
+      const current=c.authInstance.currentUser;
+      if(!current)throw fail('auth/no-current-user');
+      return c.auth.reauthenticateWithCredential(current,c.auth.EmailAuthProvider.credential(current.email,currentPassword)).then(()=>c.auth.updatePassword(current,newPassword));
+    }),
     // tickets/{autoId} 문서를 만들고 문서 id를 돌려줍니다. createdAt은 서버 시각으로 기록합니다.
     saveTicket:data=>withSdk(c=>c.store.addDoc(c.store.collection(c.db,'tickets'),{...data,createdAt:c.store.serverTimestamp()})).then(ref=>ref.id),
     // 보안 규칙이 본인 티켓만 읽게 하므로, 반드시 uid 조건을 붙여 조회합니다.
