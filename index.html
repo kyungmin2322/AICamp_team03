@@ -264,6 +264,14 @@
     .settle-summary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}.settle-summary div{padding:14px 16px;border-radius:var(--radius-card);background:var(--navy);color:var(--white)}.settle-summary span{display:block;font-size:12px;color:#c9d6f2}.settle-summary strong{font-size:22px;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
     .settle-amount{display:flex;align-items:center;gap:8px;margin-top:12px}.settle-amount input{width:140px;text-align:right}.settle-fixed{margin-top:10px;font-size:18px;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums}
     .link-card h1{margin:6px 0 16px;font-size:24px;font-weight:800;letter-spacing:-.03em;color:var(--navy)}.link-info{margin-bottom:16px;padding:14px 16px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--surface-soft);font-size:13px;color:var(--text-sub);text-align:left}.link-card .matchup{justify-content:flex-start}.link-amount{margin-bottom:12px;font-size:40px}.link-card .order-note{margin-bottom:14px}
+    /* 매장 카드 하단 버튼(픽업 주문 · 내 자리에서 주문)과 하단 토스트 */
+    .store-card.closed .store-top strong,.store-card.closed .store-meta{opacity:.55}
+    .store-actions{display:flex;align-items:stretch;gap:8px;margin-top:12px}.store-actions .btn{flex:1 1 0;min-width:0;min-height:44px;padding:8px 10px;font-size:13px;white-space:nowrap}
+    .btn.seat-delivery-btn{position:relative;border-color:var(--line-strong);background:var(--white);color:var(--text)}
+    .soon-badge{position:absolute;top:-9px;right:-6px;padding:1px 7px;border:1px solid var(--line-strong);border-radius:999px;background:var(--surface-soft);font-size:10px;font-weight:700;line-height:1.5;color:var(--text-sub)}
+    .toast small{display:block;margin-top:2px;font-size:12px;font-weight:500;color:#c9d6f2}
+    .toast.toast-bottom{top:auto;bottom:28px}body:has(#food-view:not([hidden]) .cart-bar) .toast.toast-bottom{bottom:100px}
+    @media(max-width:767px){.store-actions{flex-direction:column}}
   </style>
 </head>
 <body>
@@ -644,9 +652,11 @@
     function seatLabel(seat){return `${seat.row}열 ${seat.col}번`;}
     function seatFullLabel(seat){return `${seat.sectionId}구역 ${seatLabel(seat)}`;}
     function sectionTooltip(section){const g=gradeById(section.gradeId),remaining=remainingSection(section);return `${section.id}구역 · ${g.name} · ${money(g.price)} · ${remainingSection(section,false)?'잔여 '+remaining+'석':'매진'}`;}
-    function showToast(text){
-      const el=$('toast');el.textContent=text;el.hidden=false;
-      clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.hidden=true,2600);
+    function showToast(text,{sub='',bottom=false,duration=2600}={}){
+      const el=$('toast');el.textContent=text;
+      if(sub){const small=document.createElement('small');small.textContent=sub;el.append(small);}
+      el.classList.toggle('toast-bottom',bottom);el.hidden=false;
+      clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.hidden=true,duration);
     }
     function startBooking(){
       bookingState=createBookingState();sheetExpanded=false;plotPosition.initialized=false;
@@ -1122,6 +1132,22 @@
       const section=sectionById(String(ticket.sectionId));
       return `<div class="food-summary"><p class="food-summary-title">${formatMatchup(game,{short:true})}</p><p>${dateLabel(game.date)} ${timeLabel(game.date)} · ${game.stadium}</p><p>내 좌석 ${section?gradeById(section.gradeId).name+' ':''}${esc(ticket.sectionId)}구역</p></div>`;
     }
+    // ----- 내 자리에서 주문(준비중) -----
+    // 실제 기능을 붙일 때 true로 바꾸면 openSeatDeliveryOrder(storeId)가 호출됩니다.
+    const FEATURE_SEAT_DELIVERY = false;
+    const PICKUP_BUTTON_TEXT='픽업 주문';
+    const SEAT_DELIVERY_TEXT={button:'내 자리에서 주문',badge:'준비중',ariaLabel:'내 자리에서 주문 (준비중인 기능)',toast:'준비중인 기능입니다',toastSub:'지금은 매장 픽업 주문만 가능해요'};
+    const SEAT_DELIVERY_TOAST_MS=2000;
+    function openSeatDeliveryOrder(storeId){
+      // TODO: 좌석 배달 주문 흐름을 여기에 구현합니다. (좌석 정보는 food.ticketId의 예매에서 가져오면 됩니다)
+    }
+    // 장바구니·주문·결제 상태는 건드리지 않고, 준비중 안내만 띄웁니다. 매장이 영업 전이어도 똑같이 동작합니다.
+    function requestSeatDelivery(storeId){
+      if(FEATURE_SEAT_DELIVERY){openSeatDeliveryOrder(storeId);return;}
+      showToast(SEAT_DELIVERY_TEXT.toast,{sub:SEAT_DELIVERY_TEXT.toastSub,bottom:true,duration:SEAT_DELIVERY_TOAST_MS});
+    }
+    // 매장 카드 하단의 두 버튼: 픽업 주문(주 버튼)과 내 자리에서 주문(보조 버튼).
+    const storeActions=store=>`<div class="store-actions"><button type="button" class="btn primary" data-food-store="${store.id}"${store.isOpen?'':' disabled'}>${PICKUP_BUTTON_TEXT}</button><button type="button" class="btn seat-delivery-btn" data-seat-delivery="${store.id}" aria-label="${SEAT_DELIVERY_TEXT.ariaLabel}"><span aria-hidden="true">🪑</span> ${SEAT_DELIVERY_TEXT.button}<span class="soon-badge" aria-hidden="true">${SEAT_DELIVERY_TEXT.badge}</span></button></div>`;
     function cartBar(){
       const store=findStore(food.cart.storeId),count=cartCount();
       return `<div class="cart-bar" role="region" aria-label="장바구니"><div class="cart-info"><strong>${count?`${esc(store.brand)} · ${count}개`:'장바구니가 비어 있어요'}</strong><span>${money(cartTotal())}</span></div><button class="btn primary" id="food-checkout"${count?'':' disabled'}>주문하기</button></div>`;
@@ -1133,7 +1159,7 @@
       const zones=['전체',...['1루','3루','중앙','외야','기타'].filter(zone=>stores.some(s=>s.zone===zone))];
       if(!zones.includes(food.zone))food.zone='전체';
       const shown=stores.filter(s=>food.zone==='전체'||s.zone===food.zone);
-      return `<div class="food-zones" role="group" aria-label="매장 위치 필터">${zones.map(zone=>`<button class="chip" data-food-zone="${zone}" aria-pressed="${food.zone===zone}">${zone}</button>`).join('')}</div>${shown.length?`<div class="store-grid">${shown.map(s=>`<button class="store-card" data-food-store="${s.id}"${s.isOpen?'':' disabled'}><span class="store-top"><strong>${esc(s.name)}</strong><span class="store-state${s.isOpen?' open':''}">${s.isOpen?'주문 가능':'준비 중'}</span></span><span class="store-meta">${esc(s.locationDetail)}</span><span class="store-meta">대표 메뉴 · ${esc(s.menus[0].name)}</span><span class="store-meta">예상 대기 ${s.waitMinutes}분</span></button>`).join('')}</div>`:'<p class="empty-list">이 구역에는 매장이 없어요.</p>'}<p class="data-disclaimer">※ 메뉴·가격은 예시이며 실제와 다를 수 있습니다</p>${cartCount()?cartBar():''}`;
+      return `<div class="food-zones" role="group" aria-label="매장 위치 필터">${zones.map(zone=>`<button class="chip" data-food-zone="${zone}" aria-pressed="${food.zone===zone}">${zone}</button>`).join('')}</div>${shown.length?`<div class="store-grid">${shown.map(s=>`<article class="store-card${s.isOpen?'':' closed'}"><span class="store-top"><strong>${esc(s.name)}</strong><span class="store-state${s.isOpen?' open':''}">${s.isOpen?'주문 가능':'준비 중'}</span></span><span class="store-meta">${esc(s.locationDetail)}</span><span class="store-meta">대표 메뉴 · ${esc(s.menus[0].name)}</span><span class="store-meta">예상 대기 ${s.waitMinutes}분</span>${storeActions(s)}</article>`).join('')}</div>`:'<p class="empty-list">이 구역에는 매장이 없어요.</p>'}<p class="data-disclaimer">※ 메뉴·가격은 예시이며 실제와 다를 수 있습니다</p>${cartCount()?cartBar():''}`;
     }
     function renderFoodMenu(){
       const store=findStore(food.storeId),mine=food.cart.storeId===store.id;
@@ -1569,6 +1595,7 @@
       else if(d.foodOrder||d.foodStatus)openFood(d.foodOrder||d.foodStatus);
       else if(d.foodZone){food.zone=d.foodZone;renderFood();document.querySelector(`[data-food-zone="${d.foodZone}"]`).focus({preventScroll:true});}
       else if(d.foodStore){food.storeId=d.foodStore;setFoodPhase('menu');}
+      else if(d.seatDelivery)requestSeatDelivery(d.seatDelivery);
       else if(d.foodPlus)changeCart(d.foodPlus,1);
       else if(d.foodMinus)changeCart(d.foodMinus,-1);
       else if(target.id==='food-checkout'){food.storeId=food.cart.storeId;payPicked=false;setFoodPhase('checkout');}
