@@ -272,6 +272,12 @@
     .toast small{display:block;margin-top:2px;font-size:12px;font-weight:500;color:#c9d6f2}
     .toast.toast-bottom{top:auto;bottom:28px}body:has(#food-view:not([hidden]) .cart-bar) .toast.toast-bottom{bottom:100px}
     @media(max-width:767px){.store-actions{flex-direction:column}}
+    /* 메인: 왼쪽 열(달력 → 경기 카드), 오른쪽 열(상세 패널 → 응원 한마디). 두 열은 서로의 높이에 영향을 주지 않습니다. */
+    .workspace{align-items:start}.detail-column{grid-template-columns:minmax(0,1fr)}.calendar-area .calendar-foot{padding-bottom:0}.calendar-area .daily-heading{margin:16px 0 12px}
+    .calendar-area .match-list{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+    @media(min-width:768px) and (max-width:800px){.workspace{grid-template-columns:minmax(0,1fr) 280px}}
+    /* 식음료 주문: 경기 당일 전 안내 */
+    .food-note{margin:-2px 0 8px;font-size:11px;color:var(--text-sub);text-align:center}.btn.food-btn:disabled{border-color:var(--line);background:var(--surface-soft);color:var(--text-sub)}
   </style>
 </head>
 <body>
@@ -339,6 +345,8 @@
             <div class="days" id="days" aria-label="이번 달 경기 달력"></div>
           </div>
           <div class="calendar-foot"><span class="legend"><span></span>초록 점은 경기가 있는 날이에요 · 날짜를 선택하면 모든 경기를 볼 수 있어요</span><span>모든 일정은 가상 데이터입니다</span></div>
+          <div class="daily-heading"><h2 id="daily-title"></h2><span class="small-count" id="daily-count"></span></div>
+          <div class="match-list" id="match-list"></div>
         </div>
         <div class="detail-column">
           <aside class="detail" id="detail" aria-label="선택한 경기 상세"></aside>
@@ -353,8 +361,6 @@
           </section>
         </div>
       </div>
-      <div class="daily-heading"><h2 id="daily-title"></h2><span class="small-count" id="daily-count"></span></div>
-      <div class="match-list" id="match-list"></div>
     </section>
     <section id="booking-view" class="flow-shell seat-booking" hidden aria-label="통합 경기 예매"></section>
     <section id="success-view" hidden aria-label="예매 완료"></section>
@@ -410,19 +416,19 @@
   <div class="pickup-banner" id="pickup-banner" role="alert" hidden><span id="pickup-banner-text"></span><button class="btn" id="pickup-banner-open" type="button">주문 현황 보기</button><button class="pickup-banner-close" id="pickup-banner-close" type="button" aria-label="알림 닫기">×</button></div>
   <div class="toast" id="toast" role="status" hidden></div>
   <!-- 스크립트 파일을 고치면 ?v= 값을 함께 바꿉니다. 이전 방문자의 브라우저 캐시에 남은 예전 파일과 섞이지 않게 하기 위해서입니다. -->
-  <script src="teams.js?v=20261002a"></script>
-  <script src="grades.js?v=20261002a"></script>
-  <script src="sections.js?v=20261002a"></script>
-  <script src="weatherService.js?v=20261002a"></script>
-  <script src="statsService.js?v=20261002a"></script>
-  <script src="firebase-config.js?v=20261002a"></script>
-  <script src="firebaseService.js?v=20261002a"></script>
-  <script src="stadiums.js?v=20261002a"></script>
-  <script src="stores.js?v=20261002a"></script>
-  <script src="paymentService.js?v=20261002a"></script>
-  <script src="orderService.js?v=20261002a"></script>
-  <script src="transferService.js?v=20261002a"></script>
-  <script src="settlementService.js?v=20261002a"></script>
+  <script src="teams.js?v=20261002b"></script>
+  <script src="grades.js?v=20261002b"></script>
+  <script src="sections.js?v=20261002b"></script>
+  <script src="weatherService.js?v=20261002b"></script>
+  <script src="statsService.js?v=20261002b"></script>
+  <script src="firebase-config.js?v=20261002b"></script>
+  <script src="firebaseService.js?v=20261002b"></script>
+  <script src="stadiums.js?v=20261002b"></script>
+  <script src="stores.js?v=20261002b"></script>
+  <script src="paymentService.js?v=20261002b"></script>
+  <script src="orderService.js?v=20261002b"></script>
+  <script src="transferService.js?v=20261002b"></script>
+  <script src="settlementService.js?v=20261002b"></script>
   <script>
     'use strict';
     const teams=window.Teams;
@@ -1097,7 +1103,9 @@
     // ----- 구장 식음료 원격 주문·픽업(mock) -----
     // 매장 데이터는 stores.js, 주문 처리는 orderService.js가 맡습니다. 예매(티켓) 1건을 기준으로 그 경기 구장의 매장을 보여 줍니다.
     const orderApi=window.OrderService,storeData=window.StadiumStores||{};
-    const GAME_HOURS=4; // 경기 시작 후 이 시간이 지나면 종료된 것으로 보고 주문 버튼을 숨깁니다.
+    // 주문 가능 여부는 orderService.js가 한국 시간 기준으로 판단합니다: 'before'(경기 당일 전) · 'open'(주문 가능) · 'ended'(경기 종료).
+    const foodWindow=game=>orderApi.orderWindow(game.date.getTime());
+    const FOOD_NOT_GAME_DAY_TEXT='경기 당일에만 식음료 주문이 가능합니다';
     const pickupTimes=['지금 바로','3회말 종료 후','5회말 종료 후 (클리닝타임)','7회말 종료 후'];
     const orderLabels={received:'주문접수',cooking:'조리중',ready:'픽업대기',done:'픽업완료'};
     const orderNotes={received:'매장에서 주문을 확인하고 있어요.',cooking:'메뉴를 조리하고 있어요.',ready:'메뉴가 준비됐어요. 매장에서 픽업해 주세요!',done:'픽업이 완료됐어요. 맛있게 드세요!'};
@@ -1105,7 +1113,6 @@
     let food=newFoodState(null),bannerOrderId=null;
     const stadiumOf=game=>stadiums.find(s=>s.name===game.stadium);
     const ticketGame=ticket=>games.find(g=>g.id===ticket.gameId);
-    const gameEnded=game=>Date.now()>game.date.getTime()+GAME_HOURS*3600000;
     const findStore=id=>Object.values(storeData).flat().find(s=>s.id===id);
     const menuOption=menu=>menu.options&&menu.options.length?(food.picks[menu.id]||menu.options[0].choices[0]):undefined;
     const cartCount=()=>food.cart.items.reduce((n,item)=>n+item.qty,0);
@@ -1117,13 +1124,26 @@
     // 내 티켓 카드에 붙는 버튼: 관람 예정인 예매에만 보이고, 진행 중인 주문이 있으면 [주문 현황 보기]로 바뀝니다.
     function foodButton(ticket){
       const game=ticketGame(ticket);
-      if(!game||gameEnded(game))return '';
-      return orderApi.getActiveOrder(ticket.id)?`<button class="btn full food-btn" data-food-status="${esc(ticket.id)}">주문 현황 보기</button>`:`<button class="btn full food-btn" data-food-order="${esc(ticket.id)}">🍴 식음료 주문</button>`;
+      if(!game)return '';
+      // 진행 중인 주문이 있으면 날짜와 관계없이 주문 현황을 볼 수 있습니다.
+      if(orderApi.getActiveOrder(ticket.id))return `<button class="btn full food-btn" data-food-status="${esc(ticket.id)}">주문 현황 보기</button>`;
+      const state=foodWindow(game);
+      if(state==='ended')return '';
+      if(state==='open')return `<button class="btn full food-btn" data-food-order="${esc(ticket.id)}">🍴 식음료 주문</button>`;
+      // 경기 전날 이전: 회색 버튼과 오픈 날짜 안내.
+      return `<button class="btn full food-btn" disabled>🍴 식음료 주문</button><p class="food-note">경기 당일에만 주문할 수 있어요 (${orderApi.gameDayLabel(game.date.getTime())} 오픈)</p>`;
+    }
+    // 조건을 만족하지 않는 접근은 예매 내역 화면으로 돌려보내고 안내합니다.
+    function blockFood(){
+      if(currentView!=='wallet')openWallet();
+      showToast(FOOD_NOT_GAME_DAY_TEXT);
     }
     function openFood(ticketId){
       const ticket=findReservation(ticketId);
       if(!ticket||!ticketGame(ticket))return;
       const active=orderApi.getActiveOrder(ticketId);
+      // 버튼을 거치지 않고 들어오는 경우에도 같은 규칙을 검사합니다. (주문 현황 보기는 예외)
+      if(!active&&foodWindow(ticketGame(ticket))!=='open'){blockFood();return;}
       if(food.ticketId!==ticketId)food=newFoodState(ticketId);
       food.phase=active?'status':'stores';food.orderId=active?active.id:null;
       renderFood();showView('food');
@@ -1181,6 +1201,8 @@
     function renderFood(){
       const ticket=findReservation(food.ticketId),game=ticket&&ticketGame(ticket),view=$('food-view');
       if(!ticket||!game){view.innerHTML='<div class="empty-wallet"><h1>식음료 주문</h1><p>예매 내역을 찾을 수 없어요.</p><button class="btn" id="food-wallet">내 티켓으로</button></div>';return;}
+      // 매장 목록·메뉴·주문/결제 화면은 그릴 때마다 경기 당일인지 다시 확인합니다.
+      if(food.phase!=='status'&&foodWindow(game)!=='open'){if(currentView==='food')blockFood();return;}
       const store=findStore(food.phase==='checkout'?food.cart.storeId:food.storeId);
       const title={stores:'식음료 주문',menu:store?esc(store.name):'메뉴 선택',checkout:'주문·결제',status:'주문 현황'}[food.phase];
       const back={stores:'내 티켓으로',menu:'매장 목록',checkout:'메뉴 선택',status:'내 티켓으로'}[food.phase];
@@ -1224,15 +1246,21 @@
     function placeFoodOrder(){
       const method=selectedPayMethod(),store=findStore(food.cart.storeId);
       if(food.busy||!method||!store||!cartCount())return;
-      const ticketId=food.ticketId,total=cartTotal();
+      const ticketId=food.ticketId,total=cartTotal(),ticket=findReservation(ticketId),game=ticket&&ticketGame(ticket);
+      if(!game||foodWindow(game)!=='open'){blockFood();return;}
       food.busy=true;renderFood();
       payApi.requestPayment({methodId:method.id,amount:total,orderName:`${store.name} 식음료 주문`})
-        .then(()=>orderApi.createOrder({reservationId:ticketId,storeId:store.id,items:food.cart.items.map(i=>({...i})),pickupTime:food.pickup,totalPrice:total}))
+        .then(()=>orderApi.createOrder({reservationId:ticketId,storeId:store.id,items:food.cart.items.map(i=>({...i})),pickupTime:food.pickup,totalPrice:total,gameDateTime:game.date.getTime()}))
         .then(order=>{
           if(food.ticketId!==ticketId)return;
           food.busy=false;food.cart={storeId:null,items:[]};food.orderId=order.id;
           if(currentView==='food')setFoodPhase('status');else food.phase='status';
-        },()=>{food.busy=false;showToast('주문하지 못했어요. 잠시 후 다시 시도해 주세요.');if(currentView==='food')renderFood();});
+        },error=>{
+          food.busy=false;
+          // 주문 서비스가 경기 당일이 아니라고 거절한 경우에는 예매 내역으로 돌려보냅니다.
+          if(error&&error.code==='order/not-game-day'){blockFood();return;}
+          showToast('주문하지 못했어요. 잠시 후 다시 시도해 주세요.');if(currentView==='food')renderFood();
+        });
     }
     // 주문 상태가 바뀔 때마다: 주문 현황·내 티켓 화면을 갱신하고, 픽업대기가 되면 화면 상단에 알림 배너를 띄웁니다.
     function handleOrderChange(order){
