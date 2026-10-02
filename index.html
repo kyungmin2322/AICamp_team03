@@ -252,6 +252,18 @@
       /* 모바일에서는 간편결제 추가 창을 바텀시트로 띄웁니다. */
       .sheet-dialog{width:100%;max-width:none;margin:auto 0 0;border-radius:var(--radius-panel) var(--radius-panel) 0 0}
     }
+    /* 티켓 전달·정산 */
+    .btn.share-btn{margin-bottom:8px;font-weight:700}.share-section{margin-top:26px}.share-note{margin:6px 0 0;font-size:12px;color:var(--text-sub)}
+    .share-list{display:grid;gap:10px;margin:12px 0;padding:0;list-style:none}.share-seat{padding:16px 18px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--white)}
+    .share-seat-head{display:flex;align-items:center;flex-wrap:wrap;gap:6px 12px}.share-seat-head strong{font-size:15px}.share-seat-head>span{font-size:13px;color:var(--text-sub);font-variant-numeric:tabular-nums}
+    .share-seat-head .share-state{margin-left:auto;padding:2px 10px;border:1px solid var(--line-strong);border-radius:999px;background:var(--surface-soft);font-size:11px;font-weight:700;color:var(--text-sub)}.share-seat-head .share-state.wait{border-color:var(--blue-line);background:var(--blue-soft);color:var(--blue)}.share-seat-head .share-state.done{border-color:var(--grass-line);background:var(--grass-soft);color:var(--grass-dark)}
+    .share-choice{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.share-form{display:grid;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}.share-form label,.settle-amount{display:grid;gap:6px;font-size:12px;font-weight:600}
+    .share-form input,.share-link input,.settle-amount input{min-height:44px;padding:9px 12px;border:1px solid var(--line-strong);border-radius:var(--radius-btn);background:var(--white);font:inherit;font-weight:400;color:var(--text)}.share-form input:focus-visible,.share-link input:focus-visible,.settle-amount input:focus-visible{outline:3px solid var(--blue);outline-offset:1px;border-color:var(--blue)}
+    .share-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.share-actions .btn{flex:1 1 140px}.share-error{min-height:18px;font-size:12px;font-weight:600;color:var(--danger)}
+    .share-link{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.share-link input{flex:1 1 220px;min-width:0;font-size:12px;color:var(--text-sub)}.btn.share-danger{color:var(--danger)}
+    .settle-summary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}.settle-summary div{padding:14px 16px;border-radius:var(--radius-card);background:var(--navy);color:var(--white)}.settle-summary span{display:block;font-size:12px;color:#c9d6f2}.settle-summary strong{font-size:22px;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+    .settle-amount{display:flex;align-items:center;gap:8px;margin-top:12px}.settle-amount input{width:140px;text-align:right}.settle-fixed{margin-top:10px;font-size:18px;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums}
+    .link-card h1{margin:6px 0 16px;font-size:24px;font-weight:800;letter-spacing:-.03em;color:var(--navy)}.link-info{margin-bottom:16px;padding:14px 16px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--surface-soft);font-size:13px;color:var(--text-sub);text-align:left}.link-card .matchup{justify-content:flex-start}.link-amount{margin-bottom:12px;font-size:40px}.link-card .order-note{margin-bottom:14px}
   </style>
 </head>
 <body>
@@ -340,6 +352,8 @@
     <section id="success-view" hidden aria-label="예매 완료"></section>
     <section id="wallet-view" hidden aria-label="내 티켓"></section>
     <section id="food-view" class="data-surface" hidden aria-label="식음료 주문"></section>
+    <section id="share-view" class="data-surface" hidden aria-label="티켓 전달·정산"></section>
+    <section id="link-view" class="data-surface" hidden aria-label="전달·정산 링크"></section>
     <section id="records-view" class="data-surface" hidden aria-label="경기 기록"></section>
     <section id="players-view" class="data-surface" hidden aria-label="선수 순위"></section>
     <section id="rankings-view" class="data-surface" hidden aria-label="현재 순위"></section>
@@ -398,6 +412,8 @@
   <script src="stores.js"></script>
   <script src="paymentService.js"></script>
   <script src="orderService.js"></script>
+  <script src="transferService.js"></script>
+  <script src="settlementService.js"></script>
   <script>
     'use strict';
     const teams=window.Teams;
@@ -558,8 +574,8 @@
       currentView=view;syncSeatViewLinks();
       // 해시를 현재 화면에 맞춥니다. 해시를 쓰지 않는 화면으로 가면 지웁니다.
       const hash=Object.keys(hashViews).find(key=>hashViews[key]===view)||'';
-      if(location.hash.slice(1)!==hash&&(hash||hashView()))history.replaceState(null,'',location.href.split('#')[0]+(hash?'#'+hash:''));
-      ['calendar','booking','success','wallet','food','records','players','rankings','visits','community'].forEach(name=>{const el=$(name+'-view');el.hidden=name!==view;el.classList.toggle('view-enter',name===view);});
+      if(view!=='link'&&location.hash.slice(1)!==hash&&(hash||hashView()))history.replaceState(null,'',location.href.split('#')[0]+(hash?'#'+hash:''));
+      ['calendar','booking','success','wallet','food','share','link','records','players','rankings','visits','community'].forEach(name=>{const el=$(name+'-view');el.hidden=name!==view;el.classList.toggle('view-enter',name===view);});
       $('home-tabs').hidden=['booking','success'].includes(view);
       document.querySelectorAll('[data-view]').forEach(tab=>{if(tab.dataset.view===view)tab.setAttribute('aria-current','page');else tab.removeAttribute('aria-current');});
       $('wallet-button').setAttribute('aria-current',view==='wallet'?'page':'false');
@@ -752,6 +768,7 @@
       (same.disabled?document.querySelector(`[data-type="${id}"][data-delta="${-delta}"]`):same).focus({preventScroll:true});
     }
     function goPhase(phase){
+      if(phase==='payment')payPicked=false; // 결제 단계에 들어올 때마다 기본 결제수단부터 선택합니다.
       bookingState={...bookingState,phase,message:''};renderBooking();window.scrollTo(0,0);focusBookingHeading();
     }
     function activateSection(id,clear=false){
@@ -958,6 +975,7 @@
     function handleAuth(user){
       const wasLoggedIn=!!currentUser;
       currentUser=user;renderAuth();
+      if(currentView==='link')renderLink();
       if(user){
         if($('auth-dialog').open)$('auth-dialog').close();
         loadTickets();
@@ -966,7 +984,7 @@
         // 로그아웃하면 내 티켓 목록을 화면에서 바로 비웁니다.
         tickets.length=0;ticketsState='idle';updateTicketCount();
         if(currentView==='wallet')renderWallet();
-        if(wasLoggedIn&&['booking','success','food'].includes(currentView))openCalendar();
+        if(wasLoggedIn&&['booking','success','food','share'].includes(currentView))openCalendar();
       }
     }
     // Firestore에서 내 uid의 티켓만 불러옵니다.
@@ -983,24 +1001,27 @@
     function cancelTicket(id){
       const ticket=tickets.find(t=>t.id===id);
       if(!ticket||!currentUser||ticket.uid!==currentUser.uid)return;
+      // 수락 완료된 좌석은 보낸 사람이 취소할 수 없습니다. 좌석별 부분 취소가 없어 예매 전체 취소를 막습니다.
+      if(transferApi.listByReservation(id).some(t=>t.status==='accepted')){showToast('친구가 이미 받은 좌석이 있어 이 예매는 취소할 수 없어요');return;}
       if(!window.confirm('이 예매를 취소할까요? 취소하면 되돌릴 수 없어요.'))return;
       const button=document.querySelector(`[data-cancel-ticket="${CSS.escape(id)}"]`);
       if(button){button.disabled=true;button.textContent='처리 중…';}
       cloud.deleteTicket(id).then(()=>{
         tickets.splice(tickets.indexOf(ticket),1);updateTicketCount();showToast('예매를 취소했어요');
+        transferApi.cancelForReservation(id);settleApi.removeForReservation(id);
       },()=>showToast('예매를 취소하지 못했어요. 잠시 후 다시 시도해 주세요.')).then(()=>{if(currentView==='wallet')renderWallet();});
     }
     // 예매 1건(Firestore 문서 1개)을 티켓 카드 하나로 그립니다. 경기는 gameId로 찾고, 못 찾으면 저장된 gameLabel을 씁니다.
     function ticketCard(t){
       const game=games.find(g=>g.id===t.gameId),section=sectionById(String(t.sectionId)),seats=Array.isArray(t.seats)?t.seats:[],types=t.ticketTypes||{};
-      const seatText=id=>{const m=/^\w+-(\d+)-(\d+)$/.exec(String(id));return m?`${m[1]}열 ${m[2]}번`:esc(id);};
+      const given=t.gift?[]:activeTransfers(t.id),seatText=id=>{const transfer=given.find(g=>g.seatId===id);return seatShort(id)+(transfer?(transfer.status==='accepted'?` · 전달 완료(${esc(transferName(transfer))})`:' · 전달 대기'):'');};
       const typeText=ticketTypes.filter(type=>Number(types[type.id])>0).map(type=>`${type.name} ${Number(types[type.id])}명`).join(' · ');
-      return `<article class="ticket"><div class="ticket-head"><p class="ticket-tag">모의 예매 완료 · 예매자 ${esc(t.emailPrefix)}</p><h2>${game?formatMatchup(game,{short:true}):esc(t.gameLabel)}</h2>${game?`<p>${dateLabel(game.date)} ${timeLabel(game.date)}<br>${game.stadium}</p>`:''}</div><div class="ticket-body"><div class="ticket-seat"><strong>${section?`${gradeById(section.gradeId).name} ${section.id}구역`:esc(t.sectionId)+'구역'}</strong><span>${seats.length}석 · ${money(Number(t.totalPrice)||0)}</span></div><ul class="ticket-seats" aria-label="좌석">${seats.map(id=>`<li>${seatText(id)}</li>`).join('')}</ul>${typeText?`<p class="ticket-types">${typeText}</p>`:''}<div class="qr-area">${fakeQr(String(t.id))}<p class="qr-caption">연습용 QR 모양 · 실제 입장 불가</p><p class="ticket-id">${esc(t.id)}</p>${foodButton(t)}<button class="btn full" disabled title="친구에게 전달 기능은 준비 중입니다">친구에게 전달 · 준비 중</button><button class="btn full cancel-btn" data-cancel-ticket="${esc(t.id)}">예매 취소</button></div></div></article>`;
+      return `<article class="ticket"><div class="ticket-head"><p class="ticket-tag">${t.gift?`선물 받은 티켓 · 보낸 사람 ${esc(t.fromName)}`:`모의 예매 완료 · 예매자 ${esc(t.emailPrefix)}`}</p><h2>${game?formatMatchup(game,{short:true}):esc(t.gameLabel)}</h2>${game?`<p>${dateLabel(game.date)} ${timeLabel(game.date)}<br>${game.stadium}</p>`:''}</div><div class="ticket-body"><div class="ticket-seat"><strong>${section?`${gradeById(section.gradeId).name} ${section.id}구역`:esc(t.sectionId)+'구역'}</strong><span>${seats.length}석 · ${t.gift?'선물':money(Number(t.totalPrice)||0)}</span></div><ul class="ticket-seats" aria-label="좌석">${seats.map(id=>`<li>${seatText(id)}</li>`).join('')}</ul>${typeText?`<p class="ticket-types">${typeText}</p>`:''}<div class="qr-area">${fakeQr(String(t.id))}<p class="qr-caption">연습용 QR 모양 · 실제 입장 불가</p><p class="ticket-id">${esc(t.id)}</p>${foodButton(t)}${shareButton(t)}${t.gift?'':`<button class="btn full cancel-btn" data-cancel-ticket="${esc(t.id)}">예매 취소</button>`}</div></div></article>`;
     }
     // ----- 좌석 시야 확인(외부 링크) -----
     // 지금 보고 있는 경기(식음료 주문 중이면 그 예매의 경기)의 구장 페이지로 연결하고, 구장을 알 수 없으면 기본 주소로 연결합니다.
     function seatViewUrl(){
-      const foodTicket=currentView==='food'?tickets.find(t=>t.id===food.ticketId):null;
+      const foodTicket=currentView==='food'?findReservation(food.ticketId):null;
       const game=foodTicket?ticketGame(foodTicket):selectedGame;
       const stadium=game&&stadiumOf(game);
       return stadium&&stadium.seatViewUrl||window.SeatViewDefaultUrl;
@@ -1011,16 +1032,17 @@
     // ----- 간편결제 수단(mock) -----
     // 결제 처리는 paymentService.js가 맡고, 여기서는 목록 표시와 선택만 합니다. 카드번호 같은 민감정보는 받지 않습니다.
     const payApi=window.PaymentService;
-    let selectedPayId=null,payBusy=null;
+    // payPicked: 이번 결제 화면에서 사용자가 직접 다른 수단을 골랐는지. 고르지 않았다면 항상 기본 결제수단을 따릅니다.
+    let selectedPayId=null,payPicked=false,payBusy=null;
     // 결제사 로고 파일이 있으면 로고를, 없으면 브랜드명 텍스트 배지를 보여 줍니다.
     function payBadge(providerId){
       const p=payApi.providers.find(provider=>provider.id===providerId);
       return p?`<span class="pay-badge${imageState.get(p.logoUrl)==='ok'?' loaded':''}" style="background:${p.color};color:${p.text}"><i>${p.name}</i>${fallbackImage(p.logoUrl,p.name+' 로고',20)}</span>`:'';
     }
-    // 기본 결제수단이 먼저 선택되고, 선택해 둔 수단이 사라지면 다시 기본 결제수단으로 돌아갑니다.
+    // 결제 화면에 들어오면 기본 결제수단이 자동 선택됩니다. 직접 고른 수단이 있으면 그 화면에서만 유지하고, 사라지면 기본으로 돌아갑니다.
     function currentPayMethods(){
       const list=payApi.listPayMethods();
-      if(!list.some(m=>m.id===selectedPayId)){const first=list.find(m=>m.isDefault)||list[0];selectedPayId=first?first.id:null;}
+      if(!payPicked||!list.some(m=>m.id===selectedPayId)){const first=list.find(m=>m.isDefault)||list[0];selectedPayId=first?first.id:null;payPicked=false;}
       return list;
     }
     const selectedPayMethod=()=>currentPayMethods().find(m=>m.id===selectedPayId)||null;
@@ -1050,13 +1072,15 @@
       if(payBusy)return;
       payBusy=providerId;renderPayOptions();
       payApi.registerPayMethod(providerId).then(method=>{
-        if(!selectedPayId)selectedPayId=method.id;
         $('pay-dialog').close();showToast(`${method.label} 등록이 완료됐어요`);
       },()=>showToast('결제수단을 등록하지 못했어요. 잠시 후 다시 시도해 주세요.')).then(()=>{payBusy=null;if($('pay-dialog').open)renderPayOptions();refreshPayArea();});
     }
+    // 기본 결제수단을 삭제하면 남은 목록의 첫 번째가 기본이 되고, 그 사실을 알려 줍니다.
     function removePay(id){
-      const method=payApi.listPayMethods().find(m=>m.id===id);
-      payApi.removePayMethod(id).then(()=>{if(method)showToast(`${method.label}를 삭제했어요`);refreshPayArea();});
+      payApi.removePayMethod(id).then(({removed,newDefault})=>{
+        if(removed)showToast(newDefault?`${removed.label}를 삭제했어요. 기본 결제수단을 ${newDefault.label}(으)로 바꿨어요`:`${removed.label}를 삭제했어요`);
+        refreshPayArea();
+      });
     }
 
     // ----- 구장 식음료 원격 주문·픽업(mock) -----
@@ -1086,7 +1110,7 @@
       return orderApi.getActiveOrder(ticket.id)?`<button class="btn full food-btn" data-food-status="${esc(ticket.id)}">주문 현황 보기</button>`:`<button class="btn full food-btn" data-food-order="${esc(ticket.id)}">🍴 식음료 주문</button>`;
     }
     function openFood(ticketId){
-      const ticket=tickets.find(t=>t.id===ticketId);
+      const ticket=findReservation(ticketId);
       if(!ticket||!ticketGame(ticket))return;
       const active=orderApi.getActiveOrder(ticketId);
       if(food.ticketId!==ticketId)food=newFoodState(ticketId);
@@ -1104,8 +1128,11 @@
     function renderFoodStores(stadium){
       const stores=storeData[stadium.id]||[];
       if(!stores.length)return '<div class="empty-wallet"><h2>이 구장은 아직 원격 주문을 지원하지 않습니다</h2><p>지원 구장을 준비하고 있어요.</p><button class="btn" id="food-wallet">내 티켓으로</button></div>';
+      // 매장이 있는 구역의 탭만 보여 줍니다.
+      const zones=['전체',...['1루','3루','중앙','외야','기타'].filter(zone=>stores.some(s=>s.zone===zone))];
+      if(!zones.includes(food.zone))food.zone='전체';
       const shown=stores.filter(s=>food.zone==='전체'||s.zone===food.zone);
-      return `<div class="food-zones" role="group" aria-label="매장 위치 필터">${['전체','1루','3루','외야'].map(zone=>`<button class="chip" data-food-zone="${zone}" aria-pressed="${food.zone===zone}">${zone}</button>`).join('')}</div>${shown.length?`<div class="store-grid">${shown.map(s=>`<button class="store-card" data-food-store="${s.id}"${s.isOpen?'':' disabled'}><span class="store-top"><strong>${esc(s.name)}</strong><span class="store-state${s.isOpen?' open':''}">${s.isOpen?'주문 가능':'준비 중'}</span></span><span class="store-meta">${esc(s.locationDetail)}</span><span class="store-meta">대표 메뉴 · ${esc(s.menus[0].name)}</span><span class="store-meta">예상 대기 ${s.waitMinutes}분</span></button>`).join('')}</div>`:'<p class="empty-list">이 구역에는 매장이 없어요.</p>'}<p class="data-disclaimer">※ 메뉴·가격은 예시이며 실제와 다를 수 있습니다</p>${cartCount()?cartBar():''}`;
+      return `<div class="food-zones" role="group" aria-label="매장 위치 필터">${zones.map(zone=>`<button class="chip" data-food-zone="${zone}" aria-pressed="${food.zone===zone}">${zone}</button>`).join('')}</div>${shown.length?`<div class="store-grid">${shown.map(s=>`<button class="store-card" data-food-store="${s.id}"${s.isOpen?'':' disabled'}><span class="store-top"><strong>${esc(s.name)}</strong><span class="store-state${s.isOpen?' open':''}">${s.isOpen?'주문 가능':'준비 중'}</span></span><span class="store-meta">${esc(s.locationDetail)}</span><span class="store-meta">대표 메뉴 · ${esc(s.menus[0].name)}</span><span class="store-meta">예상 대기 ${s.waitMinutes}분</span></button>`).join('')}</div>`:'<p class="empty-list">이 구역에는 매장이 없어요.</p>'}<p class="data-disclaimer">※ 메뉴·가격은 예시이며 실제와 다를 수 있습니다</p>${cartCount()?cartBar():''}`;
     }
     function renderFoodMenu(){
       const store=findStore(food.storeId),mine=food.cart.storeId===store.id;
@@ -1125,7 +1152,7 @@
       return `<div class="order-card"><p class="order-label">주문번호</p><p class="order-number">${esc(order.id)}</p><p class="order-store">${esc(store.name)} · ${esc(store.locationDetail)}</p><p class="store-meta">픽업 희망 · ${esc(order.pickupTime)}</p><ol class="order-steps" aria-label="주문 진행 단계">${orderApi.steps.map((step,i)=>`<li class="${i<current?'done':i===current?'current':''}"${i===current?' aria-current="step"':''}><span class="order-step-dot">${i+1}</span>${orderLabels[step]}</li>`).join('')}</ol><p class="order-note" role="status">${orderNotes[order.status]}</p><ul class="order-items">${order.items.map(item=>{const menu=store.menus.find(m=>m.id===item.menuId);return `<li><span>${esc(menu?menu.name:item.menuId)}${item.option?` (${esc(item.option)})`:''} × ${item.qty}</span></li>`;}).join('')}<li class="order-total"><span>결제 금액</span><strong>${money(order.totalPrice)}</strong></li></ul><button class="btn full" id="food-wallet">내 티켓으로</button></div>`;
     }
     function renderFood(){
-      const ticket=tickets.find(t=>t.id===food.ticketId),game=ticket&&ticketGame(ticket),view=$('food-view');
+      const ticket=findReservation(food.ticketId),game=ticket&&ticketGame(ticket),view=$('food-view');
       if(!ticket||!game){view.innerHTML='<div class="empty-wallet"><h1>식음료 주문</h1><p>예매 내역을 찾을 수 없어요.</p><button class="btn" id="food-wallet">내 티켓으로</button></div>';return;}
       const store=findStore(food.phase==='checkout'?food.cart.storeId:food.storeId);
       const title={stores:'식음료 주문',menu:store?esc(store.name):'메뉴 선택',checkout:'주문·결제',status:'주문 현황'}[food.phase];
@@ -1190,6 +1217,113 @@
         bannerOrderId=order.id;$('pickup-banner-text').textContent=`주문 ${order.id} 메뉴가 준비됐어요. ${store?store.name:'매장'}에서 픽업해 주세요!`;banner.hidden=false;
       }else if(order.status==='done'&&bannerOrderId===order.id){banner.hidden=true;bannerOrderId=null;}
     }
+    // ----- 친구 티켓 전달·정산(mock) -----
+    // 전달은 transferService.js, 정산은 settlementService.js가 맡습니다. 둘 다 이 브라우저 안에서만 동작하는 모의 기능입니다.
+    const transferApi=window.TransferService,settleApi=window.SettlementService;
+    const TRANSFER_DEADLINE_HOURS=2; // 전달은 경기 시작 이 시간 전까지만 가능합니다.
+    // 정산 금액 = 좌석 가격 + (예매 수수료 ÷ 전체 좌석 수). 지금은 예매 수수료가 없어 0원이고,
+    // 원 단위 미만은 버림(floor)하며 차액은 예매자가 부담합니다. 올림은 'ceil', 반올림은 'round'로 바꾸면 됩니다.
+    const SETTLEMENT_RULE={bookingFee:0,rounding:'floor'};
+    const settleLabels={draft:'요청 전',requested:'요청됨',awaitingConfirm:'확인 대기',done:'정산 완료'};
+    let share={ticketId:null,openSeat:null};
+    const seatShort=id=>{const m=/^\w+-(\d+)-(\d+)$/.exec(String(id));return m?`${m[1]}열 ${m[2]}번`:esc(id);};
+    // 휴대폰 번호는 화면에 가려서 표시합니다. 예: 010-****-1234
+    const maskPhone=phone=>{const digits=String(phone||'').replace(/\D/g,'');return digits.length>=10?`${digits.slice(0,3)}-****-${digits.slice(-4)}`:'';};
+    const transferOpen=game=>Date.now()<game.date.getTime()-TRANSFER_DEADLINE_HOURS*3600000;
+    const activeTransfers=ticketId=>transferApi.listByReservation(ticketId).filter(t=>t.status==='pending'||t.status==='accepted');
+    const transferName=transfer=>transfer.toName||transfer.acceptedName||'친구';
+    // 내가 받은(수락 완료한) 티켓을 예매 내역 카드와 같은 모양으로 만듭니다.
+    function giftTickets(){
+      return currentUser?transferApi.listReceived(currentUser.uid).map(t=>({id:'gift-'+t.id,gift:true,fromName:t.snapshot.fromName,emailPrefix:currentUser.emailPrefix,gameId:t.snapshot.gameId,gameLabel:t.snapshot.gameLabel,sectionId:t.snapshot.sectionId,seats:[t.seatId],ticketTypes:{},totalPrice:0})):[];
+    }
+    // 예매 내역(내 예매 + 선물 받은 티켓)에서 id로 찾습니다.
+    const findReservation=id=>tickets.find(t=>t.id===id)||giftTickets().find(t=>t.id===id);
+    // 좌석별 가격. 권종은 좌석 순서대로 일반 → 장애인 → 청소년 순으로 배정됩니다.
+    function seatPrices(ticket){
+      const section=sectionById(String(ticket.sectionId)),seats=ticket.seats,types=ticket.ticketTypes||{};
+      if(!section)return Object.fromEntries(seats.map(id=>[id,Math.floor((Number(ticket.totalPrice)||0)/seats.length)]));
+      const base=gradeById(section.gradeId).price,queue=ticketTypes.flatMap(type=>Array(Number(types[type.id])||0).fill(type));
+      return Object.fromEntries(seats.map((id,i)=>[id,Math.round(base*(queue[i]||ticketTypes[0]).rate)]));
+    }
+    const settlementAmount=(ticket,seatId)=>Math[SETTLEMENT_RULE.rounding](seatPrices(ticket)[seatId]+SETTLEMENT_RULE.bookingFee/ticket.seats.length);
+    function copyLink(link,label){
+      const failed=()=>showToast('복사하지 못했어요. 화면의 주소를 직접 복사해 주세요.');
+      if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(link).then(()=>showToast(`${label}를 복사했어요`),failed);else failed();
+    }
+    // 내 티켓 카드에 붙는 버튼: 2석 이상 예매한 건에만 보입니다.
+    const shareButton=ticket=>ticket.gift||ticket.seats.length<2?'':`<button class="btn full share-btn" data-share-open="${esc(ticket.id)}">티켓 전달·정산</button>`;
+    function openShare(ticketId){share={ticketId,openSeat:null};renderShare();showView('share');}
+    function renderShare(){
+      const ticket=tickets.find(t=>t.id===share.ticketId),game=ticket&&ticketGame(ticket),view=$('share-view');
+      if(!ticket||!game){view.innerHTML='<div class="empty-wallet"><h1>티켓 전달·정산</h1><p>예매 내역을 찾을 수 없어요.</p><button class="btn" id="share-back">내 티켓으로</button></div>';return;}
+      const all=transferApi.listByReservation(ticket.id),transfers=all.filter(t=>t.status==='pending'||t.status==='accepted');
+      const open=transferOpen(game),ownCount=ticket.seats.length-transfers.length,prices=seatPrices(ticket);
+      const seatRows=ticket.seats.map(seatId=>{
+        const transfer=transfers.find(t=>t.seatId===seatId),label=seatShort(seatId);
+        const head=state=>`<div class="share-seat-head"><strong>${label}</strong><span>${money(prices[seatId])}</span>${state}</div>`;
+        if(transfer&&transfer.status==='accepted')return `<li class="share-seat">${head(`<span class="share-state done">전달 완료(${esc(transferName(transfer))})</span>`)}<p class="share-note">수락된 티켓은 회수할 수 없어요.</p></li>`;
+        if(transfer)return `<li class="share-seat">${head('<span class="share-state wait">전달 대기</span>')}<p class="share-note">${transfer.toName?`${esc(transfer.toName)}${transfer.toPhone?' · '+maskPhone(transfer.toPhone):''}님에게 보냈어요.`:'전달 링크를 받은 사람이 수락하면 전달이 완료돼요.'}</p><div class="share-link"><input type="text" readonly value="${esc(transferApi.linkFor(transfer))}" aria-label="${label} 전달 링크"><button class="btn" data-share-copy="${esc(transfer.id)}">전달 링크 복사</button><button class="btn share-danger" data-share-cancel="${esc(transfer.id)}">전달 취소</button></div></li>`;
+        const declined=all.filter(t=>t.seatId===seatId).pop(),formOpen=share.openSeat===seatId,canGive=open&&ownCount>1;
+        return `<li class="share-seat">${head(`<span class="share-state">${declined&&declined.status==='declined'?'거절됨 · 미전달':'미전달'}</span>`)}<div class="share-choice" role="group" aria-label="${label} 사용 방법"><button class="chip" data-share-self="${esc(seatId)}" aria-pressed="${!formOpen}">내가 사용</button><button class="chip" data-share-friend="${esc(seatId)}" aria-pressed="${formOpen}"${canGive?'':' disabled'}>친구에게 전달</button></div>${formOpen?`<div class="share-form"><label>받는 사람 이름<input type="text" id="share-name" maxlength="20" autocomplete="off"></label><label>휴대폰 번호<input type="tel" id="share-phone" maxlength="13" inputmode="numeric" autocomplete="off" placeholder="01012345678"></label><p class="share-error" id="share-error" role="alert"></p><div class="share-actions"><button class="btn primary" data-share-send="${esc(seatId)}">전달하기</button><button class="btn" data-share-link="${esc(seatId)}">전달 링크 복사</button></div><p class="share-note">이름과 번호를 입력해 보내거나, 입력 없이 전달 링크만 복사해 직접 보낼 수 있어요. 실제 문자는 발송되지 않아요.</p></div>`:''}</li>`;
+      }).join('');
+      const settlements=settleApi.listByReservation(ticket.id),sum=list=>list.reduce((n,s)=>n+s.amount,0);
+      const settleRows=settlements.map(s=>`<li class="share-seat"><div class="share-seat-head"><strong>${esc(s.payeeName)}</strong><span>${seatShort(s.seatId)}</span><span class="share-state${s.status==='done'?' done':s.status==='draft'?'':' wait'}">${settleLabels[s.status]}</span></div>${s.status==='draft'?`<label class="settle-amount">정산 금액<input type="number" min="0" step="100" inputmode="numeric" value="${s.amount}" data-settle-amount="${esc(s.id)}">원</label>`:`<p class="settle-fixed">${money(s.amount)}</p>`}${s.status==='requested'?`<div class="share-link"><input type="text" readonly value="${esc(settleApi.linkFor(s))}" aria-label="${esc(s.payeeName)} 정산 링크"><button class="btn" data-settle-copy="${esc(s.id)}">정산 링크 복사</button><button class="btn" data-settle-remind="${esc(s.id)}">다시 알림</button></div>`:''}${s.status==='awaitingConfirm'?`<p class="share-note">${esc(s.payeeName)}님이 송금을 완료했다고 알렸어요.</p><div class="share-actions"><button class="btn primary" data-settle-confirm="${esc(s.id)}">입금 확인</button></div>`:''}</li>`).join('');
+      view.innerHTML=`<button class="btn plain back" id="share-back">${backArrow}내 티켓으로</button><div class="data-heading"><div><h1>티켓 전달·정산</h1><p>함께 가는 친구에게 좌석을 보내고, 티켓 값을 정산해 보세요.</p></div><span class="practice-label">모의 기능</span></div>${foodSummary(ticket,game)}<section class="share-section" aria-labelledby="share-transfer-title"><h2 class="section-heading" id="share-transfer-title">티켓 전달</h2><p class="share-note">${open?`전달은 경기 시작 ${TRANSFER_DEADLINE_HOURS}시간 전까지 할 수 있어요. 본인 좌석은 최소 1석이 필요해요.`:`전달 가능 시간이 지났어요. 전달은 경기 시작 ${TRANSFER_DEADLINE_HOURS}시간 전까지만 할 수 있어요.`}</p><ul class="share-list">${seatRows}</ul></section><section class="share-section" aria-labelledby="share-settle-title"><h2 class="section-heading" id="share-settle-title">정산</h2><div class="settle-summary"><div><span>받을 금액 합계</span><strong>${money(sum(settlements))}</strong></div><div><span>받은 금액 합계</span><strong>${money(sum(settlements.filter(s=>s.status==='done')))}</strong></div></div>${settlements.length?`<ul class="share-list">${settleRows}</ul><button class="btn primary full" id="settle-request"${settlements.some(s=>s.status==='draft')?'':' disabled'}>정산 요청 보내기</button><p class="share-note">좌석 가격 기준으로 금액을 자동 계산했어요. 요청 전에는 금액을 직접 고칠 수 있고, 0원으로 두면 정산 없이 완료 처리돼요. 실제 송금 기능은 없어요.</p>`:'<p class="pay-empty">친구에게 전달한 좌석이 생기면 정산할 금액이 여기에 표시돼요.</p>'}</section>`;
+    }
+    function sendTransfer(seatId,withContact){
+      const ticket=tickets.find(t=>t.id===share.ticketId),game=ticket&&ticketGame(ticket);
+      if(!ticket||!game||!currentUser)return;
+      if(!transferOpen(game)){showToast('전달 가능 시간이 지났어요');renderShare();return;}
+      if(ticket.seats.length-activeTransfers(ticket.id).length<=1){showToast('본인 좌석은 최소 1석이 필요해요');renderShare();return;}
+      let toName,toPhone;
+      if(withContact){
+        toName=$('share-name').value.trim();toPhone=$('share-phone').value.replace(/\D/g,'');
+        if(!toName){$('share-error').textContent='받는 사람 이름을 입력해 주세요.';return;}
+        if(!/^01\d{8,9}$/.test(toPhone)){$('share-error').textContent='휴대폰 번호를 정확히 입력해 주세요.';return;}
+      }
+      const snapshot={gameId:game.id,gameLabel:ticket.gameLabel||gameLabel(game),sectionId:ticket.sectionId,fromUid:currentUser.uid,fromName:currentUser.emailPrefix};
+      transferApi.createTransfer({reservationId:ticket.id,seatId,toName,toPhone,snapshot})
+        .then(transfer=>settleApi.ensureDraft({reservationId:ticket.id,seatId,payeeName:toName||'친구',amount:settlementAmount(ticket,seatId),snapshot}).then(()=>transfer))
+        .then(transfer=>{
+          share.openSeat=null;renderShare();
+          if(withContact)showToast(`${toName}님에게 전달 링크를 보냈어요 (모의 발송)`);else copyLink(transferApi.linkFor(transfer),'전달 링크');
+        },()=>{showToast('전달하지 못했어요. 잠시 후 다시 시도해 주세요.');renderShare();});
+    }
+    function cancelTransfer(id){
+      transferApi.cancelTransfer(id).then(transfer=>settleApi.removeForSeat(transfer.reservationId,transfer.seatId)).then(()=>{renderShare();showToast('전달을 취소했어요');},()=>{renderShare();showToast('이미 수락됐거나 취소된 전달이에요');});
+    }
+    // ----- 전달 링크·정산 링크로 들어왔을 때의 화면 -----
+    const linkTarget=()=>{const m=/^#(transfer|settle)=([0-9a-f]+)$/.exec(location.hash);return m?{kind:m[1],token:m[2]}:null;};
+    function linkInfo(snapshot,seatId){
+      const game=games.find(g=>g.id===snapshot.gameId),section=sectionById(String(snapshot.sectionId));
+      return `<div class="link-info"><p class="food-summary-title">${game?formatMatchup(game,{short:true}):esc(snapshot.gameLabel)}</p>${game?`<p>${dateLabel(game.date)} ${timeLabel(game.date)} · ${game.stadium}</p>`:''}<p>${section?gradeById(section.gradeId).name+' ':''}${esc(snapshot.sectionId)}구역 ${seatShort(seatId)}</p></div>`;
+    }
+    function renderLink(){
+      const target=linkTarget(),view=$('link-view');
+      const card=(label,title,body)=>`<div class="order-card link-card"><p class="order-label">${label}</p><h1>${title}</h1>${body}</div>`;
+      const note=text=>`<p class="order-note" role="status">${text}</p>`,home='<button class="btn full" id="link-home">만루티켓 둘러보기</button>';
+      const transfer=target&&target.kind==='transfer'?transferApi.getByToken(target.token):null,settlement=target&&target.kind==='settle'?settleApi.getByToken(target.token):null;
+      if(transfer){
+        const game=games.find(g=>g.id===transfer.snapshot.gameId),mine=!!currentUser&&currentUser.uid===transfer.snapshot.fromUid,received=!!currentUser&&transfer.acceptedBy===currentUser.uid;
+        const action=transfer.status==='accepted'?note(received?'내가 받은 티켓이에요.':'이미 수락된 티켓이에요.')+(received?'<button class="btn primary full" id="link-wallet">내 티켓에서 보기</button>':home)
+          :transfer.status==='declined'?note('거절한 티켓이에요.')+home
+          :transfer.status==='canceled'?note('보낸 사람이 전달을 취소했어요.')+home
+          :mine?note('내가 보낸 전달 링크예요. 받는 사람에게 이 주소를 보내 주세요.')+'<button class="btn full" id="link-wallet">내 티켓으로</button>'
+          :game&&!transferOpen(game)?note('전달 가능 시간이 지났어요.')+home
+          :note(currentUser?'경기 정보와 좌석을 확인한 뒤 티켓을 받아 주세요.':'로그인한 뒤 티켓을 받을 수 있어요.')+'<div class="share-actions"><button class="btn primary" id="link-accept">티켓 받기</button><button class="btn" id="link-decline">거절</button></div>';
+        view.innerHTML=card('티켓 전달',`${esc(transfer.snapshot.fromName)}님이 티켓을 보냈어요`,linkInfo(transfer.snapshot,transfer.seatId)+action);
+      }else if(settlement&&settlement.status!=='draft'){
+        const action=settlement.status==='requested'?note('송금을 마쳤다면 아래 버튼을 눌러 알려 주세요. 이 화면에서는 실제 송금이 되지 않아요.')+'<button class="btn primary full" id="link-sent">송금 완료했어요</button>'
+          :settlement.status==='awaitingConfirm'?note('송금 완료를 알렸어요. 예매자가 입금을 확인하면 정산이 완료돼요.')+home
+          :note('정산이 완료됐어요.')+home;
+        view.innerHTML=card('정산 요청',`${esc(settlement.snapshot.fromName)}님의 정산 요청`,linkInfo(settlement.snapshot,settlement.seatId)+`<p class="order-number link-amount">${money(settlement.amount)}</p>`+action);
+      }else view.innerHTML=card('만루티켓','유효하지 않은 링크예요',note('링크가 잘못됐거나, 이 브라우저에서 만든 링크가 아니에요.')+home);
+    }
+    function acceptLinkTicket(){
+      const target=linkTarget();if(!target||target.kind!=='transfer')return;
+      if(!currentUser){openAuthDialog('login','로그인 후 티켓을 받을 수 있어요');return;}
+      transferApi.acceptTransfer(target.token,{uid:currentUser.uid,name:currentUser.emailPrefix}).then(()=>{renderLink();showToast('티켓을 받았어요. 내 티켓에서 확인할 수 있어요');},()=>{renderLink();showToast('티켓을 받을 수 없어요');});
+    }
     // ----- 응원 한마디(Firestore cheers) -----
     // 지금 열려 있는 경기의 응원만 최신순으로 실시간 표시합니다. 다른 경기를 열면 이전 구독을 해제하고 새 경기로 다시 구독합니다.
     let cheerGameId=null,cheerTeam=null,cheerItems=null,stopCheers=null;
@@ -1251,8 +1385,8 @@
       const body=!currentUser?notice('로그인이 필요해요','로그인하면 예매 내역을 볼 수 있어요','<button class="btn primary" id="wallet-login">로그인</button>')
         :ticketsState==='loading'?notice('예매 내역을 불러오는 중…','잠시만 기다려 주세요.')
         :ticketsState==='error'?notice('예매 내역을 불러올 수 없습니다','잠시 후 다시 시도해 주세요.','<button class="btn" id="wallet-retry">다시 불러오기</button>')
-        :!tickets.length?notice('첫 직관을 기다리고 있어요','경기를 예매하면 이곳에 티켓이 모여요.',`<button class="btn primary" id="empty-calendar">경기 캘린더 보기 ${arrow}</button>`)
-        :`<div class="ticket-grid">${tickets.map(ticketCard).join('')}</div><p class="small-note" style="margin-top:22px">예매 내역은 로그인한 계정에 저장됩니다. 실제 결제·입장은 되지 않는 연습용 티켓입니다.</p>`;
+        :!tickets.length&&!giftTickets().length?notice('첫 직관을 기다리고 있어요','경기를 예매하면 이곳에 티켓이 모여요.',`<button class="btn primary" id="empty-calendar">경기 캘린더 보기 ${arrow}</button>`)
+        :`<div class="ticket-grid">${tickets.map(ticketCard).join('')}${giftTickets().map(ticketCard).join('')}</div><p class="small-note" style="margin-top:22px">예매 내역은 로그인한 계정에 저장됩니다. 실제 결제·입장은 되지 않는 연습용 티켓입니다.</p>`;
       $('wallet-view').innerHTML=`<div class="wallet-header"><div><h1>내 티켓 <span class="small-count">${currentUser?ticketSeatCount()+'장':''}</span></h1><p>응원하는 팀은 달라도, 티켓은 한곳에.</p></div><button class="btn" id="wallet-calendar">경기 둘러보기</button></div>`+body;
     }
     function openWallet(){if(currentUser&&ticketsState!=='loading')loadTickets();renderWallet();showView('wallet');}
@@ -1287,7 +1421,7 @@
     function dataHeading(title,description){return `<div class="data-heading"><div><h1>${title}</h1><p>${description}</p></div><span class="practice-label">가짜 데이터</span></div>`;}
     // 경기 기록·선수 순위 화면은 URL 해시(#records, #rankings)에 남겨, 새로고침해도 보던 화면이 다시 열립니다.
     const hashViews={records:'records',rankings:'players'};
-    const hashView=()=>hashViews[location.hash.slice(1)]||null;
+    const hashView=()=>hashViews[location.hash.slice(1)]||(linkTarget()?'link':null);
     function renderRecords(){
       $('records-view').innerHTML=dataHeading('경기 기록','끝난 경기의 스코어와 이야기를 한눈에.')+`<div class="records-list">${mockRecords.map(r=>{
         const home=teamById(r.home),away=teamById(r.away),result=r.homeScore===r.awayScore?'무승부':`${teamName((r.homeScore>r.awayScore?home:away).id,{short:true,size:16})} 승리`;
@@ -1338,7 +1472,7 @@
     }
     function openHomeTab(view){
       if(view==='calendar'){openCalendar();return;}
-      const renderers={records:renderRecords,players:renderPlayers,rankings:renderRankings,visits:renderVisits,community:renderCommunity};
+      const renderers={link:renderLink,records:renderRecords,players:renderPlayers,rankings:renderRankings,visits:renderVisits,community:renderCommunity};
       if(renderers[view]){renderers[view]();showView(view);}
     }
     document.addEventListener('click',event=>{
@@ -1429,14 +1563,14 @@
       if(target.id==='pay-add')openPayDialog();
       else if(target.id==='pay-dialog-close')$('pay-dialog').close();
       else if(d.payProvider)registerPay(d.payProvider);
-      else if(d.paySelect){selectedPayId=d.paySelect;refreshPayArea(`[data-pay-select="${CSS.escape(d.paySelect)}"]`);}
+      else if(d.paySelect){selectedPayId=d.paySelect;payPicked=true;refreshPayArea(`[data-pay-select="${CSS.escape(d.paySelect)}"]`);}
       else if(d.payRemove)removePay(d.payRemove);
       else if(d.foodOrder||d.foodStatus)openFood(d.foodOrder||d.foodStatus);
       else if(d.foodZone){food.zone=d.foodZone;renderFood();document.querySelector(`[data-food-zone="${d.foodZone}"]`).focus({preventScroll:true});}
       else if(d.foodStore){food.storeId=d.foodStore;setFoodPhase('menu');}
       else if(d.foodPlus)changeCart(d.foodPlus,1);
       else if(d.foodMinus)changeCart(d.foodMinus,-1);
-      else if(target.id==='food-checkout'){food.storeId=food.cart.storeId;setFoodPhase('checkout');}
+      else if(target.id==='food-checkout'){food.storeId=food.cart.storeId;payPicked=false;setFoodPhase('checkout');}
       else if(target.id==='food-pay')placeFoodOrder();
       else if(target.id==='food-back')foodBack();
       else if(target.id==='food-wallet')openWallet();
@@ -1445,12 +1579,12 @@
       else if(target.id==='pickup-banner-close')$('pickup-banner').hidden=true;
       else if(target.id==='pickup-banner-open'){
         const order=orderApi.getOrder(bannerOrderId);$('pickup-banner').hidden=true;
-        if(order&&tickets.some(t=>t.id===order.reservationId)){if(food.ticketId!==order.reservationId)food=newFoodState(order.reservationId);food.orderId=order.id;food.phase='status';renderFood();showView('food');}
+        if(order&&findReservation(order.reservationId)){if(food.ticketId!==order.reservationId)food=newFoodState(order.reservationId);food.orderId=order.id;food.phase='status';renderFood();showView('food');}
       }
     });
     document.addEventListener('change',event=>{
       const d=event.target.dataset;
-      if(d.payDefault){payApi.setDefaultPayMethod(d.payDefault);refreshPayArea(`[data-pay-default="${CSS.escape(d.payDefault)}"]`);}
+      if(d.payDefault){payApi.setDefault(d.payDefault);payPicked=false;refreshPayArea(`[data-pay-default="${CSS.escape(d.payDefault)}"]`);}
       else if(d.foodOption){food.picks[d.foodOption]=event.target.value;renderFood();document.querySelector(`[data-food-option="${d.foodOption}"]`).focus({preventScroll:true});}
       else if(d.foodPickup)food.pickup=d.foodPickup;
     });
@@ -1459,6 +1593,34 @@
     // Esc로 닫힌 경우의 처리. close 이벤트는 늦게 오므로, 그 사이 모달이 다시 열렸으면(이전 닫힘의 이벤트) 무시합니다.
     $('confirm-dialog').addEventListener('close',event=>{if(finishConfirm&&!event.target.open)finishConfirm(false);});
     orderApi.onChange(handleOrderChange);
+    // 티켓 전달·정산과 링크 화면의 클릭·입력 처리.
+    document.addEventListener('click',event=>{
+      const target=event.target.closest('button');
+      if(!target||target.disabled)return;
+      const d=target.dataset,ticket=tickets.find(t=>t.id===share.ticketId);
+      if(d.shareOpen)openShare(d.shareOpen);
+      else if(target.id==='share-back'||target.id==='link-wallet')openWallet();
+      else if(target.id==='link-home')openCalendar();
+      else if(d.shareFriend){share.openSeat=d.shareFriend;renderShare();$('share-name').focus({preventScroll:true});}
+      else if(d.shareSelf){share.openSeat=null;renderShare();}
+      else if(d.shareSend)sendTransfer(d.shareSend,true);
+      else if(d.shareLink)sendTransfer(d.shareLink,false);
+      else if(d.shareCopy){const transfer=transferApi.listByReservation(share.ticketId).find(t=>t.id===d.shareCopy);if(transfer)copyLink(transferApi.linkFor(transfer),'전달 링크');}
+      else if(d.shareCancel)cancelTransfer(d.shareCancel);
+      else if(target.id==='settle-request'&&ticket)settleApi.requestAll(ticket.id).then(()=>{renderShare();showToast('정산 요청을 보냈어요 (모의 발송)');});
+      else if(d.settleCopy){const item=settleApi.listByReservation(share.ticketId).find(s=>s.id===d.settleCopy);if(item)copyLink(settleApi.linkFor(item),'정산 링크');}
+      else if(d.settleRemind)settleApi.remind(d.settleRemind).then(item=>showToast(`${item.payeeName}님에게 다시 알림을 보냈어요 (모의 발송)`),()=>renderShare());
+      else if(d.settleConfirm)settleApi.confirm(d.settleConfirm).then(()=>{renderShare();showToast('정산이 완료됐어요');},()=>renderShare());
+      else if(target.id==='link-accept')acceptLinkTicket();
+      else if(target.id==='link-decline'){const link=linkTarget();if(link)transferApi.declineTransfer(link.token).then(transfer=>settleApi.removeForSeat(transfer.reservationId,transfer.seatId)).then(()=>{renderLink();showToast('티켓을 거절했어요');},()=>renderLink());}
+      else if(target.id==='link-sent'){const link=linkTarget();if(link)settleApi.markSent(link.token).then(()=>{renderLink();showToast('송금 완료를 알렸어요');},()=>renderLink());}
+    });
+    document.addEventListener('change',event=>{
+      const id=event.target.dataset.settleAmount;
+      if(id)settleApi.setAmount(id,event.target.value).then(()=>renderShare(),()=>renderShare());
+    });
+    // 결제수단 목록이 다른 탭에서 바뀌는 등 늦게 반영되는 경우에도 결제 화면에 다시 그립니다.
+    payApi.subscribe(()=>{const scope=$(currentView+'-view');if(scope&&!scope.hidden&&scope.querySelector('#pay-area')&&!payBusy&&document.activeElement.tagName!=='INPUT')refreshPayArea();});
     // 로그인하지 않고 모달을 닫으면, 이어서 하려던 예매는 잊습니다.
     $('auth-dialog').addEventListener('close',()=>{if(!currentUser)pendingBookingId=null;});
     // 가입/로그인 탭은 좌우 방향키로도 옮길 수 있습니다.
@@ -1486,7 +1648,7 @@
         requestBooking(games.find(g=>g.id===target.dataset.book));
       }
     });
-    window.addEventListener('hashchange',()=>{const view=hashView();if(view&&view!==currentView)openHomeTab(view);});
+    window.addEventListener('hashchange',()=>{const view=hashView();if(view&&(view!==currentView||view==='link'))openHomeTab(view);});
     renderFilters();selectDay(today);
     if(hashView())openHomeTab(hashView());
     renderAuth();cloud.onAuth(handleAuth);
